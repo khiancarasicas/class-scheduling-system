@@ -70,10 +70,10 @@ The Automated Class Scheduling System is designed to simplify and automate the p
 ## Credits
 
 **Development Team:**  
-- Anjelah Bobiles
-- Jumar Bibal
-- Kyla Sinforoso
-- Khian Carasicas
+- [Khian Carasicas](mailto:khiancarasicas@gmail.com)
+- [Kyla Sinforoso](mailto:kayesinforoso@gmail.com)
+- [Jumar Bibal](mailto:bibaljums@gmail.com)
+- [Anjelah Bobiles](mailto:anjelahbobiles@gmail.com)
 
 **Client:**  
 STI College Legazpi
@@ -95,4 +95,4 @@ For full license details, refer to the [`LICENSE.md`](./LICENSE.md) file in this
 
 ## Contact
 
-For questions or feedback, please contact the development team or STI College
+For questions or feedback, please contact the development team or STI College Legazpi
