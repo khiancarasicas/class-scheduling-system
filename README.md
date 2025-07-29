@@ -1,36 +1,98 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Automated Class Scheduling System
+
+An automated solution to simplify and optimize class scheduling for educational institutions.  
+Developed as a capstone project for **STI College Legazpi**.
+
+---
+
+## Project Overview
+
+The Automated Class Scheduling System is designed to simplify and automate the process of creating and managing class schedules in schools. This project was initiated after observing the challenges and inefficiencies faced by our client when manually preparing schedules without dedicated tools. Our system aims to reduce scheduling conflicts, automate repetitive tasks, and ease the workload of academic personnel.
+
+---
+
+## Purpose and Goals
+
+- **Minimize Scheduling Conflicts:** Automatically detect and prevent overlapping classes, room assignments, and instructor schedules.
+- **Simplify Schedule Management:** Provide an intuitive interface for creating, editing, and viewing class schedules.
+- **Automate Routine Tasks:** Reduce manual effort by automating schedule generation.
+- **Reduce Workload and Stress:** Help administrators focus on decision-making rather than manual data entry.
+
+---
+
+## Key Features
+
+- Conflict-free schedule generation
+- User-friendly dashboard for schedule management
+- Automated assignment of rooms, sections, and time slots
+- Export and print schedules
+
+---
+
+## Technologies Used
+
+- [Next.js](https://nextjs.org) (React framework)
+- TypeScript
+- Shadcn UI
+- MongoDB
+
+---
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v18 or higher recommended)
+- pnpm
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Installation
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/khiancarasicas/class-scheduling-system.git
+   cd class-scheduling-system
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. **Install dependencies:**
+   ```bash
+   pnpm install
+   ```
 
-## Learn More
+3. **Run the development server:**
+   ```bash
+   pnpm dev
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Credits
 
-## Deploy on Vercel
+**Development Team:**  
+- Anjelah Bobiles
+- Jumar Bibal
+- Kyla Sinforoso
+- Khian Carasicas
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Client:**  
+STI College Legazpi
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## License
+
+This project is **not open source**.
+
+The **Automated Class Scheduling System** was developed as part of a capstone project for **STI College Legazpi** and is protected under a **custom proprietary license**.
+
+The system is intended **only for academic demonstration and evaluation purposes**.
+Any **commercial use, reproduction, modification, or redistribution** is strictly prohibited **without written permission** from the development team.
+
+For full license details, refer to the [`LICENSE.md`](./LICENSE.md) file in this repository.
+
+---
+
+## Contact
+
+For questions or feedback, please contact the development team or STI College
