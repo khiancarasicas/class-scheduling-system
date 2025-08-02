@@ -1,6 +1,8 @@
+import { Types } from "mongoose";
+
 export interface IInstructor {
   id: string;
   name: string;
-  department: string;
-  status: "Full-Time" | "Part-Time"
+  department: Types.ObjectId;
+  status: "Full-Time" | "Part-Time";
 }
