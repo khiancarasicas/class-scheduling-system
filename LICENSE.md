@@ -1,11 +1,11 @@
-## 📄 Custom License: Automated Class Scheduling System
+## Custom License: Automated Class Scheduling System
 
 **Copyright © 2025 by Development Team**
 
 This software, titled **"Automated Class Scheduling System,"** was developed as part of a capstone project for STI College Legazpi.
 All rights are reserved by the development team.
 
-### ❗ Usage Restrictions
+### Usage Restrictions
 
 This system is licensed for:
 
@@ -19,12 +19,12 @@ Any of the following actions are **strictly prohibited without written permissio
 * Modification for deployment in another institution or business
 * Use as a base for derivative projects intended for sale or public distribution
 
-### 💼 Commercial Licensing
+### Commercial Licensing
 
 The system is available for **commercial licensing or purchase**.
 If your institution is interested in deploying or using this system, please contact the development team for licensing terms and pricing.
 
-### 📩 Contact Information
+### Contact Information
 
 For inquiries regarding commercial use or licensing, contact:
 
