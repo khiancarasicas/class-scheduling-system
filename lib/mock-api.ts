@@ -1,4 +1,4 @@
-import { mockInstructors } from "@/data/mock-instructors";
+import { mockInstructors } from "@/lib/mock/instructors";
 
 export const getInstructors = (): Promise<typeof mockInstructors> => {
   return new Promise((resolve) => {
