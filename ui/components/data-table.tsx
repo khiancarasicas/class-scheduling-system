@@ -295,12 +295,14 @@ interface DataTableFilterProps {
   column: string;
   placeholder?: string;
   className?: string;
+  renderValue?: (value: string) => string;
 }
 
 function DataTableFilter({
   column,
   placeholder = "All",
   className,
+  renderValue,
 }: DataTableFilterProps) {
   const { table } = useDataTableContext();
   const [uniqueValues, setUniqueValues] = useState<string[]>([]);
@@ -351,11 +353,14 @@ function DataTableFilter({
       </SelectTrigger>
       <SelectContent>
         <SelectItem value="all">{placeholder}</SelectItem>
-        {uniqueValues.map((value) => (
-          <SelectItem key={value} value={value}>
-            {value}
-          </SelectItem>
-        ))}
+        {uniqueValues.map((value) => {
+          const label = renderValue ? renderValue(value) : value;
+          return (
+            <SelectItem key={value} value={value}>
+              {label}
+            </SelectItem>
+          );
+        })}
       </SelectContent>
     </Select>
   );

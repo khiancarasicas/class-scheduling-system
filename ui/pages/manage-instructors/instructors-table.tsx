@@ -1,122 +1,22 @@
 "use client";
 
 import { DataTable } from "@/ui/components/data-table";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  FilterFn,
-  flexRender,
-  getCoreRowModel,
-  getFacetedUniqueValues,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  PaginationState,
-  Row,
-  SortingState,
-  useReactTable,
-  VisibilityState,
-} from "@tanstack/react-table";
-import {
-  ChevronDownIcon,
-  ChevronFirstIcon,
-  ChevronLastIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  ChevronUpIcon,
-  CircleAlertIcon,
-  CircleXIcon,
-  Columns3Icon,
-  EllipsisIcon,
-  FilterIcon,
-  Icon,
-  ListFilterIcon,
-  PlusIcon,
-  TrashIcon,
-} from "lucide-react";
-import { cn } from "@/shadcn/lib/utils";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/shadcn/components/ui/alert-dialog";
-import { Badge } from "@/shadcn/components/ui/badge";
+import { useEffect, useState } from "react";
+import { ColumnDef } from "@tanstack/react-table";
+import { EllipsisIcon, PlusIcon } from "lucide-react";
 import { Button } from "@/shadcn/components/ui/button";
 import { Checkbox } from "@/shadcn/components/ui/checkbox";
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/shadcn/components/ui/dropdown-menu";
-import { Input } from "@/shadcn/components/ui/input";
-import { Label } from "@/shadcn/components/ui/label";
-import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-} from "@/shadcn/components/ui/pagination";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/shadcn/components/ui/popover";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/shadcn/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/shadcn/components/ui/table";
-import { Card } from "@/shadcn/components/ui/card";
-import { ScrollArea, ScrollBar } from "@/shadcn/components/ui/scroll-area";
 import { InstructorForm } from "./instructor-form";
-import { IInstructor } from "@/types/instructor";
-import { getInstructors } from "@/lib/mock-api";
-
-// const departmentFilterFn: FilterFn<Instructor> = (
-//   row,
-//   columnId,
-//   filterValue: string[]
-// ) => {
-//   if (!filterValue?.length) return true;
-//   const department = row.getValue(columnId) as string;
-//   return filterValue.includes(department);
-// };
-
-// const statusFilterFn: FilterFn<Instructor> = (
-//   row,
-//   columnId,
-//   filterValue: string[]
-// ) => {
-//   if (!filterValue?.length) return true;
-//   const status = row.getValue(columnId) as string;
-//   return filterValue.includes(status);
-// };
+import { IDepartment, IInstructor } from "@/types/index";
+import { getInstructors } from "@/lib/data-store/instructors";
+import { getDepartments } from "@/lib/data-store/departments";
 
 export default function InstructorsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -125,6 +25,22 @@ export default function InstructorsTable() {
   const [editingInstructor, setEditingInstructor] =
     useState<IInstructor | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [instructors, setInstructors] = useState<IInstructor[]>([]);
+  const [departments, setDepartments] = useState<IDepartment[]>([]);
+
+  const loadData = () => {
+    setInstructors(getInstructors());
+    setDepartments(getDepartments());
+  };
+
+  useEffect(() => {
+    loadData();
+  }, []);
+
+  const getDepartmentName = (departmentId: string) => {
+    const dept = departments.find((d) => d._id === departmentId);
+    return dept ? dept.name : "Unknown";
+  };
 
   const columns: ColumnDef<IInstructor>[] = [
     {
@@ -159,7 +75,12 @@ export default function InstructorsTable() {
     },
     {
       header: "Department",
-      accessorKey: "department",
+      accessorKey: "departmentId",
+      cell: ({ row }) => {
+        const departmentId = row.getValue<string>("departmentId");
+        return getDepartmentName(departmentId);
+      },
+      filterFn: "equals",
     },
     {
       header: "Status",
@@ -203,24 +124,6 @@ export default function InstructorsTable() {
       enableHiding: false,
     },
   ];
-
-  // FETCH SAMPLE DATA FROM GITHUB
-  const [data, setData] = useState<IInstructor[]>([]);
-  // useEffect(() => {
-  //   async function fetchInstructors() {
-  //     const res = await fetch(
-  //       "https://raw.githubusercontent.com/khiancarasicas/scheduling-data-test/refs/heads/main/instructors.json"
-  //     );
-  //     const data = await res.json();
-  //     setData(data);
-  //   }
-  //   fetchInstructors();
-  // }, []);
-
-  // FETCH MOCK DATA
-  useEffect(() => {
-    getInstructors().then(setData);
-  }, []);
 
   const handleAddInstructor = async (instructorData: IInstructor) => {
     try {
@@ -293,7 +196,7 @@ export default function InstructorsTable() {
 
   return (
     <div className="space-y-4 mt-2">
-      <DataTable data={data} columns={columns}>
+      <DataTable data={instructors} columns={columns}>
         {/* Toolbar */}
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div className="flex flex-wrap items-center gap-3">
@@ -303,8 +206,12 @@ export default function InstructorsTable() {
               className="max-w-sm"
             />
             <DataTable.Filter
-              column="department"
+              column="departmentId"
               placeholder="All departments"
+              renderValue={(id) => {
+                const dept = departments.find((d) => d._id === id);
+                return dept ? dept.name : "Unknown";
+              }}
             />
             <DataTable.ClearFilters />
             <DataTable.ViewOptions />
