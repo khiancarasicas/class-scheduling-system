@@ -219,8 +219,8 @@ export default function InstructorsTable() {
 
   // FETCH MOCK DATA
   useEffect(() => {
-      getInstructors().then(setData);
-    }, []);
+    getInstructors().then(setData);
+  }, []);
 
   const handleAddInstructor = async (instructorData: IInstructor) => {
     try {
