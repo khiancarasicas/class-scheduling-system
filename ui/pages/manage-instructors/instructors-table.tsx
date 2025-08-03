@@ -96,6 +96,7 @@ import { Card } from "@/shadcn/components/ui/card";
 import { ScrollArea, ScrollBar } from "@/shadcn/components/ui/scroll-area";
 import { InstructorForm } from "./instructor-form";
 import { IInstructor } from "@/types/instructor";
+import { getInstructors } from "@/lib/mock-api";
 
 // const departmentFilterFn: FilterFn<Instructor> = (
 //   row,
@@ -161,6 +162,10 @@ export default function InstructorsTable() {
       accessorKey: "department",
     },
     {
+      header: "Status",
+      accessorKey: "status",
+    },
+    {
       id: "actions",
       header: () => <span className="sr-only">Actions</span>,
       cell: ({ row }) => {
@@ -201,16 +206,21 @@ export default function InstructorsTable() {
 
   // FETCH SAMPLE DATA FROM GITHUB
   const [data, setData] = useState<IInstructor[]>([]);
+  // useEffect(() => {
+  //   async function fetchInstructors() {
+  //     const res = await fetch(
+  //       "https://raw.githubusercontent.com/khiancarasicas/scheduling-data-test/refs/heads/main/instructors.json"
+  //     );
+  //     const data = await res.json();
+  //     setData(data);
+  //   }
+  //   fetchInstructors();
+  // }, []);
+
+  // FETCH MOCK DATA
   useEffect(() => {
-    async function fetchInstructors() {
-      const res = await fetch(
-        "https://raw.githubusercontent.com/khiancarasicas/scheduling-data-test/refs/heads/main/instructors.json"
-      );
-      const data = await res.json();
-      setData(data);
-    }
-    fetchInstructors();
-  }, []);
+      getInstructors().then(setData);
+    }, []);
 
   const handleAddInstructor = async (instructorData: IInstructor) => {
     try {
