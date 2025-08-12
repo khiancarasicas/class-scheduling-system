@@ -152,7 +152,6 @@ export default function DepartmentsTable() {
               placeholder="Search departments..."
               className="max-w-sm"
             />
-            <DataTable.Sort column="name" />
             <DataTable.ClearFilters />
             <DataTable.ViewOptions />
           </div>
