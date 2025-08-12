@@ -15,7 +15,6 @@ import {
 } from "@/shadcn/components/ui/dropdown-menu";
 import { DepartmentForm } from "./department-form";
 import { IDepartment } from "@/types";
-import { getInstructors } from "@/lib/data-store/instructors";
 import { getDepartments } from "@/lib/data-store/departments";
 
 export default function DepartmentsTable() {

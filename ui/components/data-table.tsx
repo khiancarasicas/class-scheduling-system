@@ -47,14 +47,10 @@ import {
   DropdownMenuTrigger,
 } from "@/shadcn/components/ui/dropdown-menu";
 import {
-  ChevronDownIcon,
-  ChevronUpIcon,
   CircleAlertIcon,
   CircleX,
   Columns3,
   Filter,
-  Plus,
-  PlusIcon,
   Search,
   TrashIcon,
 } from "lucide-react";
@@ -70,16 +66,6 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/shadcn/components/ui/alert-dialog";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/shadcn/components/ui/dialog";
-import { Label } from "@/shadcn/components/ui/label";
 
 // Context for sharing table state
 interface DataTableContextValue<TData> {

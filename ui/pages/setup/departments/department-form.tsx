@@ -10,7 +10,6 @@ import {
 } from "@/shadcn/components/ui/dialog";
 import { Input } from "@/shadcn/components/ui/input";
 import { Label } from "@/shadcn/components/ui/label";
-import { ScrollArea } from "@/shadcn/components/ui/scroll-area";
 import { IDepartment } from "@/types";
 import { useState } from "react";
 
