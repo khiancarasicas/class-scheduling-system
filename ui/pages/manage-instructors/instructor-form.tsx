@@ -11,7 +11,7 @@ import {
 import { Input } from "@/shadcn/components/ui/input";
 import { Label } from "@/shadcn/components/ui/label";
 import { ScrollArea } from "@/shadcn/components/ui/scroll-area";
-import { IInstructor } from "@/types/instructor";
+import { IInstructor } from "@/types";
 import { useState } from "react";
 
 interface IInstructorFormProps {
@@ -30,9 +30,10 @@ export function InstructorForm({
   isLoading = false,
 }: IInstructorFormProps) {
   const [formData, setFormData] = useState<IInstructor>({
-    id: instructor?.id || "",
+    _id: instructor?._id || "",
     name: instructor?.name || "",
-    department: instructor?.department || "",
+    departmentId: instructor?.departmentId || "",
+    status: instructor?.status || "Full-Time",
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -96,8 +97,8 @@ export function InstructorForm({
             <Label htmlFor="department">Department</Label>
             <Input
               id="department"
-              value={formData.department}
-              onChange={(e) => handleChange("department", e.target.value)}
+              value={formData.departmentId}
+              onChange={(e) => handleChange("departmentId", e.target.value)}
               placeholder="Enter name"
               disabled={isLoading}
               required
