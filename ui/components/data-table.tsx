@@ -491,6 +491,54 @@ function DataTableDeleteSelected() {
   );
 }
 
+// Sorting
+interface DataTableSortProps {
+  column: string;
+  className?: string;
+}
+
+function DataTableSort({ column, className }: DataTableSortProps) {
+  const { table } = useDataTableContext();
+  const col = table.getColumn(column);
+
+  if (!col) {
+    console.warn(`Column "${column}" not found in table`);
+    return null;
+  }
+
+  const currentSort = table
+    .getState()
+    .sorting.find((s) => s.id === column)?.desc;
+
+  return (
+    <Select
+      value={
+        currentSort === undefined
+          ? "none"
+          : currentSort
+          ? "desc"
+          : "asc"
+      }
+      onValueChange={(value) => {
+        if (value === "none") {
+          table.setSorting([]);
+        } else {
+          col.toggleSorting(value === "desc");
+        }
+      }}
+    >
+      <SelectTrigger className={className}>
+        <SelectValue placeholder="Sort" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="none">No Sort</SelectItem>
+        <SelectItem value="asc">Ascending</SelectItem>
+        <SelectItem value="desc">Descending</SelectItem>
+      </SelectContent>
+    </Select>
+  );
+}
+
 // Pagination component
 function DataTablePagination() {
   const { table } = useDataTableContext();
@@ -576,4 +624,5 @@ export const DataTable = Object.assign(DataTableProvider, {
   Pagination: DataTablePagination,
   DeleteSelected: DataTableDeleteSelected,
   ClearFilters: DataTableClearFilters,
+  Sort: DataTableSort,
 });
