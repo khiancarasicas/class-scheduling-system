@@ -213,6 +213,7 @@ export default function InstructorsTable() {
                 return dept ? dept.name : "Unknown";
               }}
             />
+            <DataTable.Sort column="name" />
             <DataTable.ClearFilters />
             <DataTable.ViewOptions />
           </div>
