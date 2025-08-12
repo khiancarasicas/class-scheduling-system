@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/ui/pages/settings/toggle-theme";
+import { ModeToggle } from "@/ui/pages/system/settings/toggle-theme";
 
 export default function Settings() {
   return (

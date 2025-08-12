@@ -1,4 +1,4 @@
-import InfoCardWrapper from "@/ui/pages/dashboard/cards";
+import InfoCardWrapper from "@/ui/pages/main/dashboard/cards";
 import { Separator } from "@/shadcn/components/ui/separator";
 import {
   Card,

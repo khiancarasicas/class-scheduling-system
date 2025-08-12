@@ -195,7 +195,7 @@ export default function InstructorsTable() {
   };
 
   return (
-    <div className="space-y-4 mt-2">
+    <div className="space-y-3">
       <DataTable data={instructors} columns={columns}>
         {/* Toolbar */}
         <div className="flex flex-wrap items-center justify-between gap-3">
