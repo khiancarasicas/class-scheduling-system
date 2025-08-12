@@ -31,11 +31,11 @@ import { Sidebar, SidebarContent } from "@/shadcn/components/ui/sidebar";
 const data = {
   navGroup: [
     {
-      category: "OVERVIEW",
+      category: "MAIN",
       items: [
         {
           title: "Dashboard",
-          url: "/dashboard",
+          url: "/main/dashboard",
           icon: LayoutDashboard,
         },
         {
@@ -49,18 +49,18 @@ const data = {
       category: "SETUP",
       items: [
         {
-          title: "Manage Department",
+          title: "Departments",
           url: "#",
           icon: Building,
         },
         {
-          title: "Manage Courses",
+          title: "Courses",
           url: "#",
           icon: GraduationCap,
         },
         {
-          title: "Manage Subjects",
-          url: "/dashboard/manage-subjects",
+          title: "Subjects",
+          url: "#",
           icon: BookOpen,
         },
         // idk if im gonna add "manage semesters"
@@ -79,17 +79,17 @@ const data = {
       items: [
         {
           title: "Manage Instructors",
-          url: "/dashboard/manage-instructors",
+          url: "/management/manage-instructors",
           icon: Users,
         },
         {
           title: "Manage Rooms",
-          url: "/dashboard/manage-rooms",
+          url: "#",
           icon: School,
         },
         {
           title: "Manage Sections",
-          url: "/dashboard/manage-sections",
+          url: "#",
           icon: GraduationCap,
         },
       ],
@@ -99,13 +99,13 @@ const data = {
       items: [
         {
           title: "Subject Assigning",
-          url: "/dashboard/subject-assigning",
+          url: "#",
           icon: NotebookText,
         },
 
         {
           title: "Instructor Assigning",
-          url: "/dashboard/instructor-scheduling",
+          url: "#",
           icon: Calendar,
         },
         {
@@ -115,7 +115,7 @@ const data = {
         },
         {
           title: "Exam Assigning",
-          url: "/dashboard/exam-assigning",
+          url: "#",
           icon: Ticket,
         },
       ],
@@ -125,7 +125,7 @@ const data = {
       items: [
         {
           title: "Subject Scheduling",
-          url: "/dashboard/subject-scheduling",
+          url: "#",
           icon: CalendarDays,
         },
         {
@@ -135,7 +135,7 @@ const data = {
         },
         {
           title: "Custom Scheduling",
-          url: "/dashboard/custom-scheduling",
+          url: "#",
           icon: Sparkles,
         },
       ],
@@ -159,7 +159,7 @@ const data = {
       items: [
         {
           title: "Settings",
-          url: "/dashboard/settings",
+          url: "/system/settings",
           icon: Settings,
         },
         {
