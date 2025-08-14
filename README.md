@@ -1,37 +1,20 @@
 # Automated Class Scheduling System
 
-An automated solution to simplify and optimize class scheduling for educational institutions.  
+To simplify and optimize class scheduling for educational institutions. 
+
 Developed as a capstone project for **STI College Legazpi**.
 
 ---
 
 ## Project Overview
 
-The Automated Class Scheduling System is designed to simplify and automate the process of creating and managing class schedules in schools. This project was initiated after observing the challenges and inefficiencies faced by our client when manually preparing schedules without dedicated tools. Our system aims to reduce scheduling conflicts, automate repetitive tasks, and ease the workload of academic personnel.
-
----
-
-## Purpose and Goals
-
-- **Minimize Scheduling Conflicts:** Automatically detect and prevent overlapping classes, room assignments, and instructor schedules.
-- **Simplify Schedule Management:** Provide an intuitive interface for creating, editing, and viewing class schedules.
-- **Automate Routine Tasks:** Reduce manual effort by automating schedule generation.
-- **Reduce Workload and Stress:** Help administrators focus on decision-making rather than manual data entry.
-
----
-
-## Key Features
-
-- Conflict-free schedule generation
-- User-friendly dashboard for schedule management
-- Automated assignment of rooms, sections, and time slots
-- Export and print schedules
+Designed to simplify the process of creating and managing class schedules in schools. This project was initiated after observing the challenges and inefficiencies faced by our client when preparing schedules without dedicated tools. Our system aims to reduce scheduling conflicts, and simplify repetitive tasks.
 
 ---
 
 ## Technologies Used
 
-- [Next.js](https://nextjs.org) (React framework)
+- Next.js (React framework)
 - TypeScript
 - Shadcn UI
 - MongoDB
@@ -43,7 +26,6 @@ The Automated Class Scheduling System is designed to simplify and automate the p
 ### Prerequisites
 
 - Node.js (v18 or higher recommended)
-- pnpm
 
 ### Installation
 
@@ -82,17 +64,9 @@ STI College Legazpi
 
 ## License
 
-This project is **not open source**.
-
 The **Automated Class Scheduling System** was developed as part of a capstone project for **STI College Legazpi** and is protected under a **custom proprietary license**.
 
 The system is intended **only for academic demonstration and evaluation purposes**.
-Any **commercial use, reproduction, modification, or redistribution** is strictly prohibited **without written permission** from the development team.
+Any **commercial use, reproduction, modification, or redistribution** is strictly prohibited.
 
 For full license details, refer to the [`LICENSE.md`](./LICENSE.md) file in this repository.
-
----
-
-## Contact
-
-For questions or feedback, please contact the development team or STI College Legazpi
