@@ -6,7 +6,7 @@ export interface IDepartment {
 }
 
 export interface IInstructor {
-  _id: string;
+  _id?: string;
   name: string;
   departmentId: string; // Replace string with Types.ObjectId, if database is used
   status: "Full-Time" | "Part-Time";
