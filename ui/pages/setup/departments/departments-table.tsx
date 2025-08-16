@@ -13,7 +13,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shadcn/components/ui/dropdown-menu";
-import { DepartmentForm } from "./department-form";
 import { IDepartment } from "@/types";
 import {
   getDepartments,
@@ -22,6 +21,8 @@ import {
   deleteDepartment,
 } from "@/services/departmentService";
 import { toast } from "sonner";
+import { ConfirmDeleteDialog } from "@/ui/components/comfirm-delete-dialog";
+import { DataForm } from "@/ui/components/data-form";
 
 export default function DepartmentsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -32,10 +33,14 @@ export default function DepartmentsTable() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [departments, setDepartments] = useState<IDepartment[]>([]);
 
+  // 🆕 delete dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [departmentToDelete, setDepartmentToDelete] =
+    useState<IDepartment | null>(null);
+
   const loadData = () => {
     setLoading(true);
     setTimeout(() => {
-      // simulate slow API call
       setDepartments(getDepartments());
       setLoading(false);
     }, 800);
@@ -44,6 +49,76 @@ export default function DepartmentsTable() {
   useEffect(() => {
     loadData();
   }, []);
+
+  // ADD
+  const handleAddDepartment = async (departmentData: { name: string }) => {
+    setIsSubmitting(true);
+    try {
+      if (!departmentData.name) {
+        toast.error("Department name is required");
+        return;
+      }
+
+      if (addDepartment(departmentData)) {
+        toast.success(`Department "${departmentData.name}" added successfully`);
+        loadData();
+      } else {
+        toast.error("Failed to add department");
+      }
+      setIsAddDialogOpen(false);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // UPDATE
+  const handleUpdateDepartment = async (departmentData: {
+    _id?: string;
+    name: string;
+  }) => {
+    if (!departmentData._id) return;
+    setIsSubmitting(true);
+    try {
+      if (!departmentData.name) {
+        toast.error("Department name is required");
+        return;
+      }
+
+      if (updateDepartment(departmentData._id, { name: departmentData.name })) {
+        toast.success(`Department updated successfully`);
+        loadData();
+      } else {
+        toast.error("Failed to update department");
+      }
+
+      setIsEditDialogOpen(false);
+      setEditingDepartment(null);
+    } catch (error) {
+      toast.error("Error updating department");
+      console.error("Error updating department:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // DELETE
+  const handleDeleteDepartment = (id: string) => {
+    try {
+      if (!id) {
+        toast.error("Error deleting department");
+        return;
+      }
+      if (deleteDepartment(id)) {
+        toast.success(`Department deleted successfully`);
+        loadData();
+      } else {
+        toast.error("Failed to delete department");
+      }
+    } catch (error) {
+      toast.error("Error deleting department");
+      console.error("Error deleting department:", error);
+    }
+  };
 
   const columns: ColumnDef<IDepartment>[] = [
     {
@@ -74,130 +149,25 @@ export default function DepartmentsTable() {
       cell: ({ row }) => (
         <div className="font-medium">{row.getValue("name")}</div>
       ),
-      enableHiding: false,
     },
     {
       id: "actions",
       header: () => <span className="sr-only">Actions</span>,
-      cell: ({ row }) => {
-        const department = row.original;
-
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="flex justify-end">
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="shadow-none"
-                  aria-label="Edit item"
-                >
-                  <EllipsisIcon size={16} aria-hidden="true" />
-                </Button>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onClick={() => {
-                  setEditingDepartment(department);
-                  setIsEditDialogOpen(true);
-                }}
-              >
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem
-                variant="destructive"
-                onClick={() => {
-                  if (department._id) {
-                    handleDeleteDepartment(department._id);
-                  } else {
-                    console.error("Department ID is undefined");
-                  }
-                }}
-              >
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
-      enableHiding: false,
+      cell: ({ row }) => (
+        <RowActions
+          department={row.original}
+          onEdit={(dep) => {
+            setEditingDepartment(dep);
+            setIsEditDialogOpen(true);
+          }}
+          onDelete={(dep) => {
+            setDepartmentToDelete(dep);
+            setIsDeleteDialogOpen(true);
+          }}
+        />
+      ),
     },
   ];
-
-  // ADD
-  const handleAddDepartment = async (departmentData: { name: string }) => {
-    setIsSubmitting(true);
-    try {
-      if (!departmentData.name) {
-        toast.error("Department name is required");
-        return;
-      }
-
-      if (addDepartment(departmentData)) {
-        toast.success(`Department "${departmentData.name}" added successfully`);
-        loadData();
-      } else {
-        toast.error("Failed to add department");
-      }
-
-      setIsAddDialogOpen(false);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  // UPDATE
-  const handleUpdateDepartment = async (departmentData: {
-    _id?: string;
-    name: string;
-  }) => {
-    if (!departmentData._id) return;
-    setIsSubmitting(true);
-    try {
-      if (!departmentData.name) {
-        toast.error("Department name is required");
-        return;
-      }
-
-      if (updateDepartment(departmentData._id, { name: departmentData.name })) {
-        toast.success(`Department updated successfully`);
-        loadData();
-      } else {
-        toast.error("Failed to update department");
-      }
-      
-      setIsEditDialogOpen(false);
-      setEditingDepartment(null);
-    } catch (error) {
-      toast.error("Error updating department");
-      console.error("Error updating department:", error);
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  // DELETE
-  const handleDeleteDepartment = (id: string) => {
-    try {
-      if (!id) {
-        toast.error("Cannot delete department without ID");
-        return;
-      }
-      
-      if (deleteDepartment(id)) {
-        toast.success(`Department deleted successfully`);
-        loadData();
-      } else {
-        toast.error("Failed to delete department");
-      }
-
-    } catch (error) {
-      toast.error("Error deleting department");
-      console.error("Error deleting department:", error);
-    }
-  };
 
   return (
     <div className="space-y-3">
@@ -227,40 +197,35 @@ export default function DepartmentsTable() {
                   ids.forEach((id) => handleDeleteDepartment(id));
                 }}
               />
-              {/* Add Button */}
-              <Button
-                variant="default"
-                onClick={() => setIsAddDialogOpen(true)}
-              >
-                <PlusIcon
-                  className="-ms-1 opacity-60"
-                  size={16}
-                  aria-hidden="true"
-                />
+              <Button onClick={() => setIsAddDialogOpen(true)}>
+                <PlusIcon className="-ms-1 opacity-60" size={16} />
                 Add Department
               </Button>
             </div>
           </div>
 
-          {/* Table */}
           <DataTable.Content />
-
-          {/* Pagination */}
           <DataTable.Pagination />
         </DataTable>
       )}
 
-      {/* Create Dialog */}
-      <DepartmentForm
+      <DataForm<IDepartment>
         isOpen={isAddDialogOpen}
         onClose={() => setIsAddDialogOpen(false)}
         onSubmit={handleAddDepartment}
         isLoading={isSubmitting}
-      />
+        title={{ add: "Add Department", edit: "Edit Department" }}
+      >
+        <DataForm.Input
+          name="name"
+          label="Department Name"
+          placeholder="Enter department name"
+          required
+        />
+      </DataForm>
 
-      {/* Edit Dialog */}
-      <DepartmentForm
-        department={editingDepartment || undefined}
+      <DataForm<IDepartment>
+        item={editingDepartment || undefined}
         isOpen={isEditDialogOpen}
         onClose={() => {
           setIsEditDialogOpen(false);
@@ -268,7 +233,63 @@ export default function DepartmentsTable() {
         }}
         onSubmit={handleUpdateDepartment}
         isLoading={isSubmitting}
+        title={{ add: "Add Department", edit: "Edit Department" }}
+      >
+        <DataForm.Input
+          name="name"
+          label="Department Name"
+          placeholder="Enter department name"
+          required
+        />
+      </DataForm>
+
+      {/* Delete Dialog */}
+      <ConfirmDeleteDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={() => {
+          if (departmentToDelete?._id) {
+            handleDeleteDepartment(departmentToDelete._id);
+          }
+          setIsDeleteDialogOpen(false);
+          setDepartmentToDelete(null);
+        }}
+        itemName={departmentToDelete?.name}
       />
     </div>
+  );
+}
+
+function RowActions({
+  department,
+  onEdit,
+  onDelete,
+}: {
+  department: IDepartment;
+  onEdit: (dep: IDepartment) => void;
+  onDelete: (dep: IDepartment) => void;
+}) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="flex justify-end">
+          <Button size="icon" variant="ghost" className="shadow-none">
+            <EllipsisIcon size={16} />
+          </Button>
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => onEdit(department)}>
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          variant="destructive"
+          onClick={() => onDelete(department)}
+        >
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
