@@ -172,10 +172,10 @@ export default function DepartmentsTable() {
   return (
     <div className="space-y-3">
       {loading ? (
-        <div className="flex items-center justify-center h-40">
+        <div className="flex items-center justify-center">
           <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
           <span className="ml-2 text-sm text-muted-foreground">
-            Loading departments...
+            Loading please wait...
           </span>
         </div>
       ) : (
