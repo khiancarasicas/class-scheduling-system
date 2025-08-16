@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/shadcn/theme-provider";
 import { SidebarInset, SidebarProvider } from "@/shadcn/components/ui/sidebar";
 import { SiteHeader } from "@/shadcn/components/site-header";
 import { AppSidebar } from "@/shadcn/components/app-sidebar";
+import { Toaster } from "@/shadcn/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Class Scheduling System",
@@ -37,6 +38,7 @@ export default function RootLayout({
               </div>
             </SidebarProvider>
           </div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>
