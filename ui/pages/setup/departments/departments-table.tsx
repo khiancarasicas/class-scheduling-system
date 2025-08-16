@@ -21,6 +21,7 @@ import {
   updateDepartment,
   deleteDepartment,
 } from "@/services/departmentService";
+import { toast } from "sonner";
 
 export default function DepartmentsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -107,7 +108,13 @@ export default function DepartmentsTable() {
               <DropdownMenuSeparator />
               <DropdownMenuItem
                 variant="destructive"
-                onClick={() => handleDeleteDepartment(department._id)}
+                onClick={() => {
+                  if (department._id) {
+                    handleDeleteDepartment(department._id);
+                  } else {
+                    console.error("Department ID is undefined");
+                  }
+                }}
               >
                 Delete
               </DropdownMenuItem>
@@ -123,8 +130,18 @@ export default function DepartmentsTable() {
   const handleAddDepartment = async (departmentData: { name: string }) => {
     setIsSubmitting(true);
     try {
-      addDepartment(departmentData); // your service already makes _id
-      loadData();
+      if (!departmentData.name) {
+        toast.error("Department name is required");
+        return;
+      }
+
+      if (addDepartment(departmentData)) {
+        toast.success(`Department "${departmentData.name}" added successfully`);
+        loadData();
+      } else {
+        toast.error("Failed to add department");
+      }
+
       setIsAddDialogOpen(false);
     } finally {
       setIsSubmitting(false);
@@ -139,10 +156,23 @@ export default function DepartmentsTable() {
     if (!departmentData._id) return;
     setIsSubmitting(true);
     try {
-      updateDepartment(departmentData._id, { name: departmentData.name });
-      loadData();
+      if (!departmentData.name) {
+        toast.error("Department name is required");
+        return;
+      }
+
+      if (updateDepartment(departmentData._id, { name: departmentData.name })) {
+        toast.success(`Department updated successfully`);
+        loadData();
+      } else {
+        toast.error("Failed to update department");
+      }
+      
       setIsEditDialogOpen(false);
       setEditingDepartment(null);
+    } catch (error) {
+      toast.error("Error updating department");
+      console.error("Error updating department:", error);
     } finally {
       setIsSubmitting(false);
     }
@@ -151,9 +181,20 @@ export default function DepartmentsTable() {
   // DELETE
   const handleDeleteDepartment = (id: string) => {
     try {
-      deleteDepartment(id);
-      loadData();
+      if (!id) {
+        toast.error("Cannot delete department without ID");
+        return;
+      }
+      
+      if (deleteDepartment(id)) {
+        toast.success(`Department deleted successfully`);
+        loadData();
+      } else {
+        toast.error("Failed to delete department");
+      }
+
     } catch (error) {
+      toast.error("Error deleting department");
       console.error("Error deleting department:", error);
     }
   };
@@ -183,8 +224,7 @@ export default function DepartmentsTable() {
             <div className="flex flex-wrap items-center gap-3">
               <DataTable.DeleteSelected
                 onDeleteSelected={(ids) => {
-                  ids.forEach((id) => deleteDepartment(id));
-                  loadData();
+                  ids.forEach((id) => handleDeleteDepartment(id));
                 }}
               />
               {/* Add Button */}
