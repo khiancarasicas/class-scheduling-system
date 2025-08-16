@@ -1,19 +1,19 @@
 // lib/data-store.ts
 import bcrypt from "bcryptjs";
 
-export type User = {
+export interface IUser {
   id: string;
   username: string;
   passwordHash: string;
 };
 
 // 🔹 Mock database (in-memory)
-const users: User[] = [];
+const users: IUser[] = [];
 
 // Create a user (hash password before saving)
-export async function createUser(username: string, password: string): Promise<User> {
+export async function createUser(username: string, password: string): Promise<IUser> {
   const passwordHash = await bcrypt.hash(password, 10);
-  const newUser: User = {
+  const newUser: IUser = {
     id: String(users.length + 1),
     username,
     passwordHash,
@@ -23,6 +23,6 @@ export async function createUser(username: string, password: string): Promise<Us
 }
 
 // Find user by username
-export function findUserByUsername(username: string): User | undefined {
+export function findUserByUsername(username: string): IUser | undefined {
   return users.find((u) => u.username === username);
 }
