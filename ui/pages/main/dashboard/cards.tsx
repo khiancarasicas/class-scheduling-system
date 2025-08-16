@@ -33,7 +33,7 @@ export default function InfoCardWrapper() {
       />
       <InfoCard
         header="Rooms"
-        value="0"
+        value="1"
         icon={Building}
       />
     </>
@@ -52,7 +52,8 @@ function InfoCard({
   const Icon = icon;
 
   return (
-    <Card className="from-primary/5 to-card bg-gradient-to-t">
+    // <Card className="from-primary/5 to-card bg-gradient-to-t">
+    <Card>
       <CardHeader>
         <CardDescription className="text-card-foreground">
           {header}

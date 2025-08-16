@@ -23,7 +23,7 @@ export function SiteHeader() {
         <Separator orientation="vertical" className="mr-2 h-4" />
         {/* LOGO */}
         {/* <Image src={STI_LOGO} alt="Logo of STI College" height={20} className="hidden sm:block"/> */}
-        <h1 className="text-base">Automated Class Scheduling System</h1>
+        <h1 className="text-base font-medium">Automated Class Scheduling System</h1>
       </div>
     </header>
   );
