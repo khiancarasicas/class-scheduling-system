@@ -60,7 +60,7 @@ export default function DepartmentsTable() {
       }
 
       if (addDepartment(departmentData)) {
-        toast.success(`Department "${departmentData.name}" added successfully`);
+        toast.success(`Department added successfully`);
         loadData();
       } else {
         toast.error("Failed to add department");
