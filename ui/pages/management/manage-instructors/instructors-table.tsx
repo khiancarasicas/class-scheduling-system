@@ -15,8 +15,8 @@ import {
 } from "@/shadcn/components/ui/dropdown-menu";
 import { InstructorForm } from "./instructor-form";
 import { IDepartment, IInstructor } from "@/types/index";
-import { getInstructors } from "@/lib/data-store/instructors";
-import { getDepartments } from "@/lib/data-store/departments";
+import { getInstructors } from "@/lib/data-store/instructorStore";
+import { getDepartments } from "@/services/departmentService";
 
 export default function InstructorsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);

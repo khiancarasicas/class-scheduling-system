@@ -416,25 +416,30 @@ function DataTableClearFilters({ className }: DataTableClearFiltersProps) {
 }
 
 // Selected Delete Button
-function DataTableDeleteSelected() {
+interface DataTableDeleteSelectedProps {
+  onDeleteSelected?: (ids: string[]) => void;
+}
+
+function DataTableDeleteSelected({
+  onDeleteSelected,
+}: DataTableDeleteSelectedProps) {
   const { table } = useDataTableContext();
   const [selectedRowsCount, setSelectedRowsCount] = useState(0);
 
+  const selectedRows = table.getSelectedRowModel().rows;
+
   useEffect(() => {
-    const updateSelectedCount = () => {
-      setSelectedRowsCount(table.getSelectedRowModel().rows.length);
-    };
-
-    updateSelectedCount();
-
-    // Listen for selection changes
-    const unsubscribe = table.options.onRowSelectionChange;
-    return () => {
-      // Cleanup if needed
-    };
-  }, [table.getSelectedRowModel().rows.length]);
+    setSelectedRowsCount(selectedRows.length);
+  }, [selectedRows.length]);
 
   if (selectedRowsCount === 0) return null;
+
+  const handleConfirmDelete = () => {
+    if (!onDeleteSelected) return;
+    const ids = selectedRows.map((row) => (row.original as any)._id); // assumes each row has `_id`
+    onDeleteSelected(ids);
+    table.resetRowSelection(); // clear selection after delete
+  };
 
   return (
     <AlertDialog>
@@ -470,7 +475,9 @@ function DataTableDeleteSelected() {
         </div>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction>Delete</AlertDialogAction>
+          <AlertDialogAction onClick={handleConfirmDelete}>
+            Delete
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

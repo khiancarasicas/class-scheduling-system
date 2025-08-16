@@ -3,7 +3,7 @@
 import { DataTable } from "@/ui/components/data-table";
 import { useEffect, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { EllipsisIcon, PlusIcon } from "lucide-react";
+import { EllipsisIcon, PlusIcon, Loader2 } from "lucide-react";
 import { Button } from "@/shadcn/components/ui/button";
 import { Checkbox } from "@/shadcn/components/ui/checkbox";
 import {
@@ -15,7 +15,12 @@ import {
 } from "@/shadcn/components/ui/dropdown-menu";
 import { DepartmentForm } from "./department-form";
 import { IDepartment } from "@/types";
-import { getDepartments } from "@/lib/data-store/departments";
+import {
+  getDepartments,
+  addDepartment,
+  updateDepartment,
+  deleteDepartment,
+} from "@/services/departmentService";
 
 export default function DepartmentsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -27,17 +32,17 @@ export default function DepartmentsTable() {
   const [departments, setDepartments] = useState<IDepartment[]>([]);
 
   const loadData = () => {
-    setDepartments(getDepartments());
+    setLoading(true);
+    setTimeout(() => {
+      // simulate slow API call
+      setDepartments(getDepartments());
+      setLoading(false);
+    }, 800);
   };
 
   useEffect(() => {
     loadData();
   }, []);
-
-  const getDepartmentName = (departmentId: string) => {
-    const dept = departments.find((d) => d._id === departmentId);
-    return dept ? dept.name : "Unknown";
-  };
 
   const columns: ColumnDef<IDepartment>[] = [
     {
@@ -69,13 +74,12 @@ export default function DepartmentsTable() {
         <div className="font-medium">{row.getValue("name")}</div>
       ),
       enableHiding: false,
-      // enableSorting: true,
     },
     {
       id: "actions",
       header: () => <span className="sr-only">Actions</span>,
       cell: ({ row }) => {
-        const instructor = row.original;
+        const department = row.original;
 
         return (
           <DropdownMenu>
@@ -94,14 +98,19 @@ export default function DepartmentsTable() {
             <DropdownMenuContent align="end">
               <DropdownMenuItem
                 onClick={() => {
-                  setEditingDepartment(instructor);
+                  setEditingDepartment(department);
                   setIsEditDialogOpen(true);
                 }}
               >
                 Edit
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
+              <DropdownMenuItem
+                variant="destructive"
+                onClick={() => handleDeleteDepartment(department._id)}
+              >
+                Delete
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );
@@ -110,70 +119,96 @@ export default function DepartmentsTable() {
     },
   ];
 
-  const handleAddDepartment = async (instructorData: IDepartment) => {
+  // ADD
+  const handleAddDepartment = async (departmentData: { name: string }) => {
+    setIsSubmitting(true);
     try {
-      setIsSubmitting(true);
-      // logic to submit the new department data
-      // For example, you might call an API to create the department
-    } catch (error) {
-      console.error("Error adding department:", error);
-      // on error, might want to show a toast or alert
-      throw error;
+      addDepartment(departmentData); // your service already makes _id
+      loadData();
+      setIsAddDialogOpen(false);
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  const handleUpdateDepartment = async (personData: IDepartment) => {
-    if (!editingDepartment) return;
-
+  // UPDATE
+  const handleUpdateDepartment = async (departmentData: {
+    _id?: string;
+    name: string;
+  }) => {
+    if (!departmentData._id) return;
+    setIsSubmitting(true);
     try {
-      setIsSubmitting(true);
-      // logic to update the existing department data
-      // For example, you might call an API to update the department
-    } catch (error) {
-      console.error("Error updating department:", error);
-      // on error, might want to show a toast or alert
-      throw error;
+      updateDepartment(departmentData._id, { name: departmentData.name });
+      loadData();
+      setIsEditDialogOpen(false);
+      setEditingDepartment(null);
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  // DELETE
+  const handleDeleteDepartment = (id: string) => {
+    try {
+      deleteDepartment(id);
+      loadData();
+    } catch (error) {
+      console.error("Error deleting department:", error);
     }
   };
 
   return (
     <div className="space-y-3">
-      <DataTable data={departments} columns={columns}>
-        {/* Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-3">
-            <DataTable.Search
-              column="name"
-              placeholder="Search departments..."
-              className="max-w-sm"
-            />
-            <DataTable.ClearFilters />
-            <DataTable.ViewOptions />
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <DataTable.DeleteSelected />
-            {/* Add Button */}
-            <Button variant="default" onClick={() => setIsAddDialogOpen(true)}>
-              <PlusIcon
-                className="-ms-1 opacity-60"
-                size={16}
-                aria-hidden="true"
-              />
-              Add Department
-            </Button>
-          </div>
+      {loading ? (
+        <div className="flex items-center justify-center h-40">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+          <span className="ml-2 text-sm text-muted-foreground">
+            Loading departments...
+          </span>
         </div>
+      ) : (
+        <DataTable data={departments} columns={columns}>
+          {/* Toolbar */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <DataTable.Search
+                column="name"
+                placeholder="Search departments..."
+                className="max-w-sm"
+              />
+              <DataTable.ClearFilters />
+              <DataTable.ViewOptions />
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <DataTable.DeleteSelected
+                onDeleteSelected={(ids) => {
+                  ids.forEach((id) => deleteDepartment(id));
+                  loadData();
+                }}
+              />
+              {/* Add Button */}
+              <Button
+                variant="default"
+                onClick={() => setIsAddDialogOpen(true)}
+              >
+                <PlusIcon
+                  className="-ms-1 opacity-60"
+                  size={16}
+                  aria-hidden="true"
+                />
+                Add Department
+              </Button>
+            </div>
+          </div>
 
-        {/* Table */}
-        <DataTable.Content />
+          {/* Table */}
+          <DataTable.Content />
 
-        {/* Pagination */}
-        <DataTable.Pagination />
-      </DataTable>
+          {/* Pagination */}
+          <DataTable.Pagination />
+        </DataTable>
+      )}
 
       {/* Create Dialog */}
       <DepartmentForm

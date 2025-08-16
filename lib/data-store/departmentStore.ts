@@ -14,22 +14,6 @@ const departments: IDepartment[] = [
   { _id: "11", name: "Foreign Language" },
 ];
 
-export function getDepartments() {
-  // return new Promise<IDepartment[]>((resolve) => {
-  //   setTimeout(() => {
-  //     resolve(mockDepartments);
-  //   }, 1000); // Simulate network delay
-  // });
-
-  return [...departments]
-}
-
-export function getDepartmentById(id: string) {
-  return departments.find((dept) => dept._id === id);
-}
-
-export function addDepartment(dept: Omit<IDepartment, "id">): IDepartment {
-  const newDept = { ...dept, _id: Date.now().toString() }
-  departments.push(newDept)
-  return newDept
+export function getDepartmentStore() {
+  return departments
 }
