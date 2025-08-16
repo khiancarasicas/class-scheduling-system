@@ -1,7 +1,7 @@
 // import { Types } from "mongoose";
 
 export interface IDepartment {
-  _id: string;
+  _id?: string;
   name: string;
 }
 
