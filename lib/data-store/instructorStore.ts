@@ -93,30 +93,6 @@ const instructors: IInstructor[] = [
   },
 ];
 
-export function getInstructors() {
-  return [...instructors];
-}
-
-export function addInstructor(instructor: Omit<IInstructor, "id">): IInstructor {
-  const newInstructor = { ...instructor, _id: Date.now().toString() }
-  instructors.push(newInstructor)
-  return newInstructor
-}
-
-export function updateInstructor(id: string, updates: Partial<IInstructor>): IInstructor | null {
-  const index = instructors.findIndex((i) => i._id === id)
-  if (index === -1) return null
-  instructors[index] = { ...instructors[index], ...updates }
-  return instructors[index]
-}
-
-export function deleteInstructor(id: string): boolean {
-  const index = instructors.findIndex((i) => i._id === id)
-  if (index === -1) return false
-  instructors.splice(index, 1)
-  return true
-}
-
-export function getInstructorById(id: string) {
-  return instructors.find((i) => i._id === id)
+export function getInstructorStore() {
+  return instructors;
 }

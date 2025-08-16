@@ -15,7 +15,7 @@ import {
 } from "@/shadcn/components/ui/dropdown-menu";
 import { InstructorForm } from "./instructor-form";
 import { IDepartment, IInstructor } from "@/types/index";
-import { getInstructors } from "@/lib/data-store/instructorStore";
+import { getInstructors } from "@/services/instructorService";
 import { getDepartments } from "@/services/departmentService";
 
 export default function InstructorsTable() {
