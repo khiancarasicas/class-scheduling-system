@@ -35,7 +35,7 @@ const data = {
       items: [
         {
           title: "Dashboard",
-          url: "/main/dashboard",
+          url: "/home/main/dashboard",
           icon: LayoutDashboard,
         },
         {
@@ -50,7 +50,7 @@ const data = {
       items: [
         {
           title: "Departments",
-          url: "/setup/departments",
+          url: "/home/setup/departments",
           icon: Building,
         },
         {
@@ -79,7 +79,7 @@ const data = {
       items: [
         {
           title: "Manage Instructors",
-          url: "/management/manage-instructors",
+          url: "/home/management/manage-instructors",
           icon: Users,
         },
         {
@@ -159,7 +159,7 @@ const data = {
       items: [
         {
           title: "Settings",
-          url: "/system/settings",
+          url: "/home/system/settings",
           icon: Settings,
         },
         {

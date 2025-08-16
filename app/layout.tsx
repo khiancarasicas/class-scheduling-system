@@ -26,18 +26,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="[--header-height:calc(--spacing(14))]">
-            <SidebarProvider className="flex flex-col border-l">
-              <div className="h-1 bg-primary" />
-              <SiteHeader />
-              <div className="flex flex-1">
-                <AppSidebar />
-                <SidebarInset className="py-4 px-6 w-full overflow-hidden">
-                  {children}
-                </SidebarInset>
-              </div>
-            </SidebarProvider>
-          </div>
+          {children}
           <Toaster />
         </ThemeProvider>
       </body>
