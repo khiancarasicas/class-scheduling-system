@@ -17,7 +17,7 @@ interface IDepartmentFormProps {
   department?: IDepartment;
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: { name: string; _id?: string }) => Promise<void> | void;
+  onSubmit: (data: IDepartment) => Promise<void> | void;
   isLoading?: boolean;
 }
 
@@ -28,7 +28,7 @@ export function DepartmentForm({
   onSubmit,
   isLoading = false,
 }: IDepartmentFormProps) {
-  const [formData, setFormData] = useState<{ name: string }>({ name: "" });
+  const [formData, setFormData] = useState<IDepartment>({ name: "" });
 
   useEffect(() => {
     if (department) {
@@ -44,7 +44,7 @@ export function DepartmentForm({
       await onSubmit(
         department
           ? { _id: department._id, name: formData.name } // edit
-          : { name: formData.name } // add
+          : formData // add
       );
       onClose();
     } catch (error) {
@@ -54,15 +54,15 @@ export function DepartmentForm({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>
             {department ? "Edit Department" : "Add New Department"}
           </DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit} className="grid gap-4">
-          <div className="grid gap-3">
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div className="space-y-2">
             <Label htmlFor="name">Name</Label>
             <Input
               id="name"
