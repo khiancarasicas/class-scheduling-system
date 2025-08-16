@@ -42,7 +42,7 @@ Designed to simplify the process of creating and managing class schedules in sch
 
 3. **Run the development server:**
    ```bash
-   pnpm run dev
+   pnpm dev
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) in your browser.
