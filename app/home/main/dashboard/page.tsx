@@ -9,7 +9,7 @@ export default function Dashboard() {
     <main className="space-y-8">
       <div className="space-y-2">
         <div className="text-base font-medium">Dashboard</div>
-        <div className="grid gap-2 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <InfoCardWrapper />
         </div>
       </div>
