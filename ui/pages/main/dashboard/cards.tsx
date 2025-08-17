@@ -18,22 +18,22 @@ export default function InfoCardWrapper() {
     <>
       <InfoCard
         header="Sections"
-        value="69"
+        value="--"
         icon={GraduationCap}
       />
       <InfoCard
         header="Instructors"
-        value="21"
+        value="--"
         icon={Users}
       />
       <InfoCard
         header="Subjects"
-        value="143"
+        value="--"
         icon={BookOpen}
       />
       <InfoCard
         header="Rooms"
-        value="1"
+        value="--"
         icon={Building}
       />
     </>
