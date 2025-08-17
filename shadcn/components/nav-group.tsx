@@ -31,7 +31,7 @@ export function NavGroup({
       <SidebarMenu>
         {data.items.map((item) => (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild tooltip={item.title} className={pathname == item.url ? "bg-muted font-medium" : "" }>
+            <SidebarMenuButton asChild tooltip={item.title} className={pathname == item.url ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium hover:bg-primary-accent hover:text-sidebar-primary-foreground" : "" }>
               <Link href={item.url}>
                 <item.icon />
                 <span>{item.title}</span>
