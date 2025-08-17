@@ -15,8 +15,8 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: "/home/setup",
-        destination: "/home/setup/departments",
+        source: "/home/academic-structure",
+        destination: "/home/academic-structure/departments",
         permanent: true,
       },
       {

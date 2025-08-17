@@ -23,6 +23,7 @@ import {
   CalendarDays,
   Zap,
   Megaphone,
+  MapPin,
 } from "lucide-react";
 
 import { NavGroup } from "./nav-group";
@@ -46,17 +47,22 @@ const data = {
       ],
     },
     {
-      category: "SETUP",
+      category: "ACADEMIC STRUCTURE",
       items: [
         {
           title: "Departments",
-          url: "/home/setup/departments",
+          url: "/home/academic-structure/departments",
           icon: Building,
+        },
+        {
+          title: "Academic Levels",
+          url: "#",
+          icon: GraduationCap,
         },
         {
           title: "Courses",
           url: "#",
-          icon: GraduationCap,
+          icon: School,
         },
         {
           title: "Subjects",
@@ -85,7 +91,7 @@ const data = {
         {
           title: "Manage Rooms",
           url: "#",
-          icon: School,
+          icon: MapPin,
         },
         {
           title: "Manage Sections",
