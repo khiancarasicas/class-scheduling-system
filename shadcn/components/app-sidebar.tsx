@@ -41,7 +41,7 @@ const data = {
         },
         {
           title: "Class Schedule",
-          url: "#",
+          url: "/home/main/class-schedule",
           icon: BarChart3,
         },
       ],
@@ -56,27 +56,19 @@ const data = {
         },
         {
           title: "Academic Levels",
-          url: "#",
+          url: "/home/academic-structure/academic-levels",
           icon: GraduationCap,
         },
         {
           title: "Courses",
-          url: "#",
+          url: "/home/academic-structure/courses",
           icon: School,
         },
         {
           title: "Subjects",
-          url: "#",
+          url: "/home/academic-structure/subjects",
           icon: BookOpen,
         },
-        // idk if im gonna add "manage semesters"
-        /* 
-        manage semesters, can add/edit/delete or set to active/inactive,
-        if 1 semester is set to active, then it will show specific data for that sem,
-        only 1 can be set to active, it will automatically set other sem to inactive,
-        waaahhh di ko pa sure kung pano magiging function sa backend since seperate data per sem
-        naiiyak na ko
-        */
       ],
     },
     {
@@ -89,12 +81,12 @@ const data = {
         },
         {
           title: "Manage Rooms",
-          url: "#",
+          url: "/home/management/manage-rooms",
           icon: MapPin,
         },
         {
           title: "Manage Sections",
-          url: "#",
+          url: "/home/management/manage-sections",
           icon: GraduationCap,
         },
       ],
@@ -104,23 +96,23 @@ const data = {
       items: [
         {
           title: "Subject Assigning",
-          url: "#",
+          url: "/home/assignment/subject-assigning",
           icon: NotebookText,
         },
 
         {
           title: "Instructor Assigning",
-          url: "#",
+          url: "/home/assignment/instructor-assigning",
           icon: Calendar,
         },
-        {
-          title: "Auto Assign Instructor",
-          url: "#",
-          icon: Zap,
-        },
+        // {
+        //   title: "Auto Assign Instructor",
+        //   url: "/home/assignment/auto-assign-instructor",
+        //   icon: Zap,
+        // },
         {
           title: "Exam Assigning",
-          url: "#",
+          url: "/home/assignment/exam-assigning",
           icon: Ticket,
         },
       ],
@@ -130,17 +122,17 @@ const data = {
       items: [
         {
           title: "Subject Scheduling",
-          url: "#",
+          url: "/home/scheduling/subject-scheduling",
           icon: CalendarDays,
         },
         {
-          title: "Auto Class Schedule",
-          url: "#",
+          title: "Auto Class Scheduling",
+          url: "/home/scheduling/auto-class-scheduling",
           icon: Zap,
         },
         {
           title: "Custom Scheduling",
-          url: "#",
+          url: "/home/scheduling/custom-scheduling",
           icon: Sparkles,
         },
       ],
@@ -150,11 +142,11 @@ const data = {
       items: [
         {
           title: "Post News / Events",
-          url: "#",
+          url: "/home/announcement/post-news-events",
           icon: Megaphone,
         },
         // my idea here is to post events/news/etc...
-        // for example, i want to send an event notif, i can write when and where there
+        // for example, i want to send an event notif, i can write when and where
         // hirap mag english
         // then makikita ng teachers or kung sino mn pumunta sa website 
       ],

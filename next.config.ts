@@ -7,22 +7,42 @@ const nextConfig: NextConfig = {
       {
         source: "/home",
         destination: "/home/main/dashboard",
-        permanent: true, // or false if it's temporary
+        permanent: false, 
       },
       {
         source: "/home/main",
         destination: "/home/main/dashboard",
-        permanent: true,
+        permanent: false,
       },
       {
         source: "/home/academic-structure",
         destination: "/home/academic-structure/departments",
-        permanent: true,
+        permanent: false,
       },
       {
         source: "/home/management",
         destination: "/home/management/manage-instructors",
-        permanent: true,
+        permanent: false,
+      },
+      {
+        source: "/home/assignment",
+        destination: "/home/assignment/subject-assigning",
+        permanent: false,
+      },
+      {
+        source: "/home/scheduling",
+        destination: "/home/scheduling/subject-scheduling",
+        permanent: false,
+      },
+      {
+        source: "/home/announcement",
+        destination: "/home/announcement/post-news-events",
+        permanent: false,
+      },
+      {
+        source: "/home/system",
+        destination: "/home/system/settings",
+        permanent: false,
       },
     ];
   },

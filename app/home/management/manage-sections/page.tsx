@@ -1,7 +1,14 @@
+import { MainSection } from "@/ui/components/main-section";
+
 export default function ManageSections() {
   return (
-    <main>
-      <div className="text-base">Manage Sections</div>
-    </main>
+    <MainSection>
+      <MainSection.Section>
+        <MainSection.Title>Manage Sections</MainSection.Title>
+        <MainSection.Content>
+          <p className="text-gray-500">Manage Sections will be displayed here.</p>
+        </MainSection.Content>
+      </MainSection.Section>
+    </MainSection>
   );
 }
