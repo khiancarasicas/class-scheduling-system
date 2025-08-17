@@ -70,7 +70,6 @@ const data = {
           icon: BookOpen,
         },
         // idk if im gonna add "manage semesters"
-        // wala  ko maisip, miss ko na baby q
         /* 
         manage semesters, can add/edit/delete or set to active/inactive,
         if 1 semester is set to active, then it will show specific data for that sem,
