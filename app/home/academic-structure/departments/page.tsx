@@ -1,10 +1,15 @@
 import DepartmentsTable from "@/ui/pages/setup/departments/departments-table";
+import { MainSection } from "@/ui/components/main-section";
 
 export default function Departments() {
   return (
-    <main className="space-y-2">
-      <div className="text-base font-medium">Departments</div>
-      <DepartmentsTable />
-    </main>
+    <MainSection>
+      <MainSection.Section>
+        <MainSection.Title>Departments</MainSection.Title>
+        <MainSection.Content>
+          <DepartmentsTable />
+        </MainSection.Content>
+      </MainSection.Section>
+    </MainSection>
   );
 }
