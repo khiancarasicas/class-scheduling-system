@@ -20,11 +20,11 @@ export default function Dashboard() {
       <Separator />
 
       <MainSection.Section>
-        <MainSection.Title>Today's Class Schedule</MainSection.Title>
+        <MainSection.Title>Class Schedule</MainSection.Title>
         <MainSection.Content>
-          <Card className="h-[600px]">
+          <Card className="h-[500px]">
             <CardHeader>
-              <CardDescription>Heh</CardDescription>
+              <CardDescription></CardDescription>
             </CardHeader>
           </Card>
         </MainSection.Content>
