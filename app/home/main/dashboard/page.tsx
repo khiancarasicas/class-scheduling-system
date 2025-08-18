@@ -19,6 +19,7 @@ export default function Dashboard() {
       </MainSection.Section>
 
       <Separator />
+      {/* TEST */}
 
       <MainSection.Section>
         <MainSection.Title>Today's Class Schedule</MainSection.Title>
