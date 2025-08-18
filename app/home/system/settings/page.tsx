@@ -5,8 +5,7 @@ export default function Settings() {
   return (
     <main>
       <div className="text-base">Settings</div>
-      {/* ADDED TEST COMPONENT */}
-      <TestComponent />
+      
       <ModeToggle />
     </main>
   );
