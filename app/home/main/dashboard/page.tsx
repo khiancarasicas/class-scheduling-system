@@ -2,6 +2,7 @@ import InfoCardWrapper from "@/ui/pages/main/dashboard/cards";
 import { Separator } from "@/shadcn/components/ui/separator";
 import { Card, CardDescription, CardHeader } from "@/shadcn/components/ui/card";
 import { MainSection } from "@/ui/components/main-section";
+import { TestComponent } from "@/ui/pages/main/dashboard/test-component";
 
 //
 
@@ -27,6 +28,7 @@ export default function Dashboard() {
               <CardDescription>Heh</CardDescription>
             </CardHeader>
           </Card>
+          <TestComponent />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
