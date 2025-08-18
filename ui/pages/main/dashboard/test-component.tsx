@@ -1,3 +1,3 @@
 export function TestComponent() {
-    return(<>TEST COMPONENTss</>)
+    return(<>TEST COMPONENT</>)
 }
