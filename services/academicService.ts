@@ -1,0 +1,39 @@
+import { IAcademicLevel } from "@/types";
+import { getAcademicLevelStore } from "@/lib/data-store/academicLevelStore";
+
+export function getAcademicLevels(): IAcademicLevel[] {
+  return [...getAcademicLevelStore()];
+}
+
+export function getAcademicLevelById(id: string): IAcademicLevel | undefined {
+  const academicLevels = getAcademicLevelStore();
+  return academicLevels.find((academicLevels) => academicLevels._id === id);
+}
+
+export function addAcademicLevels(
+  academicLevels: Omit<IAcademicLevel, "_id">
+): IAcademicLevel {
+  const newAcademicLevels = { ...academicLevels, _id: Date.now().toString() };
+  getAcademicLevelStore().push(newAcademicLevels);
+  return newAcademicLevels;
+}
+
+export function updateAcademicLevels(
+  id: string,
+  updates: Partial<IAcademicLevel>
+): IAcademicLevel | null {
+  const academicLevels = getAcademicLevelStore();
+  const index = academicLevels.findIndex((academicLevels) => academicLevels._id === id);
+  if (index === -1) return null;
+  academicLevels[index] = { ...academicLevels[index], ...updates };
+  return academicLevels[index];
+}
+
+export function deleteAcademicLevels(id: string): boolean {
+  const academicLevels = getAcademicLevelStore();
+  const index = academicLevels.findIndex((academicLevels) => academicLevels._id === id);
+  if (index === -1) return false;
+  academicLevels.splice(index, 1);
+  return true;
+}
+
