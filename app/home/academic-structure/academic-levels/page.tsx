@@ -9,6 +9,7 @@ export default function AcademicLevels() {
           <p className="text-gray-500">
             Academic levels will be displayed here.
           </p>
+          {/* kunwari may table */}
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
