@@ -11,3 +11,10 @@ export interface IInstructor {
   departmentId: string; // Replace string with Types.ObjectId, if database is used
   status: "Full-Time" | "Part-Time";
 }
+
+export interface IAcademicLevel {
+  _id: string;
+  code: string;
+  name: string;
+}
+
