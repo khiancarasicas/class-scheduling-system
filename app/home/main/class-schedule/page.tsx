@@ -6,8 +6,9 @@ export default function ClassSchedule() {
       <MainSection.Section>
         <MainSection.Title>Class Schedule</MainSection.Title>
         <MainSection.Content>
+          {/* TEST: JOMS PULL REQUES */}
           <p className="text-gray-500">
-            Class schedule will be displayed here.
+            Class schedule will be displayed here,,,,.
           </p>
         </MainSection.Content>
       </MainSection.Section>
