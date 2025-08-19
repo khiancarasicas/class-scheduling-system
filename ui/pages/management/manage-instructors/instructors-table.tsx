@@ -118,7 +118,7 @@ export default function InstructorsTable() {
         return;
       }
 
-      if (updateInstructor(instructorData._id, { name: instructorData.name })) {
+      if (updateInstructor(instructorData._id, { name: instructorData.name, departmentId: instructorData.departmentId, status: instructorData.status })) {
         toast.success(`Instructor updated successfully`);
         loadData();
       } else {
