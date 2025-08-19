@@ -86,9 +86,7 @@ function DataFormBase<T extends { _id?: string }>({
             <Button type="submit" disabled={isLoading}>
               {isLoading
                 ? "Saving..."
-                : item
-                ? title.edit.replace("Edit ", "")
-                : title.add.replace("Add ", "")}
+                : "Save"}
             </Button>
           </DialogFooter>
         </form>
