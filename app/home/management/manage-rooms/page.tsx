@@ -33,7 +33,7 @@ const ROOMS = [
     building: "Laboratory",
     type: "Computer Lab",
     capacity: 20,
-    equipment: [" Computers "],
+    equipment: [" Computers",],
     status: "Maintenance",
   },
   {
