@@ -18,3 +18,8 @@ export interface IAcademicLevel {
   name: string;
 }
 
+export interface IRoom {
+  _id?: string;
+  name: string;
+  type: "Lecture" | "Laboratory";
+}
