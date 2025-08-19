@@ -7,9 +7,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  useSidebar,
 } from "@/shadcn/components/ui/sidebar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useMediaQuery } from "react-responsive";
 
 export function NavGroup({
   data,
@@ -25,13 +27,27 @@ export function NavGroup({
 }) {
   const pathname = usePathname();
 
+  const isMobile = useMediaQuery({ maxWidth: 767 });
+  const { toggleSidebar } = useSidebar();
+
   return data.map((data) => (
     <SidebarGroup key={data.category}>
       <SidebarGroupLabel>{data.category}</SidebarGroupLabel>
       <SidebarMenu>
         {data.items.map((item) => (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton asChild tooltip={item.title} className={pathname == item.url ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium hover:bg-primary-accent hover:text-sidebar-primary-foreground" : "" }>
+            <SidebarMenuButton
+              onClick={() => {
+                if (isMobile) toggleSidebar();
+              }}
+              asChild
+              tooltip={item.title}
+              className={
+                pathname == item.url
+                  ? "bg-sidebar-primary text-sidebar-primary-foreground font-medium hover:bg-primary-accent hover:text-sidebar-primary-foreground"
+                  : ""
+              }
+            >
               <Link href={item.url}>
                 <item.icon />
                 <span>{item.title}</span>
