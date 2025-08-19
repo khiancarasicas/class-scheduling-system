@@ -1,4 +1,4 @@
-import DepartmentsTable from "@/ui/pages/setup/departments/departments-table";
+import DepartmentsTable from "@/ui/pages/academic-structure/departments/departments-table";
 import { MainSection } from "@/ui/components/main-section";
 
 export default function Departments() {
