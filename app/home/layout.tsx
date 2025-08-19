@@ -9,7 +9,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="[--header-height:calc(--spacing(14))]">
       <SidebarProvider className="flex flex-col border-l">
-        <div className="h-1 bg-primary" />
         <SiteHeader />
         <div className="flex flex-1">
           <AppSidebar />
