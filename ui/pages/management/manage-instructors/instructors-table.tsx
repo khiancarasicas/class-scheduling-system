@@ -3,7 +3,7 @@
 import { DataTable } from "@/ui/components/data-table";
 import { useEffect, useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
-import { EllipsisIcon, PlusIcon } from "lucide-react";
+import { EllipsisIcon, PlusIcon, Loader2 } from "lucide-react";
 import { Button } from "@/shadcn/components/ui/button";
 import { Checkbox } from "@/shadcn/components/ui/checkbox";
 import {
@@ -13,9 +13,16 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shadcn/components/ui/dropdown-menu";
-import { InstructorForm } from "./instructor-form";
-import { IDepartment, IInstructor } from "@/types/index";
-import { getInstructors } from "@/services/instructorService";
+import { IDepartment, IInstructor } from "@/types";
+import {
+  getInstructors,
+  addInstructor,
+  updateInstructor,
+  deleteInstructor,
+} from "@/services/instructorService";
+import { toast } from "sonner";
+import { ConfirmDeleteDialog } from "@/ui/components/comfirm-delete-dialog";
+import { DataForm } from "@/ui/components/data-form";
 import { getDepartments } from "@/services/departmentService";
 
 export default function InstructorsTable() {
@@ -28,9 +35,18 @@ export default function InstructorsTable() {
   const [instructors, setInstructors] = useState<IInstructor[]>([]);
   const [departments, setDepartments] = useState<IDepartment[]>([]);
 
+  // 🆕 delete dialog state
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [instructorToDelete, setInstructorToDelete] =
+    useState<IInstructor | null>(null);
+
   const loadData = () => {
-    setInstructors(getInstructors());
-    setDepartments(getDepartments());
+    setLoading(true);
+    setTimeout(() => {
+      setInstructors(getInstructors());
+      setDepartments(getDepartments());
+      setLoading(false);
+    }, 800);
   };
 
   useEffect(() => {
@@ -40,6 +56,102 @@ export default function InstructorsTable() {
   const getDepartmentName = (departmentId: string) => {
     const dept = departments.find((d) => d._id === departmentId);
     return dept ? dept.name : "Unknown";
+  };
+
+  // ADD
+  const handleAddInstructor = async (instructorData: {
+    name: string;
+    departmentId: string;
+    status: "Full-Time" | "Part-Time";
+  }) => {
+    setIsSubmitting(true);
+    try {
+      if (!instructorData.name) {
+        toast.error("Instructor name is required");
+        return;
+      }
+
+      if (!instructorData.departmentId) {
+        toast.error("Department is required");
+        return;
+      }
+
+      if (!instructorData.status) {
+        toast.error("Status is required");
+        return;
+      }
+
+      if (addInstructor(instructorData)) {
+        toast.success(`Instructor added successfully`);
+        loadData();
+      } else {
+        toast.error("Failed to add instructor");
+      }
+      setIsAddDialogOpen(false);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // UPDATE
+  const handleUpdateInstructor = async (instructorData: {
+    _id?: string;
+    name: string;
+    departmentId: string;
+    status: "Full-Time" | "Part-Time";
+  }) => {
+    if (!instructorData._id) return;
+    setIsSubmitting(true);
+    try {
+      if (!instructorData.name) {
+        toast.error("Instructor name is required");
+        return;
+      }
+
+      if (!instructorData.departmentId) {
+        toast.error("Department is required");
+        return;
+      }
+
+      if (!instructorData.status) {
+        toast.error("Status is required");
+        return;
+      }
+
+      if (updateInstructor(instructorData._id, { name: instructorData.name })) {
+        toast.success(`Instructor updated successfully`);
+        loadData();
+      } else {
+        toast.error("Failed to update instructor");
+      }
+
+      setIsEditDialogOpen(false);
+      setEditingInstructor(null);
+    } catch (error) {
+      toast.error("Error updating instructor");
+      console.error("Error updating instructor:", error);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  // DELETE
+  const handleDeleteInstructor = (id: string) => {
+    try {
+      if (!id) {
+        toast.error("Error deleting instructor");
+        return;
+      }
+      if (deleteInstructor(id)) {
+        toast.success(`Instructor deleted successfully`);
+        loadData();
+      } else {
+        toast.error("Failed to delete instructor");
+      }
+    } catch (error) {
+      toast.error("Error deleting instructor");
+      console.error("Error deleting instructor:", error);
+    }
   };
 
   const columns: ColumnDef<IInstructor>[] = [
@@ -89,165 +201,118 @@ export default function InstructorsTable() {
     {
       id: "actions",
       header: () => <span className="sr-only">Actions</span>,
-      cell: ({ row }) => {
-        const instructor = row.original;
-
-        return (
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <div className="flex justify-end">
-                <Button
-                  size="icon"
-                  variant="ghost"
-                  className="shadow-none"
-                  aria-label="Edit item"
-                >
-                  <EllipsisIcon size={16} aria-hidden="true" />
-                </Button>
-              </div>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem
-                onClick={() => {
-                  setEditingInstructor(instructor);
-                  setIsEditDialogOpen(true);
-                }}
-              >
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuSeparator />
-              <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        );
-      },
-      enableHiding: false,
+      cell: ({ row }) => (
+        <RowActions
+          instructor={row.original}
+          onEdit={(ins) => {
+            setEditingInstructor(ins);
+            setIsEditDialogOpen(true);
+          }}
+          onDelete={(ins) => {
+            setInstructorToDelete(ins);
+            setIsDeleteDialogOpen(true);
+          }}
+        />
+      ),
     },
   ];
 
-  const handleAddInstructor = async (instructorData: IInstructor) => {
-    try {
-      setIsSubmitting(true);
-      // const response = await fetch("/api/persons", {
-      //   method: "POST",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(instructorData),
-      // })
-
-      // if (!response.ok) {
-      //   const error = await response.json()
-      //   throw new Error(error.error || "Failed to create person")
-      // }
-
-      // const newPerson = await response.json()
-      // setData((prev) => [...prev, newPerson])
-      // toast({
-      //   title: "Success",
-      //   description: "Person created successfully",
-      // })
-    } catch (error) {
-      console.error("Error creating person:", error);
-      // toast({
-      //   title: "Error",
-      //   description: error instanceof Error ? error.message : "Failed to create person",
-      //   variant: "destructive",
-      // })
-      throw error;
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
-  const handleUpdateInstructor = async (personData: IInstructor) => {
-    if (!editingInstructor) return;
-
-    try {
-      setIsSubmitting(true);
-      // const response = await fetch(`/api/persons/${editingPerson.id}`, {
-      //   method: "PUT",
-      //   headers: { "Content-Type": "application/json" },
-      //   body: JSON.stringify(personData),
-      // })
-
-      // if (!response.ok) {
-      //   const error = await response.json()
-      //   throw new Error(error.error || "Failed to update person")
-      // }
-
-      // const updatedPerson = await response.json()
-      // setData((prev) => prev.map((p) => (p.id === editingPerson.id ? updatedPerson : p)))
-      // setEditingPerson(null)
-      // toast({
-      //   title: "Success",
-      //   description: "Person updated successfully",
-      // })
-    } catch (error) {
-      console.error("Error updating person:", error);
-      // toast({
-      //   title: "Error",
-      //   description: error instanceof Error ? error.message : "Failed to update person",
-      //   variant: "destructive",
-      // })
-      throw error;
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   return (
     <div className="space-y-3">
-      <DataTable data={instructors} columns={columns}>
-        {/* Toolbar */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-3">
-            <DataTable.Search
-              column="name"
-              placeholder="Search instructors..."
-              className="max-w-sm"
-            />
-            <DataTable.Filter
-              column="departmentId"
-              placeholder="All departments"
-              renderValue={(id) => {
-                const dept = departments.find((d) => d._id === id);
-                return dept ? dept.name : "Unknown";
-              }}
-            />
-            <DataTable.ClearFilters />
-            <DataTable.ViewOptions />
-          </div>
-          <div className="flex flex-wrap items-center gap-3">
-            <DataTable.DeleteSelected />
-            {/* Add Button */}
-            <Button variant="default" onClick={() => setIsAddDialogOpen(true)}>
-              <PlusIcon
-                className="-ms-1 opacity-60"
-                size={16}
-                aria-hidden="true"
-              />
-              Add Instructor
-            </Button>
-          </div>
+      {loading ? (
+        <div className="flex items-center justify-center">
+          <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+          <span className="ml-2 text-sm text-muted-foreground">
+            Loading please wait...
+          </span>
         </div>
+      ) : (
+        <DataTable data={instructors} columns={columns}>
+          {/* Toolbar */}
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div className="flex flex-wrap items-center gap-3">
+              <DataTable.Search
+                column="name"
+                placeholder="Search instructors..."
+                className="max-w-sm"
+              />
+              <DataTable.Filter
+                column="departmentId"
+                placeholder="All departments"
+                renderValue={(id) => {
+                  const dept = departments.find((d) => d._id === id);
+                  return dept ? dept.name : "Unknown";
+                }}
+              />
+              <DataTable.ClearFilters />
+              <DataTable.ViewOptions />
+            </div>
+            <div className="flex flex-wrap items-center gap-3">
+              <DataTable.DeleteSelected
+                onDeleteSelected={(ids) => {
+                  ids.forEach((id) => handleDeleteInstructor(id));
+                }}
+              />
+              {/* Add Button */}
+              <Button
+                variant="default"
+                onClick={() => setIsAddDialogOpen(true)}
+              >
+                <PlusIcon
+                  className="-ms-1 opacity-60"
+                  size={16}
+                  aria-hidden="true"
+                />
+                Add Instructor
+              </Button>
+            </div>
+          </div>
 
-        {/* Table */}
-        <DataTable.Content />
+          {/* Table */}
+          <DataTable.Content />
 
-        {/* Pagination */}
-        <DataTable.Pagination />
-      </DataTable>
+          {/* Pagination */}
+          <DataTable.Pagination />
+        </DataTable>
+      )}
 
-      {/* Create Dialog */}
-      <InstructorForm
+      {/* ADD FORM */}
+      <DataForm<IInstructor>
         isOpen={isAddDialogOpen}
         onClose={() => setIsAddDialogOpen(false)}
         onSubmit={handleAddInstructor}
         isLoading={isSubmitting}
-      />
+        title={{ add: "Add Instructor", edit: "Edit Instructor" }}
+      >
+        <DataForm.Input
+          name="name"
+          label="Instructor Name"
+          placeholder="Enter instructor name"
+          required
+        />
+        <DataForm.Select
+          name="departmentId"
+          label="Department"
+          required
+          options={departments.map((dept) => ({
+            label: dept.name,
+            value: dept._id ?? "",
+          }))}
+        />
+        <DataForm.Select
+          name="status"
+          label="Status"
+          required
+          options={[
+            { label: "Full-Time", value: "Full-Time" },
+            { label: "Part-Time", value: "Part-Time" },
+          ]}
+        />
+      </DataForm>
 
-      {/* Edit Dialog */}
-      <InstructorForm
-        instructor={editingInstructor || undefined}
+      {/* EDIT FORM */}
+      <DataForm<IInstructor>
+        item={editingInstructor || undefined}
         isOpen={isEditDialogOpen}
         onClose={() => {
           setIsEditDialogOpen(false);
@@ -255,7 +320,81 @@ export default function InstructorsTable() {
         }}
         onSubmit={handleUpdateInstructor}
         isLoading={isSubmitting}
+        title={{ add: "Add Instructor", edit: "Edit Instructor" }}
+      >
+        <DataForm.Input
+          name="name"
+          label="Instructor Name"
+          placeholder="Enter instructor name"
+          required
+        />
+        <DataForm.Select
+          name="departmentId"
+          label="Department"
+          required
+          options={departments.map((dept) => ({
+            label: dept.name,
+            value: dept._id ?? "",
+          }))}
+        />
+        <DataForm.Select
+          name="status"
+          label="Status"
+          required
+          options={[
+            { label: "Full-Time", value: "Full-Time" },
+            { label: "Part-Time", value: "Part-Time" },
+          ]}
+        />
+      </DataForm>
+
+      {/* Delete Dialog */}
+      <ConfirmDeleteDialog
+        isOpen={isDeleteDialogOpen}
+        onClose={() => setIsDeleteDialogOpen(false)}
+        onConfirm={() => {
+          if (instructorToDelete?._id) {
+            handleDeleteInstructor(instructorToDelete._id);
+          }
+          setIsDeleteDialogOpen(false);
+          setInstructorToDelete(null);
+        }}
+        itemName={instructorToDelete?.name}
       />
     </div>
+  );
+}
+
+function RowActions({
+  instructor,
+  onEdit,
+  onDelete,
+}: {
+  instructor: IInstructor;
+  onEdit: (ins: IInstructor) => void;
+  onDelete: (ins: IInstructor) => void;
+}) {
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <div className="flex justify-end">
+          <Button size="icon" variant="ghost" className="shadow-none">
+            <EllipsisIcon size={16} />
+          </Button>
+        </div>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end">
+        <DropdownMenuItem onClick={() => onEdit(instructor)}>
+          Edit
+        </DropdownMenuItem>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem
+          variant="destructive"
+          onClick={() => onDelete(instructor)}
+        >
+          Delete
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }
