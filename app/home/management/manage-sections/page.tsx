@@ -38,10 +38,10 @@ export default function ManageSections() {
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
-            {/* Education Level */}
-            <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Education Level + Add Button below */}
+            <div className="flex flex-col gap-2">
+              <label className="block text-sm font-medium text-gray-700">
                 Education Level
               </label>
               <Select>
@@ -53,6 +53,14 @@ export default function ManageSections() {
                   <SelectItem value="senior-high">Senior High</SelectItem>
                 </SelectContent>
               </Select>
+              <div className="flex mt-2">
+                <Button
+                  onClick={() => handleAction("Added new section")}
+                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow px-4"
+                >
+                  Add
+                </Button>
+              </div>
             </div>
 
             {/* Grade Level */}
@@ -80,16 +88,6 @@ export default function ManageSections() {
               </label>
               <Input placeholder="BSIT302A" className="w-full" />
             </div>
-
-            {/* Add Button */}
-            <div>
-              <Button
-                onClick={() => handleAction("Added new section")}
-                className="bg-blue-600 hover:bg-blue-700 w-full text-white rounded-lg shadow"
-              >
-                Add
-              </Button>
-            </div>
           </div>
         </CardContent>
       </Card>
@@ -102,10 +100,10 @@ export default function ManageSections() {
           </CardTitle>
         </CardHeader>
         <CardContent className="pt-6 space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6 items-end">
-            {/* Education Level */}
-            <div>
-              <label className="block mb-1 text-sm font-medium text-gray-700">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {/* Education Level + Buttons below */}
+            <div className="flex flex-col gap-2">
+              <label className="block text-sm font-medium text-gray-700">
                 Education Level
               </label>
               <Select>
@@ -117,6 +115,28 @@ export default function ManageSections() {
                   <SelectItem value="senior-high">Senior High</SelectItem>
                 </SelectContent>
               </Select>
+
+              {/* Action Buttons below */}
+              <div className="flex gap-2 mt-2">
+                <Button
+                  onClick={() => handleAction("Search executed")}
+                  className="bg-blue-600 hover:bg-blue-700 text-white rounded-lg shadow px-4"
+                >
+                  Search
+                </Button>
+                <Button
+                  onClick={() => handleAction("Edit executed")}
+                  className="bg-green-600 hover:bg-green-700 text-white rounded-lg shadow px-4"
+                >
+                  Edit
+                </Button>
+                <Button
+                  onClick={() => handleAction("Delete executed")}
+                  className="bg-red-600 hover:bg-red-700 text-white rounded-lg shadow px-4"
+                >
+                  Delete
+                </Button>
+              </div>
             </div>
 
             {/* Grade Level */}
@@ -154,28 +174,6 @@ export default function ManageSections() {
                   ))}
                 </SelectContent>
               </Select>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex gap-2">
-              <Button
-                onClick={() => handleAction("Search executed")}
-                className="bg-blue-600 hover:bg-blue-700 flex-1 text-white rounded-lg shadow"
-              >
-                Search
-              </Button>
-              <Button
-                onClick={() => handleAction("Edit executed")}
-                className="bg-green-600 hover:bg-green-700 flex-1 text-white rounded-lg shadow"
-              >
-                Edit
-              </Button>
-              <Button
-                onClick={() => handleAction("Delete executed")}
-                className="bg-red-600 hover:bg-red-700 flex-1 text-white rounded-lg shadow"
-              >
-                Delete
-              </Button>
             </div>
           </div>
 
