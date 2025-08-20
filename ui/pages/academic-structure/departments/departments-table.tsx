@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shadcn/components/ui/dropdown-menu";
-import { IDepartment } from "@/types";
+import { IDepartment, IInstructor } from "@/types";
 import {
   getDepartments,
   addDepartment,
@@ -23,6 +23,8 @@ import {
 import { toast } from "sonner";
 import { ConfirmDeleteDialog } from "@/ui/components/comfirm-delete-dialog";
 import { DataForm } from "@/ui/components/data-form";
+import { Badge } from "@/shadcn/components/ui/badge";
+import { getInstructors } from "@/services/instructorService";
 
 export default function DepartmentsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -32,6 +34,7 @@ export default function DepartmentsTable() {
     useState<IDepartment | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [departments, setDepartments] = useState<IDepartment[]>([]);
+  const [instructors, setInstructors] = useState<IInstructor[]>([]);
 
   // 🆕 delete dialog state
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -42,6 +45,7 @@ export default function DepartmentsTable() {
     setLoading(true);
     setTimeout(() => {
       setDepartments(getDepartments());
+      setInstructors(getInstructors());
       setLoading(false);
     }, 800);
   };
@@ -50,8 +54,19 @@ export default function DepartmentsTable() {
     loadData();
   }, []);
 
+  const getDepartmentStats = (departmentId: string) => {
+    const instructorsCount = instructors.filter(
+      (i) => i.departmentId === departmentId
+    ).length;
+
+    return { instructorsCount };
+  };
+
   // ADD
-  const handleAddDepartment = async (departmentData: { name: string }) => {
+  const handleAddDepartment = async (departmentData: {
+    code: string;
+    name: string;
+  }) => {
     setIsSubmitting(true);
     try {
       if (!departmentData.name) {
@@ -74,6 +89,7 @@ export default function DepartmentsTable() {
   // UPDATE
   const handleUpdateDepartment = async (departmentData: {
     _id?: string;
+    code: string;
     name: string;
   }) => {
     if (!departmentData._id) return;
@@ -144,11 +160,27 @@ export default function DepartmentsTable() {
       enableHiding: false,
     },
     {
+      header: "Code",
+      accessorKey: "code",
+      cell: ({ row }) => (
+        <Badge variant="outline">{row.getValue("code")}</Badge>
+      ),
+    },
+    {
       header: "Name",
       accessorKey: "name",
       cell: ({ row }) => (
         <div className="font-medium">{row.getValue("name")}</div>
       ),
+    },
+    {
+      header: "Instructors",
+      id: "instructorsCount",
+      cell: ({ row }) => {
+        const stats = getDepartmentStats(row.original._id || "");
+
+        return <span>{stats.instructorsCount}</span>;
+      },
     },
     {
       id: "actions",
@@ -209,22 +241,14 @@ export default function DepartmentsTable() {
         </DataTable>
       )}
 
-      <DataForm<IDepartment>
+      <DepartmentForm
         isOpen={isAddDialogOpen}
         onClose={() => setIsAddDialogOpen(false)}
         onSubmit={handleAddDepartment}
         isLoading={isSubmitting}
-        title={{ add: "Add Department", edit: "Edit Department" }}
-      >
-        <DataForm.Input
-          name="name"
-          label="Department Name"
-          placeholder="Enter department name"
-          required
-        />
-      </DataForm>
+      />
 
-      <DataForm<IDepartment>
+      <DepartmentForm
         item={editingDepartment || undefined}
         isOpen={isEditDialogOpen}
         onClose={() => {
@@ -233,15 +257,7 @@ export default function DepartmentsTable() {
         }}
         onSubmit={handleUpdateDepartment}
         isLoading={isSubmitting}
-        title={{ add: "Add Department", edit: "Edit Department" }}
-      >
-        <DataForm.Input
-          name="name"
-          label="Department Name"
-          placeholder="Enter department name"
-          required
-        />
-      </DataForm>
+      />
 
       {/* Delete Dialog */}
       <ConfirmDeleteDialog
@@ -291,5 +307,43 @@ function RowActions({
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function DepartmentForm({
+  isOpen,
+  item,
+  onClose,
+  onSubmit,
+  isLoading,
+}: {
+  isOpen: boolean;
+  item?: IDepartment;
+  onClose: () => void;
+  onSubmit: (data: IDepartment) => void;
+  isLoading?: boolean;
+}) {
+  return (
+    <DataForm<IDepartment>
+      item={item}
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={onSubmit}
+      isLoading={isLoading}
+      title={{ add: "Add Department", edit: "Edit Department" }}
+    >
+      <DataForm.Input
+        name="code"
+        label="Department Code"
+        placeholder="e.g., IT"
+        required
+      />
+      <DataForm.Input
+        name="name"
+        label="Department Name"
+        placeholder="e.g., Information Technology"
+        required
+      />
+    </DataForm>
   );
 }
