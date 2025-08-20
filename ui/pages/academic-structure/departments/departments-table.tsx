@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/shadcn/components/ui/dropdown-menu";
-import { IDepartment } from "@/types";
+import { IDepartment, IInstructor } from "@/types";
 import {
   getDepartments,
   addDepartment,
@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { ConfirmDeleteDialog } from "@/ui/components/comfirm-delete-dialog";
 import { DataForm } from "@/ui/components/data-form";
 import { Badge } from "@/shadcn/components/ui/badge";
+import { getInstructors } from "@/services/instructorService";
 
 export default function DepartmentsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -33,6 +34,7 @@ export default function DepartmentsTable() {
     useState<IDepartment | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [departments, setDepartments] = useState<IDepartment[]>([]);
+  const [instructors, setInstructors] = useState<IInstructor[]>([]);
 
   // 🆕 delete dialog state
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
@@ -43,6 +45,7 @@ export default function DepartmentsTable() {
     setLoading(true);
     setTimeout(() => {
       setDepartments(getDepartments());
+      setInstructors(getInstructors());
       setLoading(false);
     }, 800);
   };
@@ -50,6 +53,14 @@ export default function DepartmentsTable() {
   useEffect(() => {
     loadData();
   }, []);
+
+  const getDepartmentStats = (departmentId: string) => {
+    const instructorsCount = instructors.filter(
+      (i) => i.departmentId === departmentId
+    ).length;
+
+    return { instructorsCount };
+  };
 
   // ADD
   const handleAddDepartment = async (departmentData: {
@@ -161,6 +172,15 @@ export default function DepartmentsTable() {
       cell: ({ row }) => (
         <div className="font-medium">{row.getValue("name")}</div>
       ),
+    },
+    {
+      header: "Instructors",
+      id: "instructorsCount",
+      cell: ({ row }) => {
+        const stats = getDepartmentStats(row.original._id || "");
+
+        return <span>{stats.instructorsCount}</span>;
+      },
     },
     {
       id: "actions",
