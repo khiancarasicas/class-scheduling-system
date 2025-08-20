@@ -23,3 +23,21 @@ export interface IRoom {
   name: string;
   type: "Lecture" | "Laboratory";
 }
+
+export interface ICourse {
+  _id?: string;
+  code: string;
+  name: string;
+  departmentId: string; // Replace string with Types.ObjectId, if database is used
+  academicLevelId: string; // Replace string with Types.ObjectId, if database is used
+  yearLevels: IYearLevel[]; // Array of year levels
+}
+
+export interface IYearLevel {
+  _id?: string;
+  name: string;
+  code: string;
+  courseId: string; // Replace string with Types.ObjectId, if database is used
+}
+
+// dagdagan ko nalang pag may naisip na ko
