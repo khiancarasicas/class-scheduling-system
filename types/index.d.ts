@@ -2,6 +2,7 @@
 
 export interface IDepartment {
   _id?: string;
+  code: string; // e.g., "IT", "HM"
   name: string; // e.g., "Information Technology", "Hospitality Management"
 }
 
