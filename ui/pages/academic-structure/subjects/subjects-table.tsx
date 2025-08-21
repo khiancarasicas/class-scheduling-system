@@ -532,6 +532,10 @@ function SubjectForm({
     );
   };
 
+  const resetForm = () => {
+    setFormData(item || ({} as ISubject));
+  };
+
   const handleAcademicLevelChange = (value: string) => {
     setFormData({
       ...formData,
@@ -549,11 +553,18 @@ function SubjectForm({
     });
   };
 
+  const handleChange = (value: string, item: string) => {
+    setFormData?.((prev: any) => ({ ...prev, [item]: value }));
+  };
+
   return (
     <DataForm<ISubject>
       item={formData}
       isOpen={isOpen}
-      onClose={onClose}
+      onClose={() => {
+        resetForm();
+        onClose();
+      }}
       onSubmit={onSubmit}
       isLoading={isLoading}
       title={{ add: "Add Subject", edit: "Edit Subject" }}
@@ -562,12 +573,16 @@ function SubjectForm({
         name="code"
         label="Subject Code"
         placeholder="e.g., CS101"
+        onValueChange={(value: string) => handleChange(value, "code")}
         required
       />
       <DataForm.Input
         name="title"
         label="Subject Title"
         placeholder="e.g, Introduction to Computer Science"
+        onValueChange={(value: string) =>
+          setFormData?.((prev: any) => ({ ...prev, code: value }))
+        }
         required
       />
       <DataForm.Select
@@ -577,6 +592,9 @@ function SubjectForm({
           { value: "Lecture", label: "Lecture" },
           { value: "Laboratory", label: "Laboratory" },
         ]}
+        onValueChange={(value: string) =>
+          setFormData?.((prev: any) => ({ ...prev, code: value }))
+        }
         required
       />
       <DataForm.Input
@@ -585,12 +603,18 @@ function SubjectForm({
         label="Units"
         placeholder="e.g., 3"
         required
+        onValueChange={(value: string) =>
+          setFormData?.((prev: any) => ({ ...prev, code: value }))
+        }
       />
       <DataForm.Input
         name="semester"
         label="Semester"
         placeholder="e.g., 1st Semester"
         required
+        onValueChange={(value: string) =>
+          setFormData?.((prev: any) => ({ ...prev, code: value }))
+        }
       />
 
       {/* Academic Level */}

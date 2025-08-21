@@ -107,6 +107,7 @@ interface FieldProps {
   setFormData?: (fn: any) => void;
   isLoading?: boolean;
   type?: HTMLInputTypeAttribute | undefined; // default is text
+  onValueChange?: (value: string) => void;
 }
 
 function DataFormInput({
@@ -119,7 +120,15 @@ function DataFormInput({
   setFormData,
   isLoading,
   type = "text",
+  onValueChange,
 }: FieldProps) {
+  const handleChange = (value: string) => {
+    setFormData?.((prev: any) => ({ ...prev, [name]: value }));
+    if (onValueChange) {
+      onValueChange(value); // call the callback if provided
+    }
+  };
+
   return (
     <div className="space-y-2">
       <Label htmlFor={name}>{label}</Label>
@@ -127,9 +136,7 @@ function DataFormInput({
         type={type}
         id={name}
         value={formData?.[name] || ""}
-        onChange={(e) =>
-          setFormData?.((prev: any) => ({ ...prev, [name]: e.target.value }))
-        }
+        onChange={(e) => handleChange(e.target.value)}
         placeholder={placeholder}
         disabled={disabled || isLoading}
         required={required}
