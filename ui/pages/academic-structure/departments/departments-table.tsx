@@ -63,7 +63,9 @@ export default function DepartmentsTable() {
   };
 
   // ADD
-  const handleAddDepartment = async (departmentData: Omit<IDepartment, "_id">) => {
+  const handleAddDepartment = async (
+    departmentData: Omit<IDepartment, "_id">
+  ) => {
     setIsSubmitting(true);
     try {
       if (!departmentData.code) {
@@ -101,11 +103,9 @@ export default function DepartmentsTable() {
         return;
       }
 
-      const {_id, ...data} = departmentData;
+      const { _id, ...data } = departmentData;
 
-      if (
-        updateDepartment(_id, data)
-      ) {
+      if (updateDepartment(_id, data)) {
         toast.success(`Department updated successfully`);
         loadData();
       } else {
@@ -183,6 +183,12 @@ export default function DepartmentsTable() {
       header: "Instructors",
       cell: ({ row }) => {
         const stats = getDepartmentStats(row.original._id || "");
+
+        return (
+          <Badge variant="secondary">
+            {stats.instructorsCount}
+          </Badge>
+        );
 
         return <span>{stats.instructorsCount}</span>;
       },
