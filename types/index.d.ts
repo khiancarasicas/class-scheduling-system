@@ -78,7 +78,8 @@ export interface IScheduledSubject {
   endTime: string; // e.g. "15:00"
 }
 
-export interface IAssignedInstructor {
+export interface IScheduleOfInstructor {
   _id: string;
   scheduledSubject: string; // Links to scheduled subject this assigned instructor belongs to
+  instructorId: string; // Links to instructor this schedule of intructor ha ano daw, naubusan na ko ng english
 }
