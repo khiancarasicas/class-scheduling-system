@@ -25,6 +25,11 @@ import { ConfirmDeleteDialog } from "@/ui/components/comfirm-delete-dialog";
 import { DataForm } from "@/ui/components/data-form";
 import { Badge } from "@/shadcn/components/ui/badge";
 import { getAcademicLevels } from "@/services/academicLevelService";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shadcn/components/ui/tooltip";
 
 export default function CoursesTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -144,6 +149,11 @@ export default function CoursesTable() {
     }
   };
 
+  const getAcademicLevelName = (academicLevelId: string) => {
+    const dept = academicLevels.find((d) => d._id === academicLevelId);
+    return dept ? dept.name : "Unknown";
+  };
+
   const AcademicLevelCodeBadge = ({
     academicLevelId,
   }: {
@@ -217,7 +227,17 @@ export default function CoursesTable() {
       cell: ({ row }) => {
         const academicLevelId = row.getValue<string>("academicLevelId");
 
-        return <AcademicLevelCodeBadge academicLevelId={academicLevelId} />;
+        return (
+          <Tooltip>
+            <TooltipTrigger>
+              <AcademicLevelCodeBadge academicLevelId={academicLevelId} />
+            </TooltipTrigger>
+            <TooltipContent>
+              {getAcademicLevelName(academicLevelId)}
+            </TooltipContent>
+          </Tooltip>
+        );
+        // return <AcademicLevelCodeBadge academicLevelId={academicLevelId} />;
       },
     },
     {
