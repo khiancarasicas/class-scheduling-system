@@ -74,8 +74,8 @@ export interface IScheduledSubject {
   assignedSubjectId: string; // Links to assigned subject this scheduled subject belongs to
   roomId: string; // ID of the room this scheduled subject belongs to
   dayOfWeek: number; // e.g., 0 = Sunday, 1 = Monday, etc.
-  startTime: string;
-  endTime: string;
+  startTime: string; // e.g. "14:00"
+  endTime: string; // e.g. "15:00"
 }
 
 export interface IAssignedInstructor {
