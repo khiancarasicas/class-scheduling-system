@@ -188,7 +188,6 @@ export default function DepartmentsTable() {
     },
     {
       header: "Instructors",
-      id: "instructorsCount",
       cell: ({ row }) => {
         const stats = getDepartmentStats(row.original._id || "");
 
