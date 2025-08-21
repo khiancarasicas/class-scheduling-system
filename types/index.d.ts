@@ -61,3 +61,24 @@ export interface ISubject {
   semester: string; // e.g., "1st Semester", "2nd Semester"
 }
 
+// -------------------- RELATIONSHIPS --------------------
+
+export interface IAssignedSubject {
+  _id: string;
+  subjectId: string; // Links to subject ID, e.g. subject "3" assigned to section "2"
+  sectionId: string; // Links to section ID this assigned subject belongs to
+}
+
+export interface IScheduledSubject {
+  _id: string;
+  assignedSubjectId: string; // Links to assigned subject this scheduled subject belongs to
+  roomId: string; // ID of the room this scheduled subject belongs to
+  dayOfWeek: number; // e.g., 0 = Sunday, 1 = Monday, etc.
+  startTime: string;
+  endTime: string;
+}
+
+export interface IAssignedInstructor {
+  _id: string;
+  scheduledSubject: string; // Links to scheduled subject this assigned instructor belongs to
+}
