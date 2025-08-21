@@ -517,15 +517,6 @@ function SubjectForm({
   academicLevels: IAcademicLevel[];
   courses: ICourse[];
 }) {
-  // const [selectedAcademicLevel, setSelectedAcademicLevel] = useState<string>(
-  //   item?.academicLevelId || ""
-  // );
-  // const [selectedCourse, setSelectedCourse] = useState<string>(
-  //   item?.courseId || ""
-  // );
-  // const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);
-  // const [yearLevels, setYearLevels] = useState<ICourse["yearLevels"]>([]);
-
   const [formData, setFormData] = useState<ISubject>(
     item || ({} as Omit<ISubject, "_id">)
   );
