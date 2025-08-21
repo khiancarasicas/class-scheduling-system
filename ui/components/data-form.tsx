@@ -19,6 +19,7 @@ import {
   SelectValue,
 } from "@/shadcn/components/ui/select";
 import React from "react";
+import { toast } from "sonner";
 
 // ------------------------------------
 // Base provider
@@ -196,6 +197,15 @@ function DataFormArrayInput({
 
   const handleAdd = () => {
     if (!setFormData) return;
+
+    // Validation: check if all fields have non-empty values
+    const hasEmpty = fields.some((f) => !tempItem[f.name]?.trim());
+    if (hasEmpty) {
+      // You can also show a toast or error message instead of alert
+      toast.error("Please fill out all fields before adding.");
+      return;
+    }
+
     setFormData((prev: any) => ({
       ...prev,
       [name]: [
