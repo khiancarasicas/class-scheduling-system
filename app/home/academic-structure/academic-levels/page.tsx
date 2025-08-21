@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import AcademicLevelsTable from "@/ui/pages/academic-structure/academic-levels/academic-levels-table";
 
 export default function AcademicLevels() {
   return (
@@ -6,10 +7,7 @@ export default function AcademicLevels() {
       <MainSection.Section>
         <MainSection.Title>Academic Levels</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">
-            Academic levels will be displayed here.
-          </p>
-          {/* kunwari may table */}
+          <AcademicLevelsTable />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
