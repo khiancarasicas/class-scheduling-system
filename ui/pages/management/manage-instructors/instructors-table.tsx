@@ -25,6 +25,7 @@ import { ConfirmDeleteDialog } from "@/ui/components/comfirm-delete-dialog";
 import { DataForm } from "@/ui/components/data-form";
 import { getDepartments } from "@/services/departmentService";
 import { Badge } from "@/shadcn/components/ui/badge";
+import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/components/ui/tooltip";
 
 export default function InstructorsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -53,16 +54,6 @@ export default function InstructorsTable() {
   useEffect(() => {
     loadData();
   }, []);
-
-  // const getDepartmentName = (departmentId: string) => {
-  //   const dept = departments.find((d) => d._id === departmentId);
-  //   return dept ? dept.name : "Unknown";
-  // };
-
-  const DepartmentCodeBadge = ({ departmentId }: { departmentId: string }) => {
-    const dept = departments.find((d) => d._id === departmentId);
-    return <Badge variant="outline">{dept ? dept.code : "Unknown"}</Badge>;
-  };
 
   // ADD
   const handleAddInstructor = async (instructorData: {
@@ -166,6 +157,16 @@ export default function InstructorsTable() {
     }
   };
 
+  const getDepartmentName = (departmentId: string) => {
+    const dept = departments.find((d) => d._id === departmentId);
+    return dept ? dept.name : "Unknown";
+  };
+
+  const getDepartmentCode = (departmentId: string) => {
+    const dept = departments.find((d) => d._id === departmentId);
+    return dept ? dept.code : "Unknown";
+  };
+
   const columns: ColumnDef<IInstructor>[] = [
     {
       id: "select",
@@ -202,8 +203,18 @@ export default function InstructorsTable() {
       accessorKey: "departmentId",
       cell: ({ row }) => {
         const departmentId = row.getValue<string>("departmentId");
-        // return getDepartmentName(departmentId);
-        return <DepartmentCodeBadge departmentId={departmentId} />;
+        return (
+          <Tooltip>
+            <TooltipTrigger>
+              <Badge variant="outline">
+                {getDepartmentCode(departmentId)}
+              </Badge>
+            </TooltipTrigger>
+            <TooltipContent>
+              {getDepartmentName(departmentId)}
+            </TooltipContent>
+          </Tooltip>
+        );
       },
       filterFn: "equals",
     },

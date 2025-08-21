@@ -154,34 +154,18 @@ export default function CoursesTable() {
     return dept ? dept.name : "Unknown";
   };
 
-  const AcademicLevelCodeBadge = ({
-    academicLevelId,
-  }: {
-    academicLevelId: string;
-  }) => {
+  const getAcademicLevelCode = (academicLevelId: string) => {
     const acadLevel = academicLevels.find((d) => d._id === academicLevelId);
-    return (
-      <Badge variant="outline">{acadLevel ? acadLevel.code : "Unknown"}</Badge>
-    );
+    return acadLevel ? acadLevel.code : "Unknown";
   };
 
-  const YearLevelCodeBadge = ({
-    course,
-    yearLevelId,
-  }: {
-    course: ICourse;
-    yearLevelId: string;
-  }) => {
+  const getYearLevelCode = (course: ICourse, yearLevelId: string) => {
     const yearLevel = (course.yearLevels || []).find(
       (yl) => yl._id === yearLevelId
     );
-    return (
-      <Badge variant="secondary">
-        {yearLevel ? yearLevel.code : "Unknown"}
-      </Badge>
-    );
+    return yearLevel ? yearLevel.code : "Unknown";
   };
-
+  
   const columns: ColumnDef<ICourse>[] = [
     {
       id: "select",
@@ -230,7 +214,10 @@ export default function CoursesTable() {
         return (
           <Tooltip>
             <TooltipTrigger>
-              <AcademicLevelCodeBadge academicLevelId={academicLevelId} />
+              <Badge variant="outline">
+                {getAcademicLevelCode(academicLevelId)}
+              </Badge>
+              {/* <AcademicLevelCodeBadge academicLevelId={academicLevelId} /> */}
             </TooltipTrigger>
             <TooltipContent>
               {getAcademicLevelName(academicLevelId)}
@@ -253,11 +240,14 @@ export default function CoursesTable() {
             {levels.length > 0 ? (
               levels.map((yl) =>
                 yl._id ? (
-                  <YearLevelCodeBadge
-                    key={yl._id}
-                    course={course}
-                    yearLevelId={yl._id}
-                  />
+                  <Tooltip key={yl._id}>
+                    <TooltipTrigger>
+                      <Badge variant="secondary">
+                        {getYearLevelCode(course, yl._id)}
+                      </Badge>
+                    </TooltipTrigger>
+                    <TooltipContent>{yl.name}</TooltipContent>
+                  </Tooltip>
                 ) : null
               )
             ) : (
