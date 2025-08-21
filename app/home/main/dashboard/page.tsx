@@ -11,7 +11,7 @@ export default function Dashboard() {
       <MainSection.Section>
         <MainSection.Title>Dashboard</MainSection.Title>
         <MainSection.Content>
-          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-3 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             <InfoCardWrapper />
           </div>
         </MainSection.Content>
