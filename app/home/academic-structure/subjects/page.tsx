@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import SubjectsTable from "@/ui/pages/academic-structure/subjects/subjects-table";
 
 export default function Subjects() {
   return (
@@ -6,7 +7,7 @@ export default function Subjects() {
       <MainSection.Section>
         <MainSection.Title>Subjects</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">Subjects will be displayed here.</p>
+          <SubjectsTable />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
