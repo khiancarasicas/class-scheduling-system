@@ -140,6 +140,7 @@ function DataFormInput({
 
 interface SelectProps extends FieldProps {
   options: { value: string; label: string }[];
+  onValueChange?: (value: string) => void;
 }
 
 function DataFormSelect({
@@ -151,15 +152,21 @@ function DataFormSelect({
   formData,
   setFormData,
   isLoading,
+  onValueChange,
 }: SelectProps) {
+  const handleChange = (value: string) => {
+    setFormData?.((prev: any) => ({ ...prev, [name]: value }));
+    if (onValueChange) {
+      onValueChange(value); // call the callback if provided
+    }
+  };
+
   return (
     <div className="space-y-2">
       <Label htmlFor={name}>{label}</Label>
       <Select
         value={formData?.[name] || ""}
-        onValueChange={(value) =>
-          setFormData?.((prev: any) => ({ ...prev, [name]: value }))
-        }
+        onValueChange={handleChange}
         disabled={disabled || isLoading}
         required={required}
       >
