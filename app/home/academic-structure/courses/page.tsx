@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import CoursesTable from "@/ui/pages/academic-structure/courses/courses-table";
 
 export default function Courses() {
   return (
@@ -6,7 +7,7 @@ export default function Courses() {
       <MainSection.Section>
         <MainSection.Title>Courses</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">Courses will be displayed here.</p>
+          <CoursesTable />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
