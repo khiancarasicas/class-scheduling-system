@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import { RoomsTable } from "@/ui/pages/academic-structure/rooms/rooms-table";
 
 export default function ManageRooms() {
   return (
@@ -6,7 +7,7 @@ export default function ManageRooms() {
       <MainSection.Section>
         <MainSection.Title>Manage Rooms</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">Manage Rooms will be displayed here.</p>
+          <RoomsTable />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
