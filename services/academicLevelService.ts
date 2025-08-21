@@ -10,7 +10,7 @@ export function getAcademicLevelById(id: string): IAcademicLevel | undefined {
   return academicLevels.find((academicLevels) => academicLevels._id === id);
 }
 
-export function addAcademicLevels(
+export function addAcademicLevel(
   academicLevels: Omit<IAcademicLevel, "_id">
 ): IAcademicLevel {
   const newAcademicLevels = { ...academicLevels, _id: Date.now().toString() };
@@ -18,7 +18,7 @@ export function addAcademicLevels(
   return newAcademicLevels;
 }
 
-export function updateAcademicLevels(
+export function updateAcademicLevel(
   id: string,
   updates: Partial<IAcademicLevel>
 ): IAcademicLevel | null {
@@ -29,7 +29,7 @@ export function updateAcademicLevels(
   return academicLevels[index];
 }
 
-export function deleteAcademicLevels(id: string): boolean {
+export function deleteAcademicLevel(id: string): boolean {
   const academicLevels = getAcademicLevelStore();
   const index = academicLevels.findIndex((academicLevels) => academicLevels._id === id);
   if (index === -1) return false;

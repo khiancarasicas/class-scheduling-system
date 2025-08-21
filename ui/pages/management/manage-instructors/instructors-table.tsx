@@ -24,6 +24,7 @@ import { toast } from "sonner";
 import { ConfirmDeleteDialog } from "@/ui/components/comfirm-delete-dialog";
 import { DataForm } from "@/ui/components/data-form";
 import { getDepartments } from "@/services/departmentService";
+import { Badge } from "@/shadcn/components/ui/badge";
 
 export default function InstructorsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -53,9 +54,14 @@ export default function InstructorsTable() {
     loadData();
   }, []);
 
-  const getDepartmentName = (departmentId: string) => {
+  // const getDepartmentName = (departmentId: string) => {
+  //   const dept = departments.find((d) => d._id === departmentId);
+  //   return dept ? dept.name : "Unknown";
+  // };
+
+  const DepartmentCodeBadge = ({ departmentId }: { departmentId: string }) => {
     const dept = departments.find((d) => d._id === departmentId);
-    return dept ? dept.name : "Unknown";
+    return <Badge variant="outline">{dept ? dept.code : "Unknown"}</Badge>;
   };
 
   // ADD
@@ -118,7 +124,13 @@ export default function InstructorsTable() {
         return;
       }
 
-      if (updateInstructor(instructorData._id, { name: instructorData.name, departmentId: instructorData.departmentId, status: instructorData.status })) {
+      if (
+        updateInstructor(instructorData._id, {
+          name: instructorData.name,
+          departmentId: instructorData.departmentId,
+          status: instructorData.status,
+        })
+      ) {
         toast.success(`Instructor updated successfully`);
         loadData();
       } else {
@@ -190,7 +202,8 @@ export default function InstructorsTable() {
       accessorKey: "departmentId",
       cell: ({ row }) => {
         const departmentId = row.getValue<string>("departmentId");
-        return getDepartmentName(departmentId);
+        // return getDepartmentName(departmentId);
+        return <DepartmentCodeBadge departmentId={departmentId} />;
       },
       filterFn: "equals",
     },
@@ -276,42 +289,17 @@ export default function InstructorsTable() {
         </DataTable>
       )}
 
-      {/* ADD FORM */}
-      <DataForm<IInstructor>
+      <InstructorForm
         isOpen={isAddDialogOpen}
-        onClose={() => setIsAddDialogOpen(false)}
+        onClose={() => {
+          setIsAddDialogOpen(false);
+        }}
         onSubmit={handleAddInstructor}
         isLoading={isSubmitting}
-        title={{ add: "Add Instructor", edit: "Edit Instructor" }}
-      >
-        <DataForm.Input
-          name="name"
-          label="Instructor Name"
-          placeholder="Enter instructor name"
-          required
-        />
-        <DataForm.Select
-          name="departmentId"
-          label="Department"
-          required
-          options={departments.map((dept) => ({
-            label: dept.name,
-            value: dept._id ?? "",
-          }))}
-        />
-        <DataForm.Select
-          name="status"
-          label="Status"
-          required
-          options={[
-            { label: "Full-Time", value: "Full-Time" },
-            { label: "Part-Time", value: "Part-Time" },
-          ]}
-        />
-      </DataForm>
+        departments={departments}
+      />
 
-      {/* EDIT FORM */}
-      <DataForm<IInstructor>
+      <InstructorForm
         item={editingInstructor || undefined}
         isOpen={isEditDialogOpen}
         onClose={() => {
@@ -320,33 +308,8 @@ export default function InstructorsTable() {
         }}
         onSubmit={handleUpdateInstructor}
         isLoading={isSubmitting}
-        title={{ add: "Add Instructor", edit: "Edit Instructor" }}
-      >
-        <DataForm.Input
-          name="name"
-          label="Instructor Name"
-          placeholder="Enter instructor name"
-          required
-        />
-        <DataForm.Select
-          name="departmentId"
-          label="Department"
-          required
-          options={departments.map((dept) => ({
-            label: dept.name,
-            value: dept._id ?? "",
-          }))}
-        />
-        <DataForm.Select
-          name="status"
-          label="Status"
-          required
-          options={[
-            { label: "Full-Time", value: "Full-Time" },
-            { label: "Part-Time", value: "Part-Time" },
-          ]}
-        />
-      </DataForm>
+        departments={departments}
+      />
 
       {/* Delete Dialog */}
       <ConfirmDeleteDialog
@@ -396,5 +359,57 @@ function RowActions({
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
+  );
+}
+
+function InstructorForm({
+  isOpen,
+  item,
+  onClose,
+  onSubmit,
+  isLoading,
+  departments,
+}: {
+  isOpen: boolean;
+  item?: IInstructor;
+  onClose: () => void;
+  onSubmit: (data: IInstructor) => void;
+  isLoading?: boolean;
+  departments: IDepartment[];
+}) {
+  return (
+    <DataForm<IInstructor>
+      item={item}
+      isOpen={isOpen}
+      onClose={onClose}
+      onSubmit={onSubmit}
+      isLoading={isLoading}
+      title={{ add: "Add Instructor", edit: "Edit Instructor" }}
+    >
+      <DataForm.Input
+        name="name"
+        label="Instructor Name"
+        placeholder="Enter instructor name"
+        required
+      />
+      <DataForm.Select
+        name="departmentId"
+        label="Department"
+        required
+        options={departments.map((dept) => ({
+          label: dept.name,
+          value: dept._id ?? "",
+        }))}
+      />
+      <DataForm.Select
+        name="status"
+        label="Status"
+        required
+        options={[
+          { label: "Full-Time", value: "Full-Time" },
+          { label: "Part-Time", value: "Part-Time" },
+        ]}
+      />
+    </DataForm>
   );
 }

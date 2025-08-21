@@ -46,6 +46,7 @@ export interface ISection {
   name: string; // e.g., "BSIT101A", "MWA101A"
   academicLevelId: string; // ID of the academic level this section belongs to
   courseId: string; // ID of the course this section belongs to
+  yearLevelId: string; // ID of the year level inside the course
 }
 
 export interface ISubject {
@@ -56,6 +57,7 @@ export interface ISubject {
   units: number; // e.g., 3 for lecture, 1 for laboratory
   academicLevelId: string; // ID of the academic level this subject belongs to
   courseId: string; // ID of the course this subject belongs to
+  yearLevelId: string; // ID of the year level inside the course
   semester: string; // e.g., "1st Semester", "2nd Semester"
 }
 
