@@ -1,6 +1,6 @@
 "use client";
 
-import { ReactNode, useEffect, useState } from "react";
+import { HTMLInputTypeAttribute, ReactNode, useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -106,6 +106,7 @@ interface FieldProps {
   formData?: any;
   setFormData?: (fn: any) => void;
   isLoading?: boolean;
+  type?: HTMLInputTypeAttribute | undefined; // default is text
 }
 
 function DataFormInput({
@@ -117,11 +118,13 @@ function DataFormInput({
   formData,
   setFormData,
   isLoading,
+  type = "text",
 }: FieldProps) {
   return (
     <div className="space-y-2">
       <Label htmlFor={name}>{label}</Label>
       <Input
+        type={type}
         id={name}
         value={formData?.[name] || ""}
         onChange={(e) =>
