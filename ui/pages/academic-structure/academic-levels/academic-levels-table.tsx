@@ -158,7 +158,6 @@ export default function AcademicLevelsTable() {
       enableHiding: false,
     },
     {
-      id: "code",
       header: "Code",
       accessorKey: "code",
       cell: ({ row }) => (
@@ -166,7 +165,6 @@ export default function AcademicLevelsTable() {
       ),
     },
     {
-      id: "name",
       header: "Name",
       accessorKey: "name",
       cell: ({ row }) => (

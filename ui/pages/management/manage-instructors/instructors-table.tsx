@@ -190,7 +190,6 @@ export default function InstructorsTable() {
       enableHiding: false,
     },
     {
-      id: "name",
       header: "Name",
       accessorKey: "name",
       cell: ({ row }) => (
@@ -199,7 +198,6 @@ export default function InstructorsTable() {
       enableHiding: false,
     },
     {
-      id: "department",
       header: "Department",
       accessorKey: "departmentId",
       cell: ({ row }) => {
@@ -210,7 +208,6 @@ export default function InstructorsTable() {
       filterFn: "equals",
     },
     {
-      id: "status",
       header: "Status",
       accessorKey: "status",
     },
