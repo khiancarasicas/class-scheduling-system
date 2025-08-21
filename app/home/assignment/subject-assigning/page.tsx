@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import SubjectAssigningClient from "@/ui/pages/assignment/subject-assigning/subject-assigning-client";
 
 export default function SubjectAssigning() {
   return (
@@ -6,9 +7,7 @@ export default function SubjectAssigning() {
       <MainSection.Section>
         <MainSection.Title>Subject Assigning</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">
-            Subject Assigning will be displayed here.
-          </p>
+          <SubjectAssigningClient />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
