@@ -63,10 +63,7 @@ export default function DepartmentsTable() {
   };
 
   // ADD
-  const handleAddDepartment = async (departmentData: {
-    code: string;
-    name: string;
-  }) => {
+  const handleAddDepartment = async (departmentData: Omit<IDepartment, "_id">) => {
     setIsSubmitting(true);
     try {
       if (!departmentData.code) {
@@ -91,11 +88,7 @@ export default function DepartmentsTable() {
   };
 
   // UPDATE
-  const handleUpdateDepartment = async (departmentData: {
-    _id?: string;
-    code: string;
-    name: string;
-  }) => {
+  const handleUpdateDepartment = async (departmentData: IDepartment) => {
     if (!departmentData._id) return;
     setIsSubmitting(true);
     try {

@@ -52,10 +52,7 @@ export default function AcademicLevelsTable() {
   }, []);
 
   // ADD
-  const handleAddAcademicLevel = async (academicLevelData: {
-    code: string;
-    name: string;
-  }) => {
+  const handleAddAcademicLevel = async (academicLevelData: Omit<IAcademicLevel, "_id">) => {
     setIsSubmitting(true);
     try {
       if (!academicLevelData.name) {
@@ -76,11 +73,7 @@ export default function AcademicLevelsTable() {
   };
 
   // UPDATE
-  const handleUpdateAcademicLevel = async (academicLevelData: {
-    _id?: string;
-    code: string;
-    name: string;
-  }) => {
+  const handleUpdateAcademicLevel = async (academicLevelData: IAcademicLevel) => {
     if (!academicLevelData._id) return;
     setIsSubmitting(true);
     try {

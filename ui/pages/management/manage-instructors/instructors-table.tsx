@@ -56,11 +56,7 @@ export default function InstructorsTable() {
   }, []);
 
   // ADD
-  const handleAddInstructor = async (instructorData: {
-    name: string;
-    departmentId: string;
-    status: "Full-Time" | "Part-Time";
-  }) => {
+  const handleAddInstructor = async (instructorData: Omit<IInstructor, "_id">) => {
     setIsSubmitting(true);
     try {
       if (!instructorData.name) {
@@ -91,12 +87,7 @@ export default function InstructorsTable() {
   };
 
   // UPDATE
-  const handleUpdateInstructor = async (instructorData: {
-    _id?: string;
-    name: string;
-    departmentId: string;
-    status: "Full-Time" | "Part-Time";
-  }) => {
+  const handleUpdateInstructor = async (instructorData: IInstructor) => {
     if (!instructorData._id) return;
     setIsSubmitting(true);
     try {

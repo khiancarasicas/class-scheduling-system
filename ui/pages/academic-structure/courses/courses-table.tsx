@@ -58,7 +58,7 @@ export default function CoursesTable() {
   }, []);
 
   // ADD
-  const handleAddCourse = async (courseData: ICourse) => {
+  const handleAddCourse = async (courseData: Omit<ICourse, "_id">) => {
     setIsSubmitting(true);
     try {
       if (!courseData.code) {
