@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import SectionsTable from "@/ui/pages/management/manage-sections/sections-table";
 
 export default function ManageSections() {
   return (
@@ -6,7 +7,7 @@ export default function ManageSections() {
       <MainSection.Section>
         <MainSection.Title>Manage Sections</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">Manage Sections will be displayed here.</p>
+          <SectionsTable />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
