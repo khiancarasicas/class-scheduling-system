@@ -184,6 +184,8 @@ export function RoomsTable() {
           }}
         />
       ),
+      enableHiding: false,
+      enableSorting: false,
     },
   ];
 

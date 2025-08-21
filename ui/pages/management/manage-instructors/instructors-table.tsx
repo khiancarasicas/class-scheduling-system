@@ -235,6 +235,8 @@ export default function InstructorsTable() {
           }}
         />
       ),
+      enableHiding: false,
+      enableSorting: false,
     },
   ];
 

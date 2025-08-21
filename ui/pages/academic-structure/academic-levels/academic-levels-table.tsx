@@ -179,6 +179,8 @@ export default function AcademicLevelsTable() {
           }}
         />
       ),
+      enableHiding: false,
+      enableSorting: false,
     },
   ];
 

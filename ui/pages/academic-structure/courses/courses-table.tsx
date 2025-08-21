@@ -270,6 +270,8 @@ export default function CoursesTable() {
           }}
         />
       ),
+      enableHiding: false,
+      enableSorting: false,
     },
   ];
 

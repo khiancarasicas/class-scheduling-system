@@ -363,6 +363,8 @@ export default function SubjectsTable() {
           }}
         />
       ),
+      enableHiding: false,
+      enableSorting: false,
     },
   ];
 
