@@ -59,7 +59,7 @@ export default function InstructorsTable() {
   //   return dept ? dept.name : "Unknown";
   // };
 
-  const DepartmentBadge = ({ departmentId }: { departmentId: string }) => {
+  const DepartmentCodeBadge = ({ departmentId }: { departmentId: string }) => {
     const dept = departments.find((d) => d._id === departmentId);
     return <Badge variant="outline">{dept ? dept.code : "Unknown"}</Badge>;
   };
@@ -203,7 +203,7 @@ export default function InstructorsTable() {
       cell: ({ row }) => {
         const departmentId = row.getValue<string>("departmentId");
         // return getDepartmentName(departmentId);
-        return <DepartmentBadge departmentId={departmentId} />;
+        return <DepartmentCodeBadge departmentId={departmentId} />;
       },
       filterFn: "equals",
     },
