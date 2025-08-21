@@ -172,30 +172,30 @@ export default function SubjectAssigning() {
 
           {/* Right: Subjects Assigned */}
           <div>
-            <h3 className="text-sm font-medium mb-3">Subjects Assigned</h3>
-            <div className="space-y-3">
-              {assignedSubjects.map((subj, idx) => (
-                <div
-                  key={idx}
-                  className="grid grid-cols-3 gap-2 items-center"
-                >
-                  <Input
-                    value={subj.name}
-                    readOnly
-                    className="bg-gray-100 text-sm"
-                  />
-                  <Input
-                    value={subj.lab}
-                    readOnly
+  <h3 className="text-sm font-medium mb-3">Subjects Assigned</h3>
+  <div className="space-y-3">
+    {assignedSubjects.map((subj, idx) => (
+      <div
+        key={idx}
+        className="flex items-center gap-2"
+      >
+        <Input
+          value={subj.name}
+          readOnly
+               className="bg-gray-100 text-sm flex-1"
+                 />
+               <Input
+                  value={subj.lab}
+                  readOnly
                     className="bg-gray-100 w-20 text-center text-sm"
-                  />
-                  <Button
+                   />
+                <Button
                     onClick={() => handleRemove(idx)}
-                    className="bg-red-700 hover:bg-red-800 text-white text-sm px-4 py-1 rounded shadow"
-                  >
-                    -
-                  </Button>
-                </div>
+                    className="bg-red-700 hover:bg-red-800 text-white text-sm px-4 py-1 rounded shadow w-[72px]"
+                    >
+                   -
+                </Button>
+              </div>
               ))}
             </div>
           </div>
