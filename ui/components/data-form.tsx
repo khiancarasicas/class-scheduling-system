@@ -56,7 +56,7 @@ function DataFormBase<T extends { _id?: string }>({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent>
+      <DialogContent className="max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>{item ? title.edit : title.add}</DialogTitle>
         </DialogHeader>
@@ -84,9 +84,7 @@ function DataFormBase<T extends { _id?: string }>({
               Cancel
             </Button>
             <Button type="submit" disabled={isLoading}>
-              {isLoading
-                ? "Saving..."
-                : "Save"}
+              {isLoading ? "Saving..." : "Save"}
             </Button>
           </DialogFooter>
         </form>
@@ -177,9 +175,109 @@ function DataFormSelect({
 }
 
 // ------------------------------------
+// Array input (special field)
+// ------------------------------------
+interface ArrayInputProps {
+  name: string;
+  label: string;
+  fields: { name: string; placeholder?: string }[]; // fields of object
+  formData?: any;
+  setFormData?: (fn: any) => void;
+}
+
+function DataFormArrayInput({
+  name,
+  label,
+  fields,
+  formData,
+  setFormData,
+}: ArrayInputProps) {
+  const [tempItem, setTempItem] = useState<any>({});
+
+  const handleAdd = () => {
+    if (!setFormData) return;
+    setFormData((prev: any) => ({
+      ...prev,
+      [name]: [
+        ...(prev[name] || []),
+        { ...tempItem, _id: Date.now().toString() },
+      ],
+    }));
+    setTempItem({});
+  };
+
+  const handleDelete = (id: string) => {
+    setFormData?.((prev: any) => ({
+      ...prev,
+      [name]: prev[name]?.filter((i: any) => i._id !== id),
+    }));
+  };
+
+  const handleEdit = (id: string, key: string, value: string) => {
+    setFormData?.((prev: any) => ({
+      ...prev,
+      [name]: prev[name]?.map((i: any) =>
+        i._id === id ? { ...i, [key]: value } : i
+      ),
+    }));
+  };
+
+  return (
+    <div className="space-y-2">
+      <Label>{label}</Label>
+      <div className="flex flex-wrap gap-2">
+        {fields.map((f) => (
+          <Input
+            key={f.name}
+            placeholder={f.placeholder}
+            value={tempItem[f.name] || ""}
+            onChange={(e) =>
+              setTempItem((prev: any) => ({
+                ...prev,
+                [f.name]: e.target.value,
+              }))
+            }
+          />
+        ))}
+        <Button type="button" onClick={handleAdd} size="sm">
+          Add
+        </Button>
+      </div>
+
+      {/* List of added items */}
+      <div className="space-y-2 mt-2">
+        {(formData?.[name] || []).map((item: any) => (
+          <div
+            key={item._id}
+            className="flex items-center gap-2 border rounded p-2"
+          >
+            {fields.map((f) => (
+              <Input
+                key={f.name}
+                value={item[f.name]}
+                onChange={(e) => handleEdit(item._id, f.name, e.target.value)}
+              />
+            ))}
+            <Button
+              type="button"
+              variant="destructive"
+              size="sm"
+              onClick={() => handleDelete(item._id)}
+            >
+              Delete
+            </Button>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ------------------------------------
 // Export as compound component
 // ------------------------------------
 export const DataForm = Object.assign(DataFormBase, {
   Input: DataFormInput,
   Select: DataFormSelect,
+  ArrayInput: DataFormArrayInput,
 });

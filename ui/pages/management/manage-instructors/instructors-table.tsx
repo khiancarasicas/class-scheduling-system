@@ -59,7 +59,7 @@ export default function InstructorsTable() {
   //   return dept ? dept.name : "Unknown";
   // };
 
-  const DepartmentBadge = ({ departmentId }: { departmentId: string }) => {
+  const DepartmentCodeBadge = ({ departmentId }: { departmentId: string }) => {
     const dept = departments.find((d) => d._id === departmentId);
     return <Badge variant="outline">{dept ? dept.code : "Unknown"}</Badge>;
   };
@@ -190,6 +190,7 @@ export default function InstructorsTable() {
       enableHiding: false,
     },
     {
+      id: "name",
       header: "Name",
       accessorKey: "name",
       cell: ({ row }) => (
@@ -198,16 +199,18 @@ export default function InstructorsTable() {
       enableHiding: false,
     },
     {
+      id: "department",
       header: "Department",
       accessorKey: "departmentId",
       cell: ({ row }) => {
         const departmentId = row.getValue<string>("departmentId");
         // return getDepartmentName(departmentId);
-        return <DepartmentBadge departmentId={departmentId} />;
+        return <DepartmentCodeBadge departmentId={departmentId} />;
       },
       filterFn: "equals",
     },
     {
+      id: "status",
       header: "Status",
       accessorKey: "status",
     },
