@@ -69,6 +69,11 @@ const data = {
           url: "/home/academic-structure/subjects",
           icon: BookOpen,
         },
+        {
+          title: "Rooms",
+          url: "/home/academic-structure/rooms",
+          icon: MapPin,
+        },
       ],
     },
     {
@@ -78,11 +83,6 @@ const data = {
           title: "Manage Instructors",
           url: "/home/management/manage-instructors",
           icon: Users,
-        },
-        {
-          title: "Manage Rooms",
-          url: "/home/management/manage-rooms",
-          icon: MapPin,
         },
         {
           title: "Manage Sections",
