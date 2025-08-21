@@ -640,6 +640,7 @@ function SubjectForm({
           label: yl.name,
         }))}
         disabled={!formData.courseId}
+        onValueChange={(value: string) => handleChange(value, "yearLevelId")}
         required
       />
     </DataForm>
