@@ -25,7 +25,11 @@ import { ConfirmDeleteDialog } from "@/ui/components/comfirm-delete-dialog";
 import { DataForm } from "@/ui/components/data-form";
 import { getDepartments } from "@/services/departmentService";
 import { Badge } from "@/shadcn/components/ui/badge";
-import { Tooltip, TooltipContent, TooltipTrigger } from "@/shadcn/components/ui/tooltip";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shadcn/components/ui/tooltip";
 
 export default function InstructorsTable() {
   const [isAddDialogOpen, setIsAddDialogOpen] = useState(false);
@@ -56,7 +60,9 @@ export default function InstructorsTable() {
   }, []);
 
   // ADD
-  const handleAddInstructor = async (instructorData: Omit<IInstructor, "_id">) => {
+  const handleAddInstructor = async (
+    instructorData: Omit<IInstructor, "_id">
+  ) => {
     setIsSubmitting(true);
     try {
       if (!instructorData.name) {
@@ -108,9 +114,7 @@ export default function InstructorsTable() {
 
       const { _id, ...data } = instructorData;
 
-      if (
-        updateInstructor(_id, data)
-      ) {
+      if (updateInstructor(_id, data)) {
         toast.success(`Instructor updated successfully`);
         loadData();
       } else {
@@ -195,13 +199,9 @@ export default function InstructorsTable() {
         return (
           <Tooltip>
             <TooltipTrigger>
-              <Badge variant="outline">
-                {getDepartmentCode(departmentId)}
-              </Badge>
+              <Badge variant="outline">{getDepartmentCode(departmentId)}</Badge>
             </TooltipTrigger>
-            <TooltipContent>
-              {getDepartmentName(departmentId)}
-            </TooltipContent>
+            <TooltipContent>{getDepartmentName(departmentId)}</TooltipContent>
           </Tooltip>
         );
       },
@@ -210,6 +210,14 @@ export default function InstructorsTable() {
     {
       header: "Status",
       accessorKey: "status",
+      cell: ({ row }) => {
+        const status = row.getValue<string>("status");
+        return (
+          <Badge variant={status === "Full-Time" ? "default" : "secondary"}>
+            {status}
+          </Badge>
+        );
+      },
     },
     {
       id: "actions",
@@ -257,6 +265,7 @@ export default function InstructorsTable() {
                   return dept ? dept.name : "Unknown";
                 }}
               />
+              <DataTable.Filter column="status" placeholder="All statuses" />
               <DataTable.ClearFilters />
               <DataTable.ViewOptions />
             </div>
