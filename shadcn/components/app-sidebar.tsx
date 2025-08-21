@@ -137,20 +137,20 @@ const data = {
         },
       ],
     },
-    {
-      category: "ANNOUNCEMENT",
-      items: [
-        {
-          title: "Post News / Events",
-          url: "/home/announcement/post-news-events",
-          icon: Megaphone,
-        },
-        // my idea here is to post events/news/etc...
-        // for example, i want to send an event notif, i can write when and where
-        // hirap mag english
-        // then makikita ng teachers or kung sino mn pumunta sa website 
-      ],
-    },
+    // {
+    //   category: "ANNOUNCEMENT",
+    //   items: [
+    //     {
+    //       title: "Post News / Events",
+    //       url: "/home/announcement/post-news-events",
+    //       icon: Megaphone,
+    //     },
+    //     // my idea here is to post events/news/etc...
+    //     // for example, i want to send an event notif, i can write when and where
+    //     // hirap mag english
+    //     // then makikita ng teachers or kung sino mn pumunta sa website 
+    //   ],
+    // },
     {
       category: "SYSTEM",
       items: [
