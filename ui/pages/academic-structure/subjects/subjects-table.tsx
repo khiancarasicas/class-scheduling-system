@@ -266,10 +266,21 @@ export default function SubjectsTable() {
     {
       header: "Type",
       accessorKey: "type",
+      cell: ({ row }) => {
+        const status = row.getValue<string>("type");
+        return (
+          <Badge variant={status === "Laboratory" ? "default" : "secondary"}>
+            {status}
+          </Badge>
+        );
+      },
     },
     {
       header: "Units",
       accessorKey: "units",
+      cell: ({ row }) => {
+        return <Badge variant="secondary">{row.getValue("units")}</Badge>;
+      },
     },
     {
       header: "Semester",
