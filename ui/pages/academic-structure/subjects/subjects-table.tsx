@@ -580,9 +580,7 @@ function SubjectForm({
         name="title"
         label="Subject Title"
         placeholder="e.g, Introduction to Computer Science"
-        onValueChange={(value: string) =>
-          setFormData?.((prev: any) => ({ ...prev, code: value }))
-        }
+        onValueChange={(value: string) => handleChange(value, "title")}
         required
       />
       <DataForm.Select
@@ -592,9 +590,7 @@ function SubjectForm({
           { value: "Lecture", label: "Lecture" },
           { value: "Laboratory", label: "Laboratory" },
         ]}
-        onValueChange={(value: string) =>
-          setFormData?.((prev: any) => ({ ...prev, code: value }))
-        }
+        onValueChange={(value: string) => handleChange(value, "type")}
         required
       />
       <DataForm.Input
@@ -603,18 +599,14 @@ function SubjectForm({
         label="Units"
         placeholder="e.g., 3"
         required
-        onValueChange={(value: string) =>
-          setFormData?.((prev: any) => ({ ...prev, code: value }))
-        }
+        onValueChange={(value: string) => handleChange(value, "units")}
       />
       <DataForm.Input
         name="semester"
         label="Semester"
         placeholder="e.g., 1st Semester"
         required
-        onValueChange={(value: string) =>
-          setFormData?.((prev: any) => ({ ...prev, code: value }))
-        }
+        onValueChange={(value: string) => handleChange(value, "semester")}
       />
 
       {/* Academic Level */}
