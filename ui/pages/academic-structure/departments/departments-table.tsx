@@ -173,7 +173,6 @@ export default function DepartmentsTable() {
       enableHiding: false,
     },
     {
-      id: "code",
       header: "Code",
       accessorKey: "code",
       cell: ({ row }) => (
@@ -181,7 +180,6 @@ export default function DepartmentsTable() {
       ),
     },
     {
-      id: "name",
       header: "Name",
       accessorKey: "name",
       cell: ({ row }) => (

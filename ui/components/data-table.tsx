@@ -383,7 +383,9 @@ function DataTableViewOptions({ className }: DataTableViewOptionsProps) {
             onCheckedChange={(value) => column.toggleVisibility(!!value)}
             onSelect={(event) => event.preventDefault()}
           >
-            {column.id}
+            {typeof column.columnDef.header === "string"
+              ? column.columnDef.header
+              : column.id}
           </DropdownMenuCheckboxItem>
         ))}
       </DropdownMenuContent>
