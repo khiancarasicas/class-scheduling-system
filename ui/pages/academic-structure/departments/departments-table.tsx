@@ -173,6 +173,7 @@ export default function DepartmentsTable() {
       enableHiding: false,
     },
     {
+      id: "code",
       header: "Code",
       accessorKey: "code",
       cell: ({ row }) => (
@@ -180,6 +181,7 @@ export default function DepartmentsTable() {
       ),
     },
     {
+      id: "name",
       header: "Name",
       accessorKey: "name",
       cell: ({ row }) => (
@@ -187,6 +189,7 @@ export default function DepartmentsTable() {
       ),
     },
     {
+      id: "instructors",
       header: "Instructors",
       cell: ({ row }) => {
         const stats = getDepartmentStats(row.original._id || "");
