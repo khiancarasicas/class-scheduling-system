@@ -86,11 +86,10 @@ export default function AcademicLevelsTable() {
         return;
       }
 
+      const { _id, ...data } = academicLevelData;
+
       if (
-        updateAcademicLevel(academicLevelData._id, {
-          code: academicLevelData.code,
-          name: academicLevelData.name,
-        })
+        updateAcademicLevel(_id, data)
       ) {
         toast.success(`Academic level updated successfully`);
         loadData();

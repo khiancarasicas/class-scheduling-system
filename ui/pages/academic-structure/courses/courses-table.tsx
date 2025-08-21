@@ -106,13 +106,10 @@ export default function CoursesTable() {
         return;
       }
 
+      const {_id, ...data } = courseData;
+
       if (
-        updateCourse(courseData._id, {
-          code: courseData.code,
-          name: courseData.name,
-          academicLevelId: courseData.academicLevelId,
-          yearLevels: courseData.yearLevels,
-        })
+        updateCourse(_id, data)
       ) {
         toast.success(`Course updated successfully`);
         loadData();

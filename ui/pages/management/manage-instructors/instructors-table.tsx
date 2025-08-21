@@ -106,12 +106,10 @@ export default function InstructorsTable() {
         return;
       }
 
+      const { _id, ...data } = instructorData;
+
       if (
-        updateInstructor(instructorData._id, {
-          name: instructorData.name,
-          departmentId: instructorData.departmentId,
-          status: instructorData.status,
-        })
+        updateInstructor(_id, data)
       ) {
         toast.success(`Instructor updated successfully`);
         loadData();

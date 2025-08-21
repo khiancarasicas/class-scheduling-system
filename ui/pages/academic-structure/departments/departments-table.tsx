@@ -101,11 +101,10 @@ export default function DepartmentsTable() {
         return;
       }
 
+      const {_id, ...data} = departmentData;
+
       if (
-        updateDepartment(departmentData._id, {
-          code: departmentData.code,
-          name: departmentData.name,
-        })
+        updateDepartment(_id, data)
       ) {
         toast.success(`Department updated successfully`);
         loadData();
