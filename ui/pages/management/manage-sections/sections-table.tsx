@@ -300,7 +300,18 @@ export default function SectionsTable() {
           </span>
         </div>
       ) : (
-        <DataTable data={sections} columns={columns}>
+        <DataTable
+          data={sections}
+          columns={columns}
+          initialState={{
+            columnFilters: [
+              {
+                id: "academicLevelId",
+                value: "2",
+              },
+            ],
+          }}
+        >
           {/* Toolbar */}
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-3">
@@ -464,7 +475,6 @@ function SectionForm({
   const resetForm = () => {
     setFormData(item || ({} as ISection));
   };
-
 
   const handleAcademicLevelChange = (value: string) => {
     setFormData({
