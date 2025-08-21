@@ -51,7 +51,7 @@ const courses: ICourse[] = [
     _id: "3",
     code: "ABM",
     name: "Accountancy, Business, and Management",
-    academicLevelId: "3",
+    academicLevelId: "2",
     yearLevels: [
       {
         _id: "1",
@@ -69,7 +69,7 @@ const courses: ICourse[] = [
     _id: "4",
     code: "HUMSS",
     name: "Humanities and Social Sciences",
-    academicLevelId: "3",
+    academicLevelId: "2",
     yearLevels: [
       {
         _id: "1",
@@ -87,7 +87,7 @@ const courses: ICourse[] = [
     _id: "5",
     code: "GAS",
     name: " General Academic",
-    academicLevelId: "3",
+    academicLevelId: "2",
     yearLevels: [
       {
         _id: "1",
