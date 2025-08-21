@@ -69,6 +69,10 @@ export default function DepartmentsTable() {
   }) => {
     setIsSubmitting(true);
     try {
+      if (!departmentData.code) {
+        toast.error("Department code is required");
+      }
+
       if (!departmentData.name) {
         toast.error("Department name is required");
         return;
@@ -95,6 +99,10 @@ export default function DepartmentsTable() {
     if (!departmentData._id) return;
     setIsSubmitting(true);
     try {
+      if (!departmentData.code) {
+        toast.error("Department code is required");
+      }
+
       if (!departmentData.name) {
         toast.error("Department name is required");
         return;
@@ -121,7 +129,7 @@ export default function DepartmentsTable() {
   const handleDeleteDepartment = (id: string) => {
     try {
       if (!id) {
-        toast.error("Error deleting department");
+        toast.error("Error deleting department: Invalid ID");
         return;
       }
       if (deleteDepartment(id)) {
