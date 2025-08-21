@@ -108,7 +108,12 @@ export default function DepartmentsTable() {
         return;
       }
 
-      if (updateDepartment(departmentData._id, { name: departmentData.name })) {
+      if (
+        updateDepartment(departmentData._id, {
+          code: departmentData.code,
+          name: departmentData.name,
+        })
+      ) {
         toast.success(`Department updated successfully`);
         loadData();
       } else {
