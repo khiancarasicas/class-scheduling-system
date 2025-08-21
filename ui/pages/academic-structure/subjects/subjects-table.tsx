@@ -197,19 +197,16 @@ export default function SubjectsTable() {
     }
   };
 
-  const getAcademicLevelName = (academicLevelId: string) => {
-    const dept = academicLevels.find((d) => d._id === academicLevelId);
-    return dept ? dept.name : "Unknown";
-  };
+  const getAcademicLevel = (academicLevelId: string) => {
+    const acadLevel = academicLevels.find((al) => al._id === academicLevelId);
 
-  const getAcademicLevelCode = (academicLevelId: string) => {
-    const acadLevel = academicLevels.find((d) => d._id === academicLevelId);
-    return acadLevel ? acadLevel.code : "Unknown";
+    return acadLevel
+      ? { code: acadLevel.code, name: acadLevel.name }
+      : { code: "Unknown", name: "Unknown" };
   };
 
   const getCourse = (courseId: string) => {
     const course = courses.find((c) => c._id === courseId);
-    if (!course) return { code: "Unknown", name: "Unknown" };
 
     return course
       ? { code: course.code, name: course.name }
@@ -291,21 +288,16 @@ export default function SubjectsTable() {
       accessorKey: "academicLevelId",
       cell: ({ row }) => {
         const academicLevelId = row.getValue<string>("academicLevelId");
+        const { code, name } = getAcademicLevel(academicLevelId);
 
         return (
           <Tooltip>
             <TooltipTrigger>
-              <Badge variant="outline">
-                {getAcademicLevelCode(academicLevelId)}
-              </Badge>
-              {/* <AcademicLevelCodeBadge academicLevelId={academicLevelId} /> */}
+              <Badge variant="outline">{code}</Badge>
             </TooltipTrigger>
-            <TooltipContent>
-              {getAcademicLevelName(academicLevelId)}
-            </TooltipContent>
+            <TooltipContent>{name}</TooltipContent>
           </Tooltip>
         );
-        // return <AcademicLevelCodeBadge academicLevelId={academicLevelId} />;
       },
     },
     {
@@ -319,12 +311,10 @@ export default function SubjectsTable() {
           <Tooltip>
             <TooltipTrigger>
               <Badge variant="outline">{code}</Badge>
-              {/* <AcademicLevelCodeBadge academicLevelId={academicLevelId} /> */}
             </TooltipTrigger>
             <TooltipContent>{name}</TooltipContent>
           </Tooltip>
         );
-        // return <AcademicLevelCodeBadge academicLevelId={academicLevelId} />;
       },
     },
     {
