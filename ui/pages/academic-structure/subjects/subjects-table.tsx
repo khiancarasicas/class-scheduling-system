@@ -216,7 +216,7 @@ export default function SubjectsTable() {
       : { code: "Unknown", name: "Unknown" };
   };
 
-  const getYearLevel = (courseId: string, yearLevelId: string) => {
+  const getYearLevelByCourseId = (courseId: string, yearLevelId: string) => {
     const course = courses.find((c) => c._id === courseId);
     if (!course) return { code: "Unknown", name: "Unknown" };
 
@@ -332,7 +332,7 @@ export default function SubjectsTable() {
       accessorKey: "yearLevelId",
       cell: ({ row }) => {
         const subject = row.original;
-        const { code, name } = getYearLevel(
+        const { code, name } = getYearLevelByCourseId(
           subject.courseId,
           subject.yearLevelId
         );
@@ -517,40 +517,60 @@ function SubjectForm({
   academicLevels: IAcademicLevel[];
   courses: ICourse[];
 }) {
-  const [selectedAcademicLevel, setSelectedAcademicLevel] = useState<string>(
-    item?.academicLevelId || ""
-  );
-  const [selectedCourse, setSelectedCourse] = useState<string>(
-    item?.courseId || ""
-  );
-  const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);
-  const [yearLevels, setYearLevels] = useState<ICourse["yearLevels"]>([]);
+  // const [selectedAcademicLevel, setSelectedAcademicLevel] = useState<string>(
+  //   item?.academicLevelId || ""
+  // );
+  // const [selectedCourse, setSelectedCourse] = useState<string>(
+  //   item?.courseId || ""
+  // );
+  // const [filteredCourses, setFilteredCourses] = useState<ICourse[]>([]);
+  // const [yearLevels, setYearLevels] = useState<ICourse["yearLevels"]>([]);
 
-  // Filter courses when academic level changes
+  const [formData, setFormData] = useState<ISubject>(
+    item || ({} as Omit<ISubject, "_id">)
+  );
+
   useEffect(() => {
-    if (selectedAcademicLevel) {
-      const filtered = courses.filter(
-        (c) => c.academicLevelId === selectedAcademicLevel
-      );
-      setFilteredCourses(filtered);
-      setSelectedCourse(""); // reset course
-      setYearLevels([]); // reset year levels
-    } else {
-      setFilteredCourses([]);
-      setSelectedCourse("");
-      setYearLevels([]);
+    if (item) {
+      setFormData({ ...item });
     }
-  }, [selectedAcademicLevel, courses]);
+  }, [item]);
 
-  // Load year levels when course changes
-  useEffect(() => {
-    const course = courses.find((c) => c._id === selectedCourse);
-    setYearLevels(course?.yearLevels || []);
-  }, [selectedCourse, courses]);
+  const getYearLevelsByCourseId = (courseId: string) => {
+    const course = courses.find((c) => c._id === courseId);
+    if (!course) return [];
+
+    const yearLevels = course.yearLevels;
+    return yearLevels;
+  };
+
+  const getFilteredCourses = () => {
+    if (!formData.academicLevelId) return [];
+    return courses.filter(
+      (c) => c.academicLevelId === formData.academicLevelId
+    );
+  };
+
+  const handleAcademicLevelChange = (value: string) => {
+    setFormData({
+      ...formData,
+      academicLevelId: value,
+      courseId: "",
+      yearLevelId: "",
+    });
+  };
+
+  const handleCourseChange = (value: string) => {
+    setFormData({
+      ...formData,
+      courseId: value,
+      yearLevelId: "",
+    });
+  };
 
   return (
     <DataForm<ISubject>
-      item={item}
+      item={formData}
       isOpen={isOpen}
       onClose={onClose}
       onSubmit={onSubmit}
@@ -598,37 +618,31 @@ function SubjectForm({
         label="Academic Level"
         options={academicLevels.map((a) => ({ value: a._id, label: a.name }))}
         required
-        onValueChange={(val) => {
-          setSelectedAcademicLevel(val);
-          setSelectedCourse("");
-          setYearLevels([]);
-        }}
+        onValueChange={handleAcademicLevelChange}
       />
 
       {/* Course */}
       <DataForm.Select
         name="courseId"
         label="Course"
-        options={filteredCourses
-          .filter((c) => typeof c._id === "string")
-          .map((c) => ({
-            value: c._id as string,
-            label: c.name,
-          }))}
+        options={getFilteredCourses().map((c) => ({
+          value: c._id as string,
+          label: c.name,
+        }))}
         required
-        onValueChange={(val) => {
-          setSelectedCourse(val);
-          setYearLevels([]);
-        }}
-        disabled={!selectedAcademicLevel}
+        onValueChange={handleCourseChange}
+        disabled={!formData.academicLevelId}
       />
 
       {/* Year Level */}
       <DataForm.Select
         name="yearLevelId"
         label="Year Level"
-        options={yearLevels.map((yl) => ({ value: yl._id!, label: yl.name }))}
-        disabled={!selectedCourse}
+        options={getYearLevelsByCourseId(formData.courseId).map((yl) => ({
+          value: yl._id!,
+          label: yl.name,
+        }))}
+        disabled={!formData.courseId}
         required
       />
     </DataForm>
