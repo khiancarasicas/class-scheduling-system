@@ -298,7 +298,7 @@ export default function AvailableSubjectsTable({
         </div>
       ) : !selectedSection ? (
         <div className="flex items-center justify-center">
-          <span className="ml-2 text-sm text-muted-foreground">
+          <span className="text-sm text-muted-foreground">
             Select a section...
           </span>
         </div>
