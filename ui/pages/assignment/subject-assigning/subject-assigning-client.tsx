@@ -9,6 +9,11 @@ import {
   CardContent,
 } from "@/shadcn/components/ui/card";
 import SelectSection from "./select-section";
+// import AvailableSubjectsTable from "./test-available-subjects-table";
+import AvailableSubjectsTable from "./available-subjects-table";
+import AssignedSubjectsTable from "./assigned-subjects-table";
+// import AssignedSubjectsTable from "./test-2-assigned-subjects-table";
+// import AssignedSubjectsTable from "./test-assigned-subjects-table";
 
 export default function SubjectAssigningClient() {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
@@ -36,9 +41,9 @@ export default function SubjectAssigningClient() {
               Available Subjects
             </CardTitle>
           </CardHeader>
-          <CardContent className="h-full max-h-[70vh] overflow-y-auto">
+          <CardContent className="h-full max-h-[70vh] overflow-y-auto py-4 border-y">
             {/* available subjects table */}
-            <div className="h-svh"></div>
+            <AvailableSubjectsTable selectedSection={selectedSection!} />
           </CardContent>
         </Card>
 
@@ -48,8 +53,9 @@ export default function SubjectAssigningClient() {
               Assigned Subjects
             </CardTitle>
           </CardHeader>
-          <CardContent className="h-full max-h-[70vh] overflow-y-auto">
+          <CardContent className="h-full max-h-[70vh] overflow-y-auto py-4 border-y">
             {/* assigned subjects table */}
+            <AssignedSubjectsTable selectedSection={selectedSection!} />
           </CardContent>
         </Card>
       </div>
