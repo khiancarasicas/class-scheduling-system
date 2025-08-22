@@ -17,6 +17,9 @@ import AssignedSubjectsTable from "./assigned-subjects-table";
 
 export default function SubjectAssigningClient() {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+
+  const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
 
   return (
     <div className="space-y-3">
@@ -41,9 +44,13 @@ export default function SubjectAssigningClient() {
               Available Subjects
             </CardTitle>
           </CardHeader>
-          <CardContent className="h-full max-h-[70vh] overflow-y-auto py-4 border-y">
+          <CardContent className="h-[70vh] max-h-[70vh] overflow-y-auto py-4 border-y">
             {/* available subjects table */}
-            <AvailableSubjectsTable selectedSection={selectedSection!} />
+            <AvailableSubjectsTable
+              selectedSection={selectedSection!}
+              onChange={triggerRefresh}
+              refreshKey={refreshKey}
+            />
           </CardContent>
         </Card>
 
@@ -53,9 +60,13 @@ export default function SubjectAssigningClient() {
               Assigned Subjects
             </CardTitle>
           </CardHeader>
-          <CardContent className="h-full max-h-[70vh] overflow-y-auto py-4 border-y">
+          <CardContent className="h-[70vh] max-h-[70vh] overflow-y-auto py-4 border-y">
             {/* assigned subjects table */}
-            <AssignedSubjectsTable selectedSection={selectedSection!} />
+            <AssignedSubjectsTable
+              selectedSection={selectedSection!}
+              onChange={triggerRefresh}
+              refreshKey={refreshKey}
+            />
           </CardContent>
         </Card>
       </div>

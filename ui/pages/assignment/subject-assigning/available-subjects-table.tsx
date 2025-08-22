@@ -40,8 +40,12 @@ import { Tabs, TabsList, TabsTrigger } from "@/shadcn/components/ui/tabs";
 
 export default function AvailableSubjectsTable({
   selectedSection,
+  onChange,
+  refreshKey,
 }: {
   selectedSection: string;
+  onChange: () => void;
+  refreshKey: number;
 }) {
   const [loading, setLoading] = useState(true);
   const [subjects, setSubjects] = useState<ISubject[]>([]);
@@ -68,7 +72,7 @@ export default function AvailableSubjectsTable({
 
   useEffect(() => {
     loadData();
-  }, []);
+  }, [refreshKey]);
 
   const section = useMemo(
     () => sections.find((s) => s._id === selectedSection) || null,
@@ -116,6 +120,7 @@ export default function AvailableSubjectsTable({
     try {
       if (addAssignedSubject({ sectionId: selectedSection, subjectId })) {
         setAssignedSubjects(getAssignedSubjects());
+        onChange();
         toast.success("Subject assigned");
       } else {
         toast.error("Failed to assign subject");

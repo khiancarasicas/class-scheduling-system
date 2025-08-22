@@ -30,8 +30,12 @@ import { getSections } from "@/services/sectionService";
 
 export default function AvailableSubjectsTable({
   selectedSection,
+  onChange,
+  refreshKey,
 }: {
   selectedSection: string;
+  onChange: () => void;
+  refreshKey: number;
 }) {
   const [loading, setLoading] = useState(true);
   const [isUnassigning, setIsUnassigning] = useState<string | null>(null); // _id being unassigned
@@ -65,7 +69,7 @@ export default function AvailableSubjectsTable({
   useEffect(() => {
     loadData();
     // reload when selectedSection changes
-  }, [selectedSection]);
+  }, [selectedSection, refreshKey]);
 
   const handleUnassignSubject = (id: string) => {
     if (!id) {
@@ -78,7 +82,7 @@ export default function AvailableSubjectsTable({
     try {
       if (deleteAssignedSubject(id)) {
         toast.success("Successfully unassigned subject");
-        loadData();
+        onChange();
       } else {
         toast.error("Failed to unassign subject");
       }
@@ -310,9 +314,12 @@ export default function AvailableSubjectsTable({
             columnFilters: [
               {
                 id: "section",
-                value: selectedSection,
+                value: getSection(selectedSection).name,
               },
             ],
+            columnVisibility: {
+              section: false,
+            },
           }}
         >
           {/* Toolbar */}
