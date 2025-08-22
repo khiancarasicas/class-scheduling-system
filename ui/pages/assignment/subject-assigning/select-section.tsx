@@ -62,13 +62,23 @@ export default function SelectSection({ onSectionChange }: SelectSectionProps) {
     courseId: string,
     yearLevelId: string
   ) => {
-    if (!academicLevelId || !courseId || !yearLevelId) return [];
-    return sections.filter(
-      (s) =>
-        s.academicLevelId === academicLevelId &&
-        s.courseId === courseId &&
-        s.yearLevelId === yearLevelId
-    );
+    if (courseId && academicLevelId)
+      return sections.filter(
+        (s) => s.courseId === courseId && s.academicLevelId === academicLevelId
+      );
+
+    if (academicLevelId)
+      return sections.filter((s) => s.academicLevelId === academicLevelId);
+
+    if (yearLevelId && courseId && academicLevelId)
+      return sections.filter(
+        (s) =>
+          s.academicLevelId === academicLevelId &&
+          s.courseId === courseId &&
+          s.yearLevelId === yearLevelId
+      );
+
+    return sections;
   };
 
   // // Notify parent when section changes
@@ -158,7 +168,7 @@ export default function SelectSection({ onSectionChange }: SelectSectionProps) {
       <Select
         value={section ?? ""}
         onValueChange={(val) => setSection(val)}
-        disabled={!yearLevel}
+        // disabled={!yearLevel}
       >
         <SelectTrigger>
           <SelectValue placeholder="Select Section" />
