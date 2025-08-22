@@ -378,7 +378,7 @@ export default function SubjectsTable() {
                 className="max-w-sm"
               />
               <DataTable.Filter column="type" placeholder="All types" />
-              <DataTable.Filter column="units" placeholder="All units" />
+              {/* <DataTable.Filter column="units" placeholder="All units" /> */}
               <DataTable.Filter column="semester" placeholder="All semesters" />
               <DataTable.Filter
                 column="academicLevelId"
