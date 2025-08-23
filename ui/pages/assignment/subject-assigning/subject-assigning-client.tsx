@@ -8,7 +8,7 @@ import {
   CardTitle,
   CardContent,
 } from "@/shadcn/components/ui/card";
-import SelectSection from "./select-section";
+import SelectSection from "../../../components/select-section";
 // import AvailableSubjectsTable from "./test-available-subjects-table";
 import AvailableSubjectsTable from "./available-subjects-table";
 import AssignedSubjectsTable from "./assigned-subjects-table";
