@@ -1,4 +1,3 @@
-// ui/pages/assignment/subject-assigning/subject-assigning-client.tsx
 "use client";
 
 import { useState } from "react";
@@ -9,11 +8,8 @@ import {
   CardContent,
 } from "@/shadcn/components/ui/card";
 import SelectSection from "../../../components/select-section";
-// import AvailableSubjectsTable from "./test-available-subjects-table";
 import AvailableSubjectsTable from "./available-subjects-table";
 import AssignedSubjectsTable from "./assigned-subjects-table";
-// import AssignedSubjectsTable from "./test-2-assigned-subjects-table";
-// import AssignedSubjectsTable from "./test-assigned-subjects-table";
 
 export default function SubjectAssigningClient() {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
@@ -45,7 +41,6 @@ export default function SubjectAssigningClient() {
             </CardTitle>
           </CardHeader>
           <CardContent className="h-[70vh] max-h-[70vh] overflow-y-auto py-4 border-y">
-            {/* available subjects table */}
             <AvailableSubjectsTable
               selectedSection={selectedSection!}
               onChange={triggerRefresh}
@@ -61,7 +56,6 @@ export default function SubjectAssigningClient() {
             </CardTitle>
           </CardHeader>
           <CardContent className="h-[70vh] max-h-[70vh] overflow-y-auto py-4 border-y">
-            {/* assigned subjects table */}
             <AssignedSubjectsTable
               selectedSection={selectedSection!}
               onChange={triggerRefresh}
