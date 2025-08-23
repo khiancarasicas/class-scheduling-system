@@ -28,7 +28,7 @@ import { getCourses } from "@/services/courseService";
 import { getSubjects } from "@/services/subjectService";
 import { getSections } from "@/services/sectionService";
 
-export default function AvailableSubjectsTable({
+export default function AssignedSubjectsTable({
   selectedSection,
   onChange,
   refreshKey,
