@@ -295,6 +295,7 @@ export default function AvailableSubjectsTable({
               academicLevelId: false,
               courseId: false,
               yearLevelId: false,
+              units: false,
             },
           }}
         >
