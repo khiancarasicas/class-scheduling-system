@@ -6,36 +6,53 @@ import {
   CardHeader,
   CardTitle,
   CardContent,
-  CardFooter,
 } from "@/shadcn/components/ui/card";
 import SelectSection from "../../../components/select-section";
 import { Button } from "@/shadcn/components/ui/button";
-import { Loader2, Zap } from "lucide-react";
+import { Zap } from "lucide-react";
 import Image from "next/image";
+import { Progress } from "@/shadcn/components/ui/progress";
 
 export default function AutoClassSchedulingClient() {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
-  const [refreshKey, setRefreshKey] = useState(0);
   const [generateKey, setGenerateKey] = useState(false);
   const [showImage, setShowImage] = useState(false);
-
-  const triggerRefresh = () => setRefreshKey((prev) => prev + 1);
+  const [value, setValue] = useState(0);
 
   useEffect(() => {
-    if (generateKey) {
-      setShowImage(false);
+    if (!generateKey) return;
 
-      const timer = setTimeout(() => {
-        setGenerateKey(false);
-        setShowImage(true);
-      }, 3000);
+    let progress = 0;
+    setValue(0);
 
-      return () => clearTimeout(timer); // Clean up
-    }
+    const interval = setInterval(() => {
+      progress += Math.floor(Math.random() * 15) + 5;
+      if (progress >= 100) {
+        progress = 100;
+        clearInterval(interval);
+      }
+      setValue(progress);
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, [generateKey]);
+
+  useEffect(() => {
+    if (!generateKey) return;
+
+    setShowImage(false);
+    const timer = setTimeout(() => {
+      setGenerateKey(false);
+      setShowImage(true);
+    }, 3000);
+
+    return () => clearTimeout(timer);
   }, [generateKey]);
 
   const triggerGenerate = () => {
     setGenerateKey(true);
+    setValue(0);
+    setShowImage(false);
   };
 
   return (
@@ -72,9 +89,7 @@ export default function AutoClassSchedulingClient() {
                       <p>{selectedSection ? "wala pa inaayos ko pa" : "--"}</p>
                     </div>
                     <div className="flex justify-between items-center">
-                      <p className="text-muted-foreground">
-                        Selected Days:
-                      </p>
+                      <p className="text-muted-foreground">Selected Days:</p>
                     </div>
                     <div className="flex justify-between items-center">
                       <p className="text-muted-foreground">
@@ -116,11 +131,14 @@ export default function AutoClassSchedulingClient() {
                 height={1000}
               />
             ) : generateKey ? (
-              <div className="flex items-center justify-center">
-                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+              <div className="flex flex-col gap-2 items-center justify-center">
                 <span className="ml-2 text-sm text-muted-foreground">
                   Generating schedule, please wait...
                 </span>
+                <div className="w-full max-w-sm space-y-2">
+                  <Progress value={value} />
+                  <p className="text-sm text-center">{value}%</p>
+                </div>
               </div>
             ) : (
               <div className="flex items-center justify-center">
