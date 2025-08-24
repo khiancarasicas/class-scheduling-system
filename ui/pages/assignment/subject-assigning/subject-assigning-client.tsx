@@ -25,11 +25,6 @@ export default function SubjectAssigningClient() {
         </CardHeader>
         <CardContent>
           <SelectSection onSectionChange={setSelectedSection} />
-          {selectedSection && (
-            <p className="mt-2 text-sm text-gray-700">
-              Selected Section ID: {selectedSection}
-            </p>
-          )}
         </CardContent>
       </Card>
 
@@ -41,11 +36,19 @@ export default function SubjectAssigningClient() {
             </CardTitle>
           </CardHeader>
           <CardContent className="h-[70vh] max-h-[70vh] overflow-y-auto py-4 border-y">
-            <AvailableSubjectsTable
-              selectedSection={selectedSection!}
-              onChange={triggerRefresh}
-              refreshKey={refreshKey}
-            />
+            {selectedSection ? (
+              <AvailableSubjectsTable
+                selectedSection={selectedSection!}
+                onChange={triggerRefresh}
+                refreshKey={refreshKey}
+              />
+            ) : (
+              <div className="flex items-center justify-center">
+                <span className="text-sm text-muted-foreground">
+                  Select a section...
+                </span>
+              </div>
+            )}
           </CardContent>
         </Card>
 
@@ -56,11 +59,19 @@ export default function SubjectAssigningClient() {
             </CardTitle>
           </CardHeader>
           <CardContent className="h-[70vh] max-h-[70vh] overflow-y-auto py-4 border-y">
-            <AssignedSubjectsTable
-              selectedSection={selectedSection!}
-              onChange={triggerRefresh}
-              refreshKey={refreshKey}
-            />
+            {selectedSection ? (
+              <AssignedSubjectsTable
+                selectedSection={selectedSection!}
+                onChange={triggerRefresh}
+                refreshKey={refreshKey}
+              />
+            ) : (
+              <div className="flex items-center justify-center">
+                <span className="text-sm text-muted-foreground">
+                  Select a section...
+                </span>
+              </div>
+            )}
           </CardContent>
         </Card>
       </div>
