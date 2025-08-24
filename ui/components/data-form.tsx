@@ -108,6 +108,7 @@ interface FieldProps {
   isLoading?: boolean;
   type?: HTMLInputTypeAttribute | undefined; // default is text
   onValueChange?: (value: string) => void;
+  className?: string;
 }
 
 function DataFormInput({
@@ -121,6 +122,7 @@ function DataFormInput({
   isLoading,
   type = "text",
   onValueChange,
+  className,
 }: FieldProps) {
   const handleChange = (value: string) => {
     setFormData?.((prev: any) => ({ ...prev, [name]: value }));
@@ -140,6 +142,7 @@ function DataFormInput({
         placeholder={placeholder}
         disabled={disabled || isLoading}
         required={required}
+        className={className}
       />
     </div>
   );
