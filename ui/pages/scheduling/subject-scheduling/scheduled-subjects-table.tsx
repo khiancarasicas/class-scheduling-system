@@ -147,7 +147,7 @@ export function ScheduledSubjectsTable({
           durationMinutes(row.original.startTime, row.original.endTime)
         );
 
-        return `${hourScheduled}h/${toHours(requiredMinutes)}h`;
+        return `${hourScheduled} / ${toHours(requiredMinutes)} hrs`;
       },
     },
     {
