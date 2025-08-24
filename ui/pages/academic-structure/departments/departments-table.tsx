@@ -185,8 +185,6 @@ export default function DepartmentsTable() {
         const stats = getDepartmentStats(row.original._id || "");
 
         return <Badge variant="secondary">{stats.instructorsCount}</Badge>;
-
-        return <span>{stats.instructorsCount}</span>;
       },
     },
     {
