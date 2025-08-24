@@ -28,7 +28,7 @@ interface DataFormProps<T> {
   item?: T;
   isOpen: boolean;
   onClose: () => void;
-  onSubmit: (data: T) => Promise<void> | void;
+  onSubmit: (data: T) => Promise<boolean | void> | void;
   isLoading?: boolean;
   title?: { add: string; edit: string };
   children: ReactNode;
@@ -51,8 +51,11 @@ function DataFormBase<T extends { _id?: string }>({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    await onSubmit(formData);
-    onClose();
+    const result = await onSubmit(formData);
+
+    if (!result) {
+      onClose();
+    }
   };
 
   return (
