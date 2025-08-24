@@ -307,10 +307,23 @@ function DataFormArrayInput({
 }
 
 // ------------------------------------
+// Section (container only, no injected props)
+// ------------------------------------
+interface SectionProps {
+  children: ReactNode;
+  className?: string;
+}
+
+function DataFormDiv({ children, className }: SectionProps) {
+  return <div className={className}>{children}</div>;
+}
+
+// ------------------------------------
 // Export as compound component
 // ------------------------------------
 export const DataForm = Object.assign(DataFormBase, {
   Input: DataFormInput,
   Select: DataFormSelect,
   ArrayInput: DataFormArrayInput,
+  Div: DataFormDiv,
 });
