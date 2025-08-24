@@ -80,6 +80,6 @@ export interface IScheduledSubject {
 
 export interface IScheduleOfInstructor {
   _id?: string;
-  scheduledSubject: string; // Links to scheduled subject this assigned instructor belongs to
+  assignedSubjectId: string; // Links to assigned subject this assigned instructor belongs to
   instructorId: string; // Links to instructor this schedule of intructor ha ano daw, naubusan na ko ng english
 }
