@@ -53,7 +53,7 @@ function DataFormBase<T extends { _id?: string }>({
     e.preventDefault();
     const result = await onSubmit(formData);
 
-    if (!result) {
+    if (result !== false) {
       onClose();
     }
   };
