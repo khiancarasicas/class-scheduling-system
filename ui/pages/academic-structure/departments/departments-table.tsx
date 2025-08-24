@@ -66,43 +66,51 @@ export default function DepartmentsTable() {
   const handleAddDepartment = async (
     departmentData: Omit<IDepartment, "_id">
   ) => {
+    if (!departmentData.code) {
+      toast.error("Department code is required");
+      return false;
+    }
+
+    if (!departmentData.name) {
+      toast.error("Department name is required");
+      return false;
+    }
+
     setIsSubmitting(true);
     try {
-      if (!departmentData.code) {
-        toast.error("Department code is required");
-      }
-
-      if (!departmentData.name) {
-        toast.error("Department name is required");
-        return;
-      }
-
       if (addDepartment(departmentData)) {
         toast.success(`Department added successfully`);
         loadData();
+        setIsAddDialogOpen(false);
       } else {
         toast.error("Failed to add department");
+        return false;
       }
-      setIsAddDialogOpen(false);
     } finally {
       setIsSubmitting(false);
+      return true;
     }
   };
 
   // UPDATE
   const handleUpdateDepartment = async (departmentData: IDepartment) => {
-    if (!departmentData._id) return;
+    if (!departmentData._id) {
+      toast.error("Invalid ID");
+      return false;
+    }
+
+    if (!departmentData.code) {
+      toast.error("Department code is required");
+      return false;
+    }
+
+    if (!departmentData.name) {
+      toast.error("Department name is required");
+      return false;
+    }
+
     setIsSubmitting(true);
     try {
-      if (!departmentData.code) {
-        toast.error("Department code is required");
-      }
-
-      if (!departmentData.name) {
-        toast.error("Department name is required");
-        return;
-      }
-
       const { _id, ...data } = departmentData;
 
       if (updateDepartment(_id, data)) {
@@ -119,6 +127,7 @@ export default function DepartmentsTable() {
       console.error("Error updating department:", error);
     } finally {
       setIsSubmitting(false);
+      return true;
     }
   };
 
