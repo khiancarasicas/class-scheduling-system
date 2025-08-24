@@ -80,7 +80,6 @@ export default function SelectInstructor({
       <Select
         value={instructorId ?? ""}
         onValueChange={(val) => setInstructorId(val || null)}
-        disabled={!departmentId}
       >
         <SelectTrigger>
           <SelectValue placeholder="Select Instructor" />
