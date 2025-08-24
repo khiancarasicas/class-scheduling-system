@@ -1,18 +1,18 @@
 import { IScheduleOfInstructor } from "@/types";
 import { getScheduledOfInstructorStore } from "@/lib/data-store/scheduleOfInstructorStore";
 
-export function getScheduledOfInstructors(): IScheduleOfInstructor[] {
+export function getScheduleOfInstructors(): IScheduleOfInstructor[] {
   return [...getScheduledOfInstructorStore()];
 }
 
-export function getScheduledOfInstructorById(
+export function getScheduleOfInstructorById(
   id: string
 ): IScheduleOfInstructor | undefined {
   const scheduledOfInstructors = getScheduledOfInstructorStore();
   return scheduledOfInstructors.find((item) => item._id === id);
 }
 
-export function addScheduledOfInstructor(
+export function addScheduleOfInstructor(
   scheduledOfInstructor: Omit<IScheduleOfInstructor, "_id">
 ): IScheduleOfInstructor {
   const newScheduledOfInstructor = {
@@ -23,7 +23,7 @@ export function addScheduledOfInstructor(
   return newScheduledOfInstructor;
 }
 
-export function updateScheduledOfInstructor(
+export function updateScheduleOfInstructor(
   id: string,
   updates: Partial<IScheduleOfInstructor>
 ): IScheduleOfInstructor | null {
@@ -37,7 +37,7 @@ export function updateScheduledOfInstructor(
   return scheduledOfInstructors[index];
 }
 
-export function deleteScheduledOfInstructor(id: string): boolean {
+export function deleteScheduleOfInstructor(id: string): boolean {
   const scheduledOfInstructors = getScheduledOfInstructorStore();
   const index = scheduledOfInstructors.findIndex((item) => item._id === id);
   if (index === -1) return false;
