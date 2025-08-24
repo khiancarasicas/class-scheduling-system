@@ -142,14 +142,6 @@ export function UnscheduledSubjectsTable({
 
   const columns: ColumnDef<Row>[] = [
     {
-      id: "units",
-      header: "Units",
-      accessorFn: (row) => row.subject.units,
-      cell: ({ getValue }) => {
-        return getValue<number>();
-      },
-    },
-    {
       id: "progress",
       header: "Progress",
       accessorFn: (row) => row.scheduledMinutes,
@@ -171,6 +163,14 @@ export function UnscheduledSubjectsTable({
             </Tooltip>
           </div>
         );
+      },
+    },
+    {
+      id: "units",
+      header: "Units",
+      accessorFn: (row) => row.subject.units,
+      cell: ({ getValue }) => {
+        return <Badge variant="secondary">{getValue<number>()}</Badge>;
       },
     },
     {

@@ -139,21 +139,6 @@ export function ScheduledSubjectsTable({
       enableSorting: false,
     },
     {
-      id: "room",
-      header: "Room",
-      accessorFn: (row) => row.room?.name || "Unknown",
-    },
-    {
-      id: "day",
-      header: "Day",
-      accessorFn: (row) => DAYS_OF_WEEK[Number(row.dayOfWeek)],
-    },
-    {
-      id: "time",
-      header: "Time",
-      accessorFn: (row) => `${row.startTime} - ${row.endTime}`,
-    },
-    {
       id: "hours",
       header: "Hours",
       cell: ({ row }) => {
@@ -166,8 +151,8 @@ export function ScheduledSubjectsTable({
       },
     },
     {
-      id: "schedule",
-      header: "Schedule",
+      id: "scheduleStatus",
+      header: "Schedule Status",
       cell: ({ row }) => {
         const { scheduledMinutes, requiredMinutes } = row.original;
         const isComplete = scheduledMinutes === requiredMinutes;
@@ -178,13 +163,28 @@ export function ScheduledSubjectsTable({
             {isComplete ? (
               <Badge>Complete</Badge>
             ) : isExceed ? (
-              <Badge variant="destructive">Exceed</Badge>
+              <Badge variant="destructive">Excess</Badge>
             ) : (
-              <Badge variant="secondary">Incomplete</Badge>
+              <Badge variant="secondary">Partial</Badge>
             )}
           </>
         );
       },
+    },
+    {
+      id: "room",
+      header: "Room",
+      accessorFn: (row) => row.room?.name || "Unknown",
+    },
+    {
+      id: "day",
+      header: "Day",
+      accessorFn: (row) => DAYS_OF_WEEK[Number(row.dayOfWeek)],
+    },
+    {
+      id: "time",
+      header: "Time",
+      accessorFn: (row) => `${formatTime(row.startTime)} - ${formatTime(row.endTime)}`,
     },
     {
       id: "subjectCode",
