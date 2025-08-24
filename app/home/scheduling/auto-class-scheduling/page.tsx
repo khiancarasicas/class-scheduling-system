@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import AutoClassSchedulingClient from "@/ui/pages/scheduling/auto-class-scheduling/auto-class-scheduling-client";
 
 export default function AutoClassScheduling() {
   return (
@@ -6,7 +7,7 @@ export default function AutoClassScheduling() {
       <MainSection.Section>
         <MainSection.Title>Auto Class Scheduling</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">Auto Class Scheduling will be displayed here.</p>
+          <AutoClassSchedulingClient />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
