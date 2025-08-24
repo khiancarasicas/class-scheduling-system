@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import InstructorAssigningClient from "@/ui/pages/assignment/instructor-assigning/instructor-assigning-client";
 
 export default function InstructorAssigning() {
   return (
@@ -6,9 +7,7 @@ export default function InstructorAssigning() {
       <MainSection.Section>
         <MainSection.Title>Instructor Assigning</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">
-            Instructor Assigning will be displayed here.
-          </p>
+          <InstructorAssigningClient />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
