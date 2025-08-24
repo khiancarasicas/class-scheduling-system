@@ -4,7 +4,7 @@ const instructors: IInstructor[] = [
   {
     _id: "1",
     name: "Jumar Bibal",
-    departmentId: "3",
+    departmentId: "1",
     status: "Part-Time",
   },
   {
@@ -22,7 +22,7 @@ const instructors: IInstructor[] = [
   {
     _id: "4",
     name: "Khian Carasicas",
-    departmentId: "3",
+    departmentId: "2",
     status: "Part-Time",
   },
   {
@@ -64,7 +64,7 @@ const instructors: IInstructor[] = [
   {
     _id: "11",
     name: "Leonard Hilig",
-    departmentId: "2",
+    departmentId: "3",
     status: "Full-Time",
   },
   {
