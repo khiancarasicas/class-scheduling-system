@@ -132,12 +132,14 @@ export default function AutoClassSchedulingClient() {
               />
             ) : generateKey ? (
               <div className="flex flex-col gap-2 items-center justify-center">
-                <span className="ml-2 text-sm text-muted-foreground">
+                <span className="text-sm text-muted-foreground">
                   Generating schedule, please wait...
                 </span>
-                <div className="w-full max-w-sm space-y-2">
+                <div className="w-full max-w-sm space-y-2 text-muted-foreground">
                   <Progress value={value} />
-                  <p className="text-sm text-center">{value}%</p>
+                  <p className="text-sm text-center">
+                    {value === 100 ? "Almost there..." : `${value}%`}
+                  </p>
                 </div>
               </div>
             ) : (
