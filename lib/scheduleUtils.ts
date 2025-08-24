@@ -27,7 +27,7 @@ export const overlaps = (
 
 export const toHours = (mins: number) => +(mins / 60).toFixed(2);
 
-export const dayNames = [
+export const DAYS_OF_WEEK = [
   "Sunday",
   "Monday",
   "Tuesday",
@@ -36,6 +36,9 @@ export const dayNames = [
   "Friday",
   "Saturday",
 ];
+
+const DEFAULT_START_HOUR = 7
+const DEFAULT_END_HOUR = 19
 
 export const formatTime = (time: string) => {
   const [hour, minute] = time.split(":").map(Number);

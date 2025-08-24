@@ -1,6 +1,6 @@
 import {
   minutesFromTime,
-  dayNames,
+  DAYS_OF_WEEK,
   toHours,
   durationMinutes,
   formatTime,
@@ -146,7 +146,7 @@ export function ScheduledSubjectsTable({
     {
       id: "day",
       header: "Day",
-      accessorFn: (row) => dayNames[Number(row.dayOfWeek)],
+      accessorFn: (row) => DAYS_OF_WEEK[Number(row.dayOfWeek)],
     },
     {
       id: "time",
@@ -260,7 +260,7 @@ export function ScheduledSubjectsTable({
         itemName={`${
           toDelete
             ? `${toDelete.subject?.title} | ${
-                dayNames[Number(toDelete.dayOfWeek)]
+                DAYS_OF_WEEK[Number(toDelete.dayOfWeek)]
               } ${formatTime(toDelete.startTime)}-${formatTime(
                 toDelete.endTime
               )}`
