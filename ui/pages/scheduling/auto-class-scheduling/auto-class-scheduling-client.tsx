@@ -10,7 +10,7 @@ import {
 } from "@/shadcn/components/ui/card";
 import SelectSection from "../../../components/select-section";
 import { Button } from "@/shadcn/components/ui/button";
-import { Zap } from "lucide-react";
+import { Loader2, Zap } from "lucide-react";
 import Image from "next/image";
 
 export default function AutoClassSchedulingClient() {
@@ -47,7 +47,6 @@ export default function AutoClassSchedulingClient() {
         <CardContent>
           <SelectSection onSectionChange={setSelectedSection} />
         </CardContent>
-        <CardFooter></CardFooter>
       </Card>
 
       <div className="grid gap-3 grid-cols-1 md:grid-cols-2">
@@ -59,7 +58,32 @@ export default function AutoClassSchedulingClient() {
           </CardHeader>
           <CardContent className="h-[70vh] max-h-[70vh] overflow-y-auto py-4 border-y">
             <div className="space-y-4">
-              <Card className="bg-secondary border-0 shadow-none"></Card>
+              <Card className="bg-secondary border-0 shadow-none">
+                <CardContent>
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center">
+                      <p className="text-muted-foreground">Section:</p>
+                      <p>{selectedSection ? `ID: ${selectedSection}` : "--"}</p>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className="text-muted-foreground">
+                        Unscheduled Subjects:
+                      </p>
+                      <p>{selectedSection ? "wala pa inaayos ko pa" : "--"}</p>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className="text-muted-foreground">
+                        Selected Days:
+                      </p>
+                    </div>
+                    <div className="flex justify-between items-center">
+                      <p className="text-muted-foreground">
+                        Ano pa pwede idagdag?
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
               <Button
                 disabled={generateKey || !selectedSection}
                 onClick={triggerGenerate}
@@ -93,7 +117,8 @@ export default function AutoClassSchedulingClient() {
               />
             ) : generateKey ? (
               <div className="flex items-center justify-center">
-                <span className="text-sm text-muted-foreground">
+                <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
+                <span className="ml-2 text-sm text-muted-foreground">
                   Generating schedule, please wait...
                 </span>
               </div>
