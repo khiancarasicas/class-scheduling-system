@@ -64,13 +64,13 @@ export interface ISubject {
 // -------------------- RELATIONSHIPS --------------------
 
 export interface IAssignedSubject {
-  _id: string;
+  _id?: string;
   subjectId: string; // Links to subject ID, e.g. subject "3" assigned to section "2"
   sectionId: string; // Links to section ID this assigned subject belongs to
 }
 
 export interface IScheduledSubject {
-  _id: string;
+  _id?: string;
   assignedSubjectId: string; // Links to assigned subject this scheduled subject belongs to
   roomId: string; // ID of the room this scheduled subject belongs to
   dayOfWeek: number; // e.g., 0 = Sunday, 1 = Monday, etc.
@@ -79,7 +79,7 @@ export interface IScheduledSubject {
 }
 
 export interface IScheduleOfInstructor {
-  _id: string;
+  _id?: string;
   scheduledSubject: string; // Links to scheduled subject this assigned instructor belongs to
   instructorId: string; // Links to instructor this schedule of intructor ha ano daw, naubusan na ko ng english
 }
