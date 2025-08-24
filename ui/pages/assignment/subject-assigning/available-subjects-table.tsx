@@ -185,16 +185,16 @@ export default function AvailableSubjectsTable({
     },
     {
       header: "Subject Code",
-      accessorKey: "subjectCode",
+      accessorKey: "code",
       cell: ({ row }) => (
-        <Badge variant="outline">{row.getValue("subjectCode")}</Badge>
+        <Badge variant="outline">{row.getValue("code")}</Badge>
       ),
     },
     {
       header: "Subject Title",
-      accessorKey: "subjectTitle",
+      accessorKey: "title",
       cell: ({ row }) => (
-        <div className="font-medium">{row.getValue("subjectTitle")}</div>
+        <div className="font-medium">{row.getValue("title")}</div>
       ),
     },
     {
@@ -324,7 +324,7 @@ export default function AvailableSubjectsTable({
               </TabsList>
             </Tabs>
             <DataTable.Search
-              column="subjectTitle"
+              column="title"
               placeholder="Search subjects..."
               className="max-w-full w-full"
             />
