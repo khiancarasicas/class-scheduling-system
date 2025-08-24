@@ -62,14 +62,6 @@ export default function SelectSection({ onSectionChange }: SelectSectionProps) {
     courseId: string,
     yearLevelId: string
   ) => {
-    if (courseId && academicLevelId)
-      return sections.filter(
-        (s) => s.courseId === courseId && s.academicLevelId === academicLevelId
-      );
-
-    if (academicLevelId)
-      return sections.filter((s) => s.academicLevelId === academicLevelId);
-
     if (yearLevelId && courseId && academicLevelId)
       return sections.filter(
         (s) =>
@@ -77,6 +69,14 @@ export default function SelectSection({ onSectionChange }: SelectSectionProps) {
           s.courseId === courseId &&
           s.yearLevelId === yearLevelId
       );
+
+    if (courseId && academicLevelId)
+      return sections.filter(
+        (s) => s.courseId === courseId && s.academicLevelId === academicLevelId
+      );
+
+    if (academicLevelId)
+      return sections.filter((s) => s.academicLevelId === academicLevelId);
 
     return sections;
   };
