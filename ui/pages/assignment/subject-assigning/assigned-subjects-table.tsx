@@ -330,16 +330,6 @@ export default function AssignedSubjectsTable({
               className="max-w-full w-full"
             />
             <div className="flex flex-wrap items-center gap-3">
-              {/* <DataTable.Filter
-                column="academicLevel"
-                placeholder="All semesters"
-                renderValue={(val) =>
-                  typeof val === "string" ? val : "Unknown"
-                }
-              /> */}
-            </div>
-
-            <div className="flex flex-wrap items-center gap-3">
               <Button variant="outline" onClick={loadData}>
                 <RefreshCcw className="-ms-1 opacity-60" size={16} />
                 Refresh
