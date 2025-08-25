@@ -7,6 +7,11 @@ import {
   formatTime,
   timeToMinutes,
 } from "@/lib/scheduleUtils";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shadcn/components/ui/tooltip";
 import { useState } from "react";
 
 export default function Timetable() {
@@ -104,16 +109,25 @@ export default function Timetable() {
 
             {/* Dummy schedule block */}
             {day === "Monday" && (
-              <div
-                className="absolute bg-primary text-primary-foreground p-2 rounded text-xs overflow-hidden hover:opacity-90 transition-opacity border"
-                style={getScheduleStyle("8:00", "9:00")}
-              >
-                <div className="text-xs opacity-75">8:00 AM - 9:00 AM</div>
-                <div className="font-medium truncate">TEST SUBJECT</div>
-                <div className="text-xs opacity-90 truncate">BSIT401B</div>
-                <div className="text-xs opacity-90 truncate">Prof. Kyla</div>
-                <div className="text-xs opacity-90 truncate">Room 9999</div>
-              </div>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <div
+                    className="absolute bg-primary text-primary-foreground p-2 rounded text-xs overflow-hidden hover:opacity-90 transition-opacity border"
+                    style={getScheduleStyle("8:00", "9:00")}
+                  >
+                    <div className="text-xs opacity-75">8:00 AM - 9:00 AM</div>
+                    <div className="font-medium truncate">TEST SUBJECT</div>
+                    <div className="text-xs opacity-90 truncate">BSIT401B</div>
+                    <div className="text-xs opacity-90 truncate">
+                      Prof. Kyla
+                    </div>
+                    <div className="text-xs opacity-90 truncate">Room 9999</div>
+                  </div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  8:00 AM - 9:00 AM | TEST SUBJECT | BSIT401B | Room 9999
+                </TooltipContent>
+              </Tooltip>
             )}
             {day === "Wednesday" && (
               <div
@@ -129,7 +143,10 @@ export default function Timetable() {
             )}
 
             {day === "Monday" && (
-              <div className={CELL_CLASSNAME} style={getScheduleStyle("9:00", "10:30")}>
+              <div
+                className={CELL_CLASSNAME}
+                style={getScheduleStyle("9:00", "10:30")}
+              >
                 <div className="text-xs opacity-75">9:00 AM - 10:30 AM</div>
                 <div className="font-medium truncate">TEST SUBJECT</div>
                 <div className="text-xs opacity-90 truncate">BSIT401B</div>
