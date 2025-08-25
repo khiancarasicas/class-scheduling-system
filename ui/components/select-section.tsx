@@ -15,10 +15,14 @@ import { getSections } from "@/services/sectionService";
 import { Loader2 } from "lucide-react";
 
 interface SelectSectionProps {
-  onSectionChange: (section: string | null) => void;
+  onSectionChange?: (section: string | null) => void;
+  onAcademicLevelChange?: (academicLevel: string | null) => void;
 }
 
-export default function SelectSection({ onSectionChange }: SelectSectionProps) {
+export default function SelectSection({
+  onSectionChange,
+  onAcademicLevelChange,
+}: SelectSectionProps) {
   const [sections, setSections] = useState<ISection[]>([]);
   const [academicLevels, setAcademicLevels] = useState<IAcademicLevel[]>([]);
   const [courses, setCourses] = useState<ICourse[]>([]);
@@ -83,8 +87,12 @@ export default function SelectSection({ onSectionChange }: SelectSectionProps) {
 
   // // Notify parent when section changes
   useEffect(() => {
-    onSectionChange(section);
+    if (onSectionChange) onSectionChange(section);
   }, [section, onSectionChange]);
+
+  useEffect(() => {
+    if (onAcademicLevelChange) onAcademicLevelChange(academicLevel);
+  }, [academicLevel, onAcademicLevelChange]);
 
   if (loading) {
     return (
