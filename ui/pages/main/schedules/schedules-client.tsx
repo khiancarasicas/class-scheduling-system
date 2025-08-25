@@ -24,6 +24,8 @@ import { getAcademicLevels } from "@/services/academicLevelService";
 import { getCourses } from "@/services/courseService";
 import { getSections } from "@/services/sectionService";
 import SelectSection from "@/ui/components/select-section";
+import { Document, Packer, Paragraph, ImageRun } from "docx";
+import { saveAs } from "file-saver";
 // import Timetable from "./test-responsive-timetable.test";
 // import Timetable from "./test-2-timetable.test";
 import Timetable from "./test-timetable";
@@ -46,7 +48,7 @@ export default function SchedulesClient() {
         <CardContent className="space-y-4">
           <SelectSection onSectionChange={setSelectedSection} />
           <SelectRoom onRoomChange={setSelectedRoom} />
-          <Button>
+          <Button onClick={() => exportDocx("/images/wow.png")}>
             <FileText />
             Export DOCX
           </Button>
@@ -65,9 +67,7 @@ export default function SchedulesClient() {
           </CardTitle>
         </CardHeader>
         <CardContent className="overflow-y-auto py-4 border-y">
-          <div className="flex items-center justify-center">
-            <Image src="/images/wow.png" alt="wow" width={500} height={500} className="opacity-30"/>
-          </div>
+          {/* detailed schedule table or kung ano man */}
         </CardContent>
       </Card>
     </div>
@@ -121,4 +121,35 @@ function SelectRoom({
       </SelectContent>
     </Select>
   );
+}
+
+// TESTING
+async function exportDocx(imageUrl: string) {
+  const response = await fetch(imageUrl);
+  const blob = await response.blob();
+  const arrayBuffer = await blob.arrayBuffer();
+
+  const doc = new Document({
+    sections: [
+      {
+        children: [
+          new Paragraph({
+            children: [
+              new ImageRun({
+                data: arrayBuffer,
+                transformation: {
+                  width: 600,
+                  height: 300,
+                },
+                type: "png"
+              }),
+            ],
+          }),
+        ],
+      },
+    ],
+  });
+
+  const buffer = await Packer.toBlob(doc);
+  saveAs(buffer, "schedule_ni_maem.docx");
 }
