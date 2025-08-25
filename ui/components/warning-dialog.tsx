@@ -18,7 +18,7 @@ export function WarningDialog({ src }: { src?: string }) {
         <DialogHeader>
           <DialogTitle>This page is not working properly yet</DialogTitle>
           <p className="text-sm text-muted-foreground">
-            We are still working on it. Check back soon.
+            We are still working on it.
           </p>
         </DialogHeader>
         <Image
