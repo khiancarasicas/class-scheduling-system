@@ -9,7 +9,7 @@ import {
 import Image from "next/image";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
-export function WarningDialog() {
+export function WarningDialog({ src }: { src?: string }) {
   const [open, setOpen] = React.useState(true);
 
   return (
@@ -22,7 +22,7 @@ export function WarningDialog() {
           </p>
         </DialogHeader>
         <Image
-          src="/images/oki_lang.png" // replace with your image path
+          src={src ? src : "/images/oki_lang.png"} // replace with your image path
           alt="Under construction"
           width={1000}
           height={120}
