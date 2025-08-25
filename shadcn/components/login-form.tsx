@@ -17,6 +17,7 @@ import { signIn } from "next-auth/react";
 import { toast } from "sonner";
 import { redirect } from "next/navigation";
 import { Loader2 } from "lucide-react";
+import { WarningDialog } from "@/ui/components/warning-dialog";
 
 export function LoginForm({
   className,
@@ -26,6 +27,8 @@ export function LoginForm({
   const [password, setPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
+
+  const [openDialog, setOpenDialog] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -41,6 +44,7 @@ export function LoginForm({
       toast.error("Login failed", {
         description: "Invalid username or password",
       });
+      setOpenDialog(true);
       setLoading(false);
     } else {
       redirect("/home");
@@ -96,6 +100,14 @@ export function LoginForm({
           </form>
         </CardContent>
       </Card>
+
+      {openDialog && (
+        <WarningDialog
+          title="Login Failed"
+          description="Invalid credentials. Please try to remember who you are."
+          src="/images/sus.png"
+        />
+      )}
     </div>
   );
 }

@@ -33,7 +33,7 @@ export function WarningDialog({
         </DialogHeader>
         <Image
           src={src || "/images/oki_lang.png"} // replace with your image path
-          alt="Under construction"
+          alt=""
           width={1000}
           height={120}
         />
