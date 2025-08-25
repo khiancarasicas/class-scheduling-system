@@ -30,6 +30,11 @@ import { saveAs } from "file-saver";
 // import Timetable from "./test-2-timetable.test";
 import Timetable from "./test-timetable";
 import Image from "next/image";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/shadcn/components/ui/tooltip";
 
 export default function SchedulesClient() {
   const [selectedSection, setSelectedSection] = useState<string | null>(null);
@@ -48,10 +53,15 @@ export default function SchedulesClient() {
         <CardContent className="space-y-4">
           <SelectSection onSectionChange={setSelectedSection} />
           <SelectRoom onRoomChange={setSelectedRoom} />
-          <Button onClick={() => exportDocx("/images/wow.png")}>
-            <FileText />
-            Export DOCX
-          </Button>
+          <Tooltip>
+            <TooltipTrigger asChild>
+                <Button onClick={() => exportDocx("/images/wow.png")}>
+                  <FileText />
+                  Export DOCX
+                </Button>
+            </TooltipTrigger>
+            <TooltipContent>wag</TooltipContent>
+          </Tooltip>
         </CardContent>
         <CardFooter></CardFooter>
       </Card>
@@ -141,7 +151,7 @@ async function exportDocx(imageUrl: string) {
                   width: 600,
                   height: 300,
                 },
-                type: "png"
+                type: "png",
               }),
             ],
           }),
