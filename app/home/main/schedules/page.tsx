@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import SchedulesClient from "@/ui/pages/main/schedules/schedules-client";
 
 export default function Schedules() {
   return (
@@ -6,9 +7,7 @@ export default function Schedules() {
       <MainSection.Section>
         <MainSection.Title>Schedules</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">
-            Schedules will be displayed here.
-          </p>
+          <SchedulesClient />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>

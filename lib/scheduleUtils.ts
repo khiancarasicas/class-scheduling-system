@@ -37,12 +37,17 @@ export const DAYS_OF_WEEK = [
   "Saturday",
 ];
 
-const DEFAULT_START_HOUR = 7
-const DEFAULT_END_HOUR = 19
+export const DEFAULT_START_HOUR = 7;
+export const DEFAULT_END_HOUR = 19;
 
 export const formatTime = (time: string) => {
   const [hour, minute] = time.split(":").map(Number);
   const ampm = hour >= 12 ? "PM" : "AM";
   const h = hour % 12 || 12;
   return `${h}:${minute.toString().padStart(2, "0")} ${ampm}`;
+};
+
+export const timeToMinutes = (time: string) => {
+  const [hours, minutes] = time.split(":").map(Number);
+  return hours * 60 + minutes;
 };
