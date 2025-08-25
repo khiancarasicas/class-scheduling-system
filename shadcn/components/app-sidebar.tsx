@@ -40,8 +40,8 @@ const data = {
           icon: LayoutDashboard,
         },
         {
-          title: "Class Schedule",
-          url: "/home/main/class-schedule",
+          title: "Schedules",
+          url: "/home/main/schedules",
           icon: BarChart3,
         },
       ],
