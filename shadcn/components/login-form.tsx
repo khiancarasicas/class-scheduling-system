@@ -12,16 +12,40 @@ import {
 import { Input } from "@/shadcn/components/ui/input";
 import { Label } from "@/shadcn/components/ui/label";
 import Link from "next/link";
-import { useId, useState } from "react";
-import { EyeIcon, EyeOffIcon } from "lucide-react";
+import { useEffect, useState } from "react";
+import { signIn } from "next-auth/react";
+import { toast } from "sonner";
+import { redirect } from "next/navigation";
+import { Loader2 } from "lucide-react";
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
-  const [isVisible, setIsVisible] = useState(false);
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
 
-  const id = useId();
+  const [loading, setLoading] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    setLoading(true);
+
+    const res = await signIn("credentials", {
+      username,
+      password,
+      redirect: false,
+    });
+
+    if (res?.error) {
+      toast.error("Login failed", {
+        description: "Invalid username or password",
+      });
+      setLoading(false);
+    } else {
+      redirect("/home");
+    }
+  }
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -33,42 +57,33 @@ export function LoginForm({
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Username</Label>
                 <Input
-                  id="email"
+                  id="username"
                   type="text"
-                  placeholder="jisuntitum"
+                  placeholder="Username"
                   required
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div className="grid gap-3">
                 <Label htmlFor="password">Password</Label>
-                <div className="relative">
-                  <Input
-                    id={id}
-                    type={isVisible ? "text" : "password"}
-                    placeholder="Password"
-                    className="pe-9"
-                  />
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                    onClick={() => setIsVisible((prevState) => !prevState)}
-                    className="text-muted-foreground focus-visible:ring-ring/50 absolute inset-y-0 end-0 rounded-s-none hover:bg-transparent"
-                  >
-                    {isVisible ? <EyeOffIcon /> : <EyeIcon />}
-                    <span className="sr-only">
-                      {isVisible ? "Hide password" : "Show password"}
-                    </span>
-                  </Button>
-                </div>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="Password"
+                  className="pe-9"
+                  required
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </div>
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full">
-                  Login
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                  {loading ? "Logging in..." : "Login"}
                 </Button>
                 <Link
                   href="#"
