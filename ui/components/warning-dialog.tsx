@@ -9,20 +9,30 @@ import {
 import Image from "next/image";
 import { DialogTitle } from "@radix-ui/react-dialog";
 
-export function WarningDialog({ src }: { src?: string }) {
+export function WarningDialog({
+  src,
+  title,
+  description,
+}: {
+  src?: string;
+  title?: string;
+  description?: string;
+}) {
   const [open, setOpen] = React.useState(true);
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent className="sm:max-w-md text-center">
         <DialogHeader>
-          <DialogTitle>This page is not working properly yet</DialogTitle>
+          <DialogTitle>
+            {title || "This page is not working properly yet"}
+          </DialogTitle>
           <p className="text-sm text-muted-foreground">
-            We are still working on it.
+            {description || "We are still working on it."}
           </p>
         </DialogHeader>
         <Image
-          src={src ? src : "/images/oki_lang.png"} // replace with your image path
+          src={src || "/images/oki_lang.png"} // replace with your image path
           alt="Under construction"
           width={1000}
           height={120}
