@@ -22,6 +22,7 @@ export function NavGroup({
       title: string;
       url: string;
       icon: LucideIcon;
+      onLogout?: () => void;
     }[];
   }[];
 }) {
@@ -48,7 +49,10 @@ export function NavGroup({
                   : ""
               }
             >
-              <Link href={item.url}>
+              <Link
+                href={item.url}
+                onClick={item.onLogout ? item.onLogout : () => {}}
+              >
                 <item.icon />
                 <span>{item.title}</span>
               </Link>
