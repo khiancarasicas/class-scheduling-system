@@ -30,6 +30,7 @@ export default function Timetable() {
     "Thursday",
     "Friday",
     "Saturday",
+    "Sunday",
   ];
 
   // Generate time slots
