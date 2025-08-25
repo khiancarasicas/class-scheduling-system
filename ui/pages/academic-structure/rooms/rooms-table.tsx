@@ -318,8 +318,18 @@ function RoomForm({
     >
       <DataForm.Input
         name="name"
-        label="room Name"
+        label="Room Name"
         placeholder="e.g., Information Technology"
+        required
+      />
+      <DataForm.Select
+        name="type"
+        label="Type"
+        options={[
+          { value: "Lecture", label: "Lecture" },
+          { value: "Laboratory", label: "Laboratory" },
+        ]}
+        // onValueChange={(value: string) => handleChange(value, "type")}
         required
       />
     </DataForm>
