@@ -12,7 +12,7 @@ import UnassignedInstructorSubjectsTable from "./unassigned-instructor-subjects-
 import AssignedInstructorSubjectsTable from "./assigned-instructor-subjects-table";
 import { WarningDialog } from "../../../components/warning-dialog";
 
-export default function InstructorAssigningClient() {
+export default function InstructorSchedulingClient() {
   const [selectedInstructor, setSelectedInstructor] = useState<string | null>(
     null
   );

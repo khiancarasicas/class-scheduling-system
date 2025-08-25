@@ -1,5 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
-import InstructorAssigningClient from "@/ui/pages/assignment/instructor-assigning/instructor-assigning-client";
+import InstructorSchedulingClient from "@/ui/pages/scheduling/instructor-scheduling/instructor-assigning-client";
 
 export default function InstructorAssigning() {
   return (
@@ -7,7 +7,7 @@ export default function InstructorAssigning() {
       <MainSection.Section>
         <MainSection.Title>Instructor Assigning</MainSection.Title>
         <MainSection.Content>
-          <InstructorAssigningClient />
+          <InstructorSchedulingClient />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>

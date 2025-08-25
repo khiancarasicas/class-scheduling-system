@@ -99,12 +99,6 @@ const data = {
           url: "/home/assignment/subject-assigning",
           icon: NotebookText,
         },
-
-        {
-          title: "Instructor Assigning",
-          url: "/home/assignment/instructor-assigning",
-          icon: Calendar,
-        },
         // {
         //   title: "Auto Assign Instructor",
         //   url: "/home/assignment/auto-assign-instructor",
@@ -124,6 +118,11 @@ const data = {
           title: "Subject Scheduling",
           url: "/home/scheduling/subject-scheduling",
           icon: CalendarDays,
+        },
+        {
+          title: "Instructor Scheduling",
+          url: "/home/scheduling/instructor-scheduling",
+          icon: Calendar,
         },
         {
           title: "Auto Class Scheduling",
