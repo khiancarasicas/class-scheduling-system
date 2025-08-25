@@ -1,4 +1,5 @@
 import { MainSection } from "@/ui/components/main-section";
+import CustomScheduleClient from "@/ui/pages/scheduling/custom-scheduling/custom-scheduling-client";
 
 export default function CustomScheduling() {
   return (
@@ -6,7 +7,7 @@ export default function CustomScheduling() {
       <MainSection.Section>
         <MainSection.Title>Custom Scheduling</MainSection.Title>
         <MainSection.Content>
-          <p className="text-gray-500">Custom Scheduling will be displayed here.</p>
+          <CustomScheduleClient />
         </MainSection.Content>
       </MainSection.Section>
     </MainSection>
